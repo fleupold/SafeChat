@@ -7,21 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <JavaScriptCore/JavaScriptCore.h>
 
-@protocol BPJavascriptRuntimeDelegate <NSObject, UIWebViewDelegate>
-@required
--(void)keyPairGeneratedWithPublicKey:(NSString *)publicKey;
-@end
+@interface BPJavascriptRuntime : NSObject
 
-@interface BPJavascriptRuntime : UIWebView
-
+@property JSContext *context;
 @property NSString *myPrivateKey;
-@property (nonatomic, weak) id<BPJavascriptRuntimeDelegate> delegate;
 
 +(BPJavascriptRuntime *)getInstance;
++(BOOL)privateKeyAvailable;
++(void)resetPrivateKey;
 
--(NSString *)decrypt: (NSString *)message;
--(NSString *)encrypt: (NSString *)message withPublicKey:(NSString *)publicKey;
--(void)triggerKeyGenerationWithPassphrase:(NSString *)passphrase;
+-(NSString *)decrypt: (NSString *)message withSessionKey:(NSString *)sessionKey;
+-(NSString *)encrypt: (NSString *)message withSessionKey:(NSString *)sessionKey;
+-(NSString *)generatePublicKeyWithPassphrase:(NSString *)passphrase;
+-(NSString *)generateSessionKey: (NSString *)public_json;
 
 @end

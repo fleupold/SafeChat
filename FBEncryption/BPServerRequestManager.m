@@ -7,22 +7,40 @@
 //
 
 #import "BPServerRequestManager.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @implementation BPServerRequestManager
 
-const NSString *BaseUrl = @"http://blockprism.likescale.com/";
+const NSString *BaseUrl = @"http://192.168.178.28:8000";
 
 +(void)publicKeyForID: (NSString *)facebookID
            completion: (void(^)(AFHTTPRequestOperation *operation, id responseObject))successBlock
               failure: (void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
-    NSString *urlString = [NSString stringWithFormat: @"%@/public_key/facebook?facebook_id=%@", BaseUrl, facebookID];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL: url];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess: successBlock failure:failureBlock];
-    [operation start];
+    NSString *urlString = [NSString stringWithFormat: @"%@/public_key/facebook/", BaseUrl];
+    NSDictionary *params = @{@"facebook_id": facebookID};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:urlString parameters: params success:successBlock failure:failureBlock];
 }
+    
++(void)storePublicKey: (NSString *)key
+                forID: (NSString *)facebookID
+             override: (BOOL) override
+           completion: (void(^)(AFHTTPRequestOperation *operation, id responseObject))successBlock
+              failure: (void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSString *urlString = [NSString stringWithFormat: @"%@/public_key/facebook/", BaseUrl];
+    NSDictionary *params = @{@"facebook_id": facebookID,
+                             @"public_key": key,
+                             @"access_token": [FBSession activeSession].accessTokenData,
+                             @"override": @(override)};
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager POST:urlString parameters:params success:successBlock failure:failureBlock];
+}
+    
 
 @end

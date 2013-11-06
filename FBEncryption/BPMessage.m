@@ -61,10 +61,20 @@
     {
         if ([submessage rangeOfString: me.username].location == NSNotFound)
             continue;
-        NSString *cipher = [submessage componentsSeparatedByString: @"@"][1];
         
+        NSArray *messageParts = [submessage componentsSeparatedByString: @"@"];
+        if (messageParts.count != 3)
+            //Does not confirm with the protocol
+            continue;
+        
+        BPFriend *other = [BPFriend findByUsername: messageParts[0]];
+        if (other == me) {
+            other = [BPFriend findByUsername: messageParts[1]];
+        }
+        
+        NSString *cipher = messageParts[2];
         @try {
-            return [[BPJavascriptRuntime getInstance] decrypt: cipher];
+            return [[BPJavascriptRuntime getInstance] decrypt:cipher withSessionKey: other.sessionKey];
         }
         @catch (NSException *exception) {
             return message;
@@ -76,10 +86,14 @@
 -(NSString *)encryptForParticipants: (NSArray *)participants
 {
     NSString *encryptedMessage = @"";
+    BPFriend *me = [BPFriend me];
     for (BPFriend *participant in participants)
     {
-        NSString *cipher = [[BPJavascriptRuntime getInstance] encrypt: self.text withPublicKey:participant.publicKey];
-        NSString *encryptedPart = [NSString stringWithFormat: @"BLOCKPRISM.ORG_%@@%@", participant.username, cipher];
+        if (participant == me) {
+            continue;
+        }
+        NSString *cipher = [[BPJavascriptRuntime getInstance] encrypt: self.text withSessionKey:participant.sessionKey];
+        NSString *encryptedPart = [NSString stringWithFormat: @"BLOCKPRISM.ORG_%@@%@@%@", me.username, participant.username, cipher];
         encryptedMessage = [encryptedMessage stringByAppendingString: encryptedPart];
     }
     return encryptedMessage;

@@ -18,12 +18,14 @@ typedef NSInteger BPEncryptionsSupport;
 
 @interface BPFriend : NSObject
 
-@property NSString *name, *id, *username, *publicKey;
+@property NSString *name, *id, *username, *sessionKey;
 @property BPEncryptionsSupport encryptionSupport;
 
 +(BPFriend *)findOrCreateFriendWithId: (NSString *)id andName: (NSString *)name;
 +(BPFriend *)createMe: (NSDictionary<FBGraphUser> *)object;
 +(BPFriend *)me;
++(BPFriend *)findByUsername: (NSString *)username;
+
 
 -(BOOL)isMe;
 -(void)checkEncryptionSupportAndExecuteOnCompletion: (void (^)(BOOL))completionHandler;

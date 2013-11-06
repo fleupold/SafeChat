@@ -8,143 +8,142 @@
 
 #import "BPJavascriptRuntime.h"
 #import "BPFriend.h"
+#import <CommonCrypto/CommonDigest.h>
+#import <CommonCrypto/CommonCryptor.h>
+#import <CommonCrypto/CommonKeyDerivation.h>
 
 @implementation BPJavascriptRuntime
 
+const CCAlgorithm kAlgorithm = kCCAlgorithmAES128;
+const NSUInteger kAlgorithmKeySize = kCCKeySizeAES256;
+const NSUInteger kAlgorithmBlockSize = kCCBlockSizeAES128;
+const NSUInteger kAlgorithmIVSize = kCCBlockSizeAES128;
+const NSUInteger kPBKDFSaltSize = 8;
+const NSUInteger kPBKDFRounds = 10000;
+
+#define private_key_identifier @"my_private_key"
+    
 static BPJavascriptRuntime *instance;
 
 +(BPJavascriptRuntime *)getInstance
 {
     if (instance == nil) {
         instance = [[BPJavascriptRuntime alloc] init];
-        [instance loadHTMLString:@"<script src=\"encryption.js\"></script><script src=\"cryptico.min.js\"></script>" baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath]]];
     }
     return instance;
 }
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
++(BOOL)privateKeyAvailable {
+    return [[NSUserDefaults standardUserDefaults] objectForKey: private_key_identifier] != nil;
 }
 
++(void)resetPrivateKey
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey: private_key_identifier];
+}
+
+
 -(id)init{
-    _myPrivateKey = [[NSUserDefaults standardUserDefaults] objectForKey: @"my_private_key"];
+    _myPrivateKey = [[NSUserDefaults standardUserDefaults] objectForKey: private_key_identifier];
+    _context = [[JSContext alloc] init];
+    
+    //Load all Javascript files
+    NSString *cryptico_js = [[NSBundle mainBundle] pathForResource:@"cryptico.min" ofType:@"js"];
+    NSString *encryption_js = [[NSBundle mainBundle] pathForResource:@"encryption" ofType:@"js"];
+    
+    NSString *ec_js = [[NSBundle mainBundle] pathForResource:@"ec" ofType:@"js"];
+    NSString *jsbn_js = [[NSBundle mainBundle] pathForResource:@"jsbn" ofType:@"js"];
+    NSString *jsbn2_js = [[NSBundle mainBundle] pathForResource:@"jsbn2" ofType:@"js"];
+    NSString *sec_js = [[NSBundle mainBundle] pathForResource:@"sec" ofType:@"js"];
+    
+    NSString *gibberish_js = [[NSBundle mainBundle] pathForResource:@"gibberish-aes-1.0.0.min" ofType:@"js"];
+    
+    NSMutableString *script = [NSMutableString stringWithContentsOfFile:cryptico_js encoding:NSUTF8StringEncoding error:nil];
+    [script appendString:[NSString stringWithContentsOfFile:gibberish_js encoding:NSUTF8StringEncoding error:NULL]];
+    [script appendString:[NSString stringWithContentsOfFile:encryption_js encoding:NSUTF8StringEncoding error:NULL]];
+    [script appendString:[NSString stringWithContentsOfFile:ec_js encoding:NSUTF8StringEncoding error:NULL]];
+    [script appendString:[NSString stringWithContentsOfFile:jsbn_js encoding:NSUTF8StringEncoding error:NULL]];
+    [script appendString:[NSString stringWithContentsOfFile:jsbn2_js encoding:NSUTF8StringEncoding error:NULL]];
+    [script appendString:[NSString stringWithContentsOfFile:sec_js encoding:NSUTF8StringEncoding error:NULL]];
+    
+    JSValue *result = [_context evaluateScript: script];
+    
     return [super init];
 }
 
--(NSString *)decrypt: (NSString *)message
+-(NSString *)decrypt: (NSString *)message withSessionKey:(NSString *)sessionKey
 {
-    // Decrypt the message using the javascript functions provided in cryptico.js and the private key of the user
+    JSValue *dec = _context[@"GibberishAES"][@"dec"];
+    
+    JSValue *result = [dec callWithArguments: @[message, sessionKey]];
+    return result.toString;
+}
+
+-(NSString *)encrypt: (NSString *)message withSessionKey:(NSString *)sessionKey
+{
+    JSValue *enc = _context[@"GibberishAES"][@"enc"];
+    
+    JSValue *result = [enc callWithArguments: @[message, sessionKey]];
+    return result.toString;
+}
+
+-(NSString *)generatePublicKeyWithPassphrase:(NSString *)passphrase;
+{
+    NSData *salt = [[BPFriend me].username dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *key = [self keyFromPassphrase:passphrase withSalt:salt];
+    _myPrivateKey = [self hexFromNSData: key];
+    [[NSUserDefaults standardUserDefaults] setObject:_myPrivateKey forKey:private_key_identifier];
+    
+    JSValue *derive_public = _context[@"derive_public"];
+    //NSLog(@"%@", derive_public);
+    JSValue *public = [derive_public callWithArguments: @[_myPrivateKey]];
+    NSLog(@"%@", public);
+    
+    return public.toString;
+}
+
+-(NSData *)keyFromPassphrase: (NSString *)passphrase withSalt: (NSData *)salt
+{
+    NSMutableData *derivedKey = [NSMutableData dataWithLength:kAlgorithmKeySize];
+    int result = CCKeyDerivationPBKDF(kCCPBKDF2,            // algorithm
+                                      passphrase.UTF8String,  // password
+                                      passphrase.length,  // passwordLength
+                                      salt.bytes,           // salt
+                                      salt.length,          // saltLen
+                                      kCCPRFHmacAlgSHA1,    // PRF
+                                      kPBKDFRounds,         // rounds
+                                      derivedKey.mutableBytes, // derivedKey
+                                      derivedKey.length); // derivedKeyLen
+    
+    NSAssert(result == kCCSuccess,
+             @"Unable to create AES key for password: %d", result);
+    return derivedKey;
+}
+
+-(NSString *)generateSessionKey: (NSString *)public_json {
     if (_myPrivateKey == nil) {
         @throw [NSException exceptionWithName: @"EncryptionException" reason: @"No private key supplied" userInfo:nil];
     }
     
-    NSString *js = [NSString stringWithFormat: @"cryptico.decrypt('%@', cast_to_rsa_key(JSON.parse('%@'))).plaintext", message, _myPrivateKey];
-    NSString *decrypted = [self stringByEvaluatingJavaScriptFromString: js];
+    JSValue *generate_secret_key = _context[@"generate_secret_key"];
+    //NSLog(@"%@", generate_secret_key);
     
-    if (decrypted.length == 0) {
-        @throw [NSException exceptionWithName: @"EncryptionException" reason: @"cryptico.decryot returned empty string" userInfo:nil];
+    JSValue *result = [generate_secret_key callWithArguments: @[_myPrivateKey, public_json]];
+    //NSLog(@"%@", result);
+    return result.toString;
+}
+
+-(NSString *)hexFromNSData: (NSData *)data
+{
+    //Turn the NSData into its HEX representation
+    NSUInteger capacity = [data length] * 2;
+    NSMutableString *stringBuffer = [NSMutableString stringWithCapacity:capacity];
+    const unsigned char *dataBuffer = [data bytes];
+    NSInteger i;
+    for (i=0; i < [data length]; ++i) {
+        [stringBuffer appendFormat:@"%02X", dataBuffer[i]];
     }
-    return decrypted;
+    return stringBuffer;
 }
-
--(NSString *)encrypt: (NSString *)message withPublicKey:(NSString *)publicKey
-{
-    NSString *js = [NSString stringWithFormat: @"cryptico.encrypt('%@', '%@').cipher", message, publicKey];
-    NSString *encrypted = [self stringByEvaluatingJavaScriptFromString: js];
-    return encrypted;
-}
-
--(void)triggerKeyGenerationWithPassphrase:(NSString *)passphrase
-{
-    NSString *phrase_with_salt = [NSString stringWithFormat: @"%@_%@", [BPFriend me].username, passphrase];
-    NSString *js = [NSString stringWithFormat: @"generate_key_pair('%@')", phrase_with_salt];
-    [self performSelector: @selector(stringByEvaluatingJavaScriptFromString:) withObject: js afterDelay:1];
-    [self performSelector:@selector(tryFetchKey) withObject:nil afterDelay:10];
-}
-
--(void)tryFetchKey {
-    _myPrivateKey = [self stringByEvaluatingJavaScriptFromString:@"my_private_key"];
-    NSString *myPublicKey = [self stringByEvaluatingJavaScriptFromString:@"my_public_key"];
-    
-    if([myPublicKey length] == 0 || [_myPrivateKey length] == 0) {
-        [self performSelector:@selector(tryFetchKey) withObject:nil afterDelay:1];
-        NSLog(@"waiting...");
-        return;
-    }
-    [[NSUserDefaults standardUserDefaults] setObject: _myPrivateKey forKey: @"my_private_key"];
-    [self.delegate keyPairGeneratedWithPublicKey: myPublicKey];
-}
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
-/*
- -(void)executeJavaScript
- {
- if (!self.context) {
- self.context = [[JSContext alloc] init];
- NSString *cryptico_js = [[NSBundle mainBundle] pathForResource:@"cryptico.min" ofType:@"js"];
- NSString *script = [NSString stringWithContentsOfFile:cryptico_js encoding:NSUTF8StringEncoding error:NULL];
- [self.context evaluateScript: script];
- 
- NSString *encryption_js = [[NSBundle mainBundle] pathForResource:@"encryption" ofType:@"js"];
- script = [NSString stringWithContentsOfFile:encryption_js encoding:NSUTF8StringEncoding error:NULL];
- [self.context evaluateScript: script];
- }
- 
- JSValue *generate_key_pair = self.context[@"cryptico"];
- NSLog(@"%@", [generate_key_pair toDictionary]);
- NSArray *args = @[[NSNumber numberWithInt:10]];
- 
- JSValue *key = [generate_key_pair callWithArguments: args];
- NSLog(@"%@", [key toString]);
- 
- 
- JSValue *encrypt = self.context[@"encrypt"];
- args = @[@"Hallo Welt!", key];
- JSValue *encrypted = [encrypt callWithArguments: args];
- BPEncryptedObject *encryptedObject = [encrypted toObject];
- NSLog(@"Cipher: %@", encryptedObject.cipher);
- }
- 
- -(void)triggerKeyGeneration
- {
- [self.jsHost stringByEvaluatingJavaScriptFromString:@"generate_key_pair('foo')"];
- [self performSelector:@selector(tryFetchKey) withObject:nil afterDelay:10];
- }
- 
- -(void)tryFetchKey {
- myPrivateKey = [self.jsHost stringByEvaluatingJavaScriptFromString:@"my_private_key"];
- myPublicKey = [self.jsHost stringByEvaluatingJavaScriptFromString:@"my_public_key"];
- 
- if([myPublicKey length] == 0 || [myPrivateKey length] == 0) {
- [self performSelector:@selector(tryFetchKey) withObject:nil afterDelay:1];
- NSLog(@"waiting...");
- return;
- }
- [spinner stopAnimating];
- NSLog(@"Private: %@\n\nPublic: %@", myPrivateKey, myPublicKey);
- [self encrypt: @"Hallo Welt!"];
- }
- 
- -(void)encrypt: (NSString *)message forFriend:(BPFriend *)friend
- {
- NSString *js = [NSString stringWithFormat: @"cryptico.encrypt('%@', '%@').cipher", message, myPublicKey];
- NSString *encrypted = [self.jsHost stringByEvaluatingJavaScriptFromString: js];
- NSLog(@"Encrypted: %@", encrypted);
- [self decrypt: encrypted];
- }
- */
 
 @end

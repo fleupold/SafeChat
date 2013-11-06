@@ -30,6 +30,7 @@
         // No, display the login page.
         [self showLoginView];
     }
+    [FBProfilePictureView class];
     return YES;
 }
 

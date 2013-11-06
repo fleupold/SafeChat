@@ -8,9 +8,10 @@
 
 #import "BPFriend.h"
 #import "BPServerRequestManager.h"
+#import "BPJavascriptRuntime.h"
 
 @implementation BPFriend
-@synthesize name, id, username, encryptionSupport, publicKey;
+@synthesize name, id, username, encryptionSupport, sessionKey;
 
 static NSMutableDictionary *friendList;
 static BPFriend *me;
@@ -42,6 +43,17 @@ static BPFriend *me;
 +(BPFriend *)me
 {
     return me;
+}
+    
++(BPFriend *)findByUsername: (NSString *)username
+{
+    for (NSString *id in friendList) {
+        BPFriend *friend = [friendList objectForKey:id];
+        if ([friend.username isEqualToString: username]) {
+            return friend;
+        }
+    }
+    return nil;
 }
 
 -(BOOL)isMe
@@ -79,7 +91,7 @@ static BPFriend *me;
     //to be set
     [BPServerRequestManager publicKeyForID:self.username
                                 completion:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                    self.publicKey = operation.responseString;
+                                    self.sessionKey = [[BPJavascriptRuntime getInstance] generateSessionKey: operation.responseString];
                                     self.encryptionSupport = EncryptionAvailable;
                                     completionHandler(YES);
                                 }

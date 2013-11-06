@@ -11,6 +11,7 @@
 #import "BPFacebookLoginViewController.h"
 #import "BPThread.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "IonIcons.h"
 
 @interface BPMasterViewController () {
     NSMutableArray *_objects;
@@ -28,11 +29,15 @@
 {
     [super viewDidLoad];
     
+    UIImage *icon = [IonIcons imageWithIcon:icon_ios7_gear
+                                  iconColor:[UIColor grayColor]
+                                   iconSize:32
+                                  imageSize:CGSizeMake(32, 32)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithTitle:@"Logout"
-                                              style:UIBarButtonItemStyleBordered
+                                              initWithImage:icon
+                                              style:UIBarButtonItemStylePlain
                                               target:self
-                                              action:@selector(logoutButtonWasPressed:)];
+                                              action:@selector(configButtonWasPressed:)];
 }
 
 
@@ -120,8 +125,9 @@
     }
 }
 
--(void)logoutButtonWasPressed:(id)sender {
-    [FBSession.activeSession closeAndClearTokenInformation];
+-(void)configButtonWasPressed:(id)sender
+{
+    [self performSegueWithIdentifier:@"load_configuration" sender:sender];
 }
 
 -(void)fetchThreads
@@ -146,6 +152,7 @@
              }
          }];
     }
+    NSLog(@"%@", [FBSession activeSession].accessTokenData);
 }
 
 - (BOOL) refresh
