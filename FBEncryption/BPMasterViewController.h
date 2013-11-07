@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "STableViewController.h"
+#import "STHeaderView.h"
 
-@interface BPMasterViewController : STableViewController
+@interface BPMasterViewController : STableViewController {
+    @protected
+    
+    NSString *nextPage;
+}
+
+@property IBOutlet STHeaderView *tableHeaderView;
+@property IBOutlet UIView *tableFooterView;
 
 @end

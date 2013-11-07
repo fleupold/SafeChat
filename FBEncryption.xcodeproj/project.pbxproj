@@ -81,6 +81,7 @@
 		08575A17181BF2C1006C1DD9 /* jsbn.js in Resources */ = {isa = PBXBuildFile; fileRef = 08575A0F181BE468006C1DD9 /* jsbn.js */; };
 		08575A18181BF2C1006C1DD9 /* jsbn2.js in Resources */ = {isa = PBXBuildFile; fileRef = 08575A10181BE468006C1DD9 /* jsbn2.js */; };
 		08575A19181BF2C1006C1DD9 /* sec.js in Resources */ = {isa = PBXBuildFile; fileRef = 08575A11181BE468006C1DD9 /* sec.js */; };
+		0860F82D182BA559007A63EE /* STHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0860F82C182BA559007A63EE /* STHeaderView.m */; };
 		08689375182A57CA0087048C /* IonIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = 08689371182A57CA0087048C /* IonIcons.m */; };
 		08689376182A57CA0087048C /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08689372182A57CA0087048C /* ionicons.ttf */; };
 		08689377182A57CA0087048C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 08689373182A57CA0087048C /* LICENSE */; };
@@ -251,6 +252,8 @@
 		08575A0F181BE468006C1DD9 /* jsbn.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsbn.js; sourceTree = "<group>"; };
 		08575A10181BE468006C1DD9 /* jsbn2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsbn2.js; sourceTree = "<group>"; };
 		08575A11181BE468006C1DD9 /* sec.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = sec.js; sourceTree = "<group>"; };
+		0860F82B182BA559007A63EE /* STHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STHeaderView.h; sourceTree = "<group>"; };
+		0860F82C182BA559007A63EE /* STHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STHeaderView.m; sourceTree = "<group>"; };
 		0868936F182A57CA0087048C /* ionicons-codes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ionicons-codes.h"; sourceTree = "<group>"; };
 		08689370182A57CA0087048C /* IonIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IonIcons.h; sourceTree = "<group>"; };
 		08689371182A57CA0087048C /* IonIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IonIcons.m; sourceTree = "<group>"; };
@@ -356,6 +359,8 @@
 			children = (
 				0857546E18193553006C1DD9 /* STableViewController.h */,
 				0857546F18193553006C1DD9 /* STableViewController.m */,
+				0860F82B182BA559007A63EE /* STHeaderView.h */,
+				0860F82C182BA559007A63EE /* STHeaderView.m */,
 			);
 			path = STableViewController;
 			sourceTree = "<group>";
@@ -881,6 +886,7 @@
 				08575A13181BE468006C1DD9 /* jsbn.js in Sources */,
 				08575A02181A65A9006C1DD9 /* AFHTTPRequestOperation.m in Sources */,
 				085759D51819622E006C1DD9 /* XMPPStringPrep.m in Sources */,
+				0860F82D182BA559007A63EE /* STHeaderView.m in Sources */,
 				085754531817E632006C1DD9 /* BPThread.m in Sources */,
 				085759E21819622E006C1DD9 /* DDXMLNode.m in Sources */,
 				08575A14181BE468006C1DD9 /* jsbn2.js in Sources */,

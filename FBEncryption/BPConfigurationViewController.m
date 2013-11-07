@@ -195,8 +195,6 @@
     }
     
     if (!CGRectContainsPoint(aRect, self.generateButton.frame.origin) ) {
-        CGRect foo = self.generateButton.frame;
-        CGRect bar = self.scrollView.frame;
         [self.scrollView scrollRectToVisible:self.generateButton.frame animated:YES];
     }
 }

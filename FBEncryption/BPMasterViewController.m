@@ -28,7 +28,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
+    //Make a plain white view if there are no messages yet
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    //iconize view
     UIImage *icon = [IonIcons imageWithIcon:icon_ios7_gear
                                   iconColor:[UIColor grayColor]
                                    iconSize:32
@@ -38,6 +43,11 @@
                                               style:UIBarButtonItemStylePlain
                                               target:self
                                               action:@selector(configButtonWasPressed:)];
+
+    //Somehow the views from to superclass cannot be connected in the storyboard file, use own
+    self.headerView = self.tableHeaderView;
+    self.footerView = self.tableFooterView;
+    self.footerView.hidden = YES;
 }
 
 
@@ -112,6 +122,9 @@
 */
 
 - (void) viewDidAppear:(BOOL) animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(resizeHeaderAndFooter)  name:UIDeviceOrientationDidChangeNotification  object:nil];
+    [self resizeHeaderAndFooter];
+    
     [self fetchThreads];
     [super viewDidAppear:animated];
 }
@@ -145,7 +158,14 @@
                      BPThread *thread = [BPThread threadFromFBGraphObject: threadInformation];
                      [_objects addObject: thread];
                  }
+                 [self setNextPage: [[inbox objectForKey:@"paging"] objectForKey: @"next"]];
+                 
+                 //adjustments that are necessary after first loading
+                 self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+                 self.footerView.hidden = NO;
+                 
                  [self.tableView reloadData];
+                 [self refreshCompleted];
              }
              else {
                  NSLog(@"%@", error);
@@ -155,10 +175,83 @@
     NSLog(@"%@", [FBSession activeSession].accessTokenData);
 }
 
+-(void)setNextPage: (NSString *)page
+{
+    NSURL *nextPageURL = [NSURL URLWithString: page];
+    nextPage = [NSString stringWithFormat:@"%@?%@", nextPageURL.relativePath, nextPageURL.query];
+}
+
+//STTabelViewControllerMethods
 - (BOOL) refresh
 {
+    [super refresh];
     [self fetchThreads];
     return YES;
+}
+
+- (BOOL) loadMore
+{
+    if (![super loadMore])
+        return NO;
+
+    if (!nextPage)
+        return NO;
+    
+    if (!FBSession.activeSession.isOpen)
+        return NO;
+    
+    [[FBRequest requestForGraphPath: nextPage] startWithCompletionHandler:
+     ^(FBRequestConnection *connection,
+       NSDictionary<FBGraphUser> *inbox,
+       NSError *error) {
+         if (!error) {
+             for (FBGraphObject *threadInformation in [inbox objectForKey:@"data"])
+             {
+                 BPThread *thread = [BPThread threadFromFBGraphObject: threadInformation];
+                 [_objects addObject: thread];
+             }
+             [self setNextPage: [[inbox objectForKey:@"paging"] objectForKey: @"next"]];
+             
+             [self.tableView reloadData];
+             [self loadMoreCompleted];
+         }
+         else {
+             NSLog(@"%@", error);
+         }
+     }]; 
+    return YES;
+}
+
+-(void)pinHeaderView
+{
+    [super pinHeaderView];
+    self.tableHeaderView.loadingView.hidden = NO;
+}
+-(void)unpinHeaderView
+{
+    [super unpinHeaderView];
+    self.tableHeaderView.loadingView.hidden = YES;
+}
+- (void) headerViewDidScroll:(BOOL)willRefreshOnRelease scrollView:(UIScrollView *)scrollView
+{
+    STHeaderView *hv = (STHeaderView *)self.headerView;
+    if (willRefreshOnRelease)
+        hv.title.text = @"Release to refresh...";
+    else
+        hv.title.text = @"Pull down to refresh...";
+}
+
+- (void)resizeHeaderAndFooter {
+    self.headerView.frame = CGRectMake(self.headerView.frame.origin.x,
+                                       self.headerView.frame.origin.y,
+                                       self.view.frame.size.width,
+                                       self.headerView.frame.size.height);
+
+    self.footerView.frame = CGRectMake(self.footerView.frame.origin.x,
+                                       self.footerView.frame.origin.y,
+                                       self.view.frame.size.width,
+                                       self.footerView.frame.size.height);
+    
 }
 
 @end
