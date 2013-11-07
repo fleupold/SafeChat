@@ -10,6 +10,9 @@
 #import "BPDetailViewController.h"
 #import "BPFacebookLoginViewController.h"
 #import "BPThread.h"
+#import "BPFriend.h"
+#import "BPFacebookDateFormatter.h"
+#import "BPMessageTableViewCell.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "IonIcons.h"
 
@@ -43,11 +46,22 @@
                                               style:UIBarButtonItemStylePlain
                                               target:self
                                               action:@selector(configButtonWasPressed:)];
+    
+    icon = [IonIcons imageWithIcon:icon_ios7_compose_outline
+                        iconColor:[UIColor grayColor]
+                         iconSize:32
+                        imageSize:CGSizeMake(32, 32)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                             initWithImage:icon
+                                             style:UIBarButtonItemStylePlain
+                                             target:nil
+                                             action:@selector(configButtonWasPressed:)];
 
     //Somehow the views from to superclass cannot be connected in the storyboard file, use own
     self.headerView = self.tableHeaderView;
     self.footerView = self.tableFooterView;
     self.footerView.hidden = YES;
+    self.tableHeaderView.title.font = [IonIcons fontWithSize:15];
 }
 
 
@@ -81,11 +95,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    BPMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"messageCell" forIndexPath:indexPath];
+    cell.unreadLabel.font = [IonIcons fontWithSize:20.0f];
+    cell.unreadLabel.text = icon_radio_waves;
 
+   
     BPThread *object = _objects[indexPath.row];
-    cell.textLabel.text = [object participantsPreview];
-    cell.detailTextLabel.text = [object textPreview];
+    cell.participantsLabel.text = [object participantsPreview];
+    cell.previewLabel.text = [object textPreview];
+    cell.timeLabel.text = [BPFacebookDateFormatter prettyPrint: object.updated_at];
+    
+    BPFriend *user = object.participants.lastObject;
+    if ([user isMe]) {
+        user = object.participants.firstObject;
+    }
+    cell.messageImage.userID = user.id;
+    
+    if (object.unread == 0) {
+        cell.unreadLabel.hidden = YES;
+    } else {
+        cell.unreadLabel.hidden = NO;
+    }
+        
     return cell;
 }
 
@@ -93,16 +124,6 @@
 {
     // Return NO if you do not want the specified item to be editable.
     return NO;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_objects removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }
 }
 
 /*
@@ -236,9 +257,9 @@
 {
     STHeaderView *hv = (STHeaderView *)self.headerView;
     if (willRefreshOnRelease)
-        hv.title.text = @"Release to refresh...";
+        hv.title.text = [NSString stringWithFormat: @"%@ Release to refresh...", icon_arrow_up_a];
     else
-        hv.title.text = @"Pull down to refresh...";
+        hv.title.text = [NSString stringWithFormat: @"%@Pull down to refresh...", icon_arrow_down_a];
 }
 
 - (void)resizeHeaderAndFooter {

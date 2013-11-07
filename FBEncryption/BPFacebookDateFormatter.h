@@ -10,4 +10,6 @@
 
 @interface BPFacebookDateFormatter : NSDateFormatter
 
++(NSString *)prettyPrint: (NSDate *)date;
+
 @end

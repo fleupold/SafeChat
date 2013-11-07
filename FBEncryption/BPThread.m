@@ -54,22 +54,19 @@
 -(NSString *)textPreview
 {
     BPMessage *message = [self.messages lastObject];
-    if([message.text length] > 30)
-        return [message.text substringToIndex: 30];
     return message.text;
 }
 
 -(NSString *)participantsPreview
 {
-    NSString *preview = @"";
+    NSMutableString *preview = [NSMutableString string];
     for (BPFriend *participant in self.participants)
     {
         if([participant isMe])
             continue;
-        preview = [preview stringByAppendingString: [NSString stringWithFormat: @"%@,", participant.name]];
-        if([preview length] > 10)
-            break;
+        [preview appendString: [NSString stringWithFormat: @"%@, ", participant.name]];
     }
+    [preview deleteCharactersInRange: NSMakeRange(preview.length-2,2)];
     return preview;
 }
 

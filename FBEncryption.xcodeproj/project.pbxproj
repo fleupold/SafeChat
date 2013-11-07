@@ -82,6 +82,8 @@
 		08575A18181BF2C1006C1DD9 /* jsbn2.js in Resources */ = {isa = PBXBuildFile; fileRef = 08575A10181BE468006C1DD9 /* jsbn2.js */; };
 		08575A19181BF2C1006C1DD9 /* sec.js in Resources */ = {isa = PBXBuildFile; fileRef = 08575A11181BE468006C1DD9 /* sec.js */; };
 		0860F82D182BA559007A63EE /* STHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0860F82C182BA559007A63EE /* STHeaderView.m */; };
+		0860F830182BC258007A63EE /* BPMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0860F82F182BC258007A63EE /* BPMessageTableViewCell.m */; };
+		0860F833182BE9CF007A63EE /* BPMessageMashupImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0860F832182BE9CF007A63EE /* BPMessageMashupImageView.m */; };
 		08689375182A57CA0087048C /* IonIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = 08689371182A57CA0087048C /* IonIcons.m */; };
 		08689376182A57CA0087048C /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08689372182A57CA0087048C /* ionicons.ttf */; };
 		08689377182A57CA0087048C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 08689373182A57CA0087048C /* LICENSE */; };
@@ -254,6 +256,10 @@
 		08575A11181BE468006C1DD9 /* sec.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = sec.js; sourceTree = "<group>"; };
 		0860F82B182BA559007A63EE /* STHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STHeaderView.h; sourceTree = "<group>"; };
 		0860F82C182BA559007A63EE /* STHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STHeaderView.m; sourceTree = "<group>"; };
+		0860F82E182BC258007A63EE /* BPMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMessageTableViewCell.h; sourceTree = "<group>"; };
+		0860F82F182BC258007A63EE /* BPMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPMessageTableViewCell.m; sourceTree = "<group>"; };
+		0860F831182BE9CF007A63EE /* BPMessageMashupImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMessageMashupImageView.h; sourceTree = "<group>"; };
+		0860F832182BE9CF007A63EE /* BPMessageMashupImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPMessageMashupImageView.m; sourceTree = "<group>"; };
 		0868936F182A57CA0087048C /* ionicons-codes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ionicons-codes.h"; sourceTree = "<group>"; };
 		08689370182A57CA0087048C /* IonIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IonIcons.h; sourceTree = "<group>"; };
 		08689371182A57CA0087048C /* IonIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IonIcons.m; sourceTree = "<group>"; };
@@ -340,6 +346,8 @@
 				0857546518180C36006C1DD9 /* BPJavascriptRuntime.m */,
 				085759EB181A5A9D006C1DD9 /* BPServerRequestManager.h */,
 				085759EC181A5A9D006C1DD9 /* BPServerRequestManager.m */,
+				0860F831182BE9CF007A63EE /* BPMessageMashupImageView.h */,
+				0860F832182BE9CF007A63EE /* BPMessageMashupImageView.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -707,6 +715,8 @@
 				0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */,
 				0873371D18150CC5004A0AE3 /* BPMasterViewController.h */,
 				0873371E18150CC5004A0AE3 /* BPMasterViewController.m */,
+				0860F82E182BC258007A63EE /* BPMessageTableViewCell.h */,
+				0860F82F182BC258007A63EE /* BPMessageTableViewCell.m */,
 				0873372018150CC5004A0AE3 /* BPDetailViewController.h */,
 				0873372118150CC5004A0AE3 /* BPDetailViewController.m */,
 				08575467181813DF006C1DD9 /* BPConfigurationViewController.h */,
@@ -865,6 +875,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08575A07181A65A9006C1DD9 /* AFURLConnectionOperation.m in Sources */,
+				0860F830182BC258007A63EE /* BPMessageTableViewCell.m in Sources */,
 				085759E11819622E006C1DD9 /* DDXMLElement.m in Sources */,
 				0857547018193553006C1DD9 /* STableViewController.m in Sources */,
 				0873371F18150CC5004A0AE3 /* BPMasterViewController.m in Sources */,
@@ -900,6 +911,7 @@
 				085759CD1819622E006C1DD9 /* XMPPParser.m in Sources */,
 				085759CC1819622E006C1DD9 /* XMPPModule.m in Sources */,
 				08575469181813DF006C1DD9 /* BPConfigurationViewController.m in Sources */,
+				0860F833182BE9CF007A63EE /* BPMessageMashupImageView.m in Sources */,
 				08B7A4B51827CC8A003C0B51 /* encryption.js in Sources */,
 				085759DB1819622E006C1DD9 /* DDTTYLogger.m in Sources */,
 				085759CE1819622E006C1DD9 /* XMPPPresence.m in Sources */,
