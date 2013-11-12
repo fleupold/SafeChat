@@ -13,6 +13,7 @@
 }
 
 static NSMutableDictionary *cache;
+static NSLock *cache_lock;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -32,6 +33,7 @@ static NSMutableDictionary *cache;
 {
     if (!cache) {
         cache = [NSMutableDictionary dictionary];
+        cache_lock = [[NSLock alloc] init];
     }
     
     _userID = userID;
@@ -65,7 +67,12 @@ static NSMutableDictionary *cache;
     NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: url]];
     
     UIImage *image = [UIImage imageWithData:imageData];
+    
+    //cache write operation has to be thread safe
+    [cache_lock lock];
     [cache setObject:image forKey:userID];
+    [cache_lock unlock];    
+    
     self.image = image;
 }
 
