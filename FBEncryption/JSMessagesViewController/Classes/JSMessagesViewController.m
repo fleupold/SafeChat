@@ -373,6 +373,8 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     self.isUserScrolling = NO;
+    if(scrollView.contentOffset.y < 0 && [self.delegate respondsToSelector:@selector(loadMore)])
+        [self.delegate loadMore];
 }
 
 #pragma mark - Text view delegate

@@ -28,6 +28,8 @@
 @property NSMutableArray *messages, *participants;
 @property NSString *id;
 
+@property NSString *nextPage;
+
 + (BPThread *)threadFromFBGraphObject: (FBGraphObject *)object;
 
 -(NSString *)participantsPreview;

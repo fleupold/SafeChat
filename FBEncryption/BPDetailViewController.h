@@ -15,6 +15,7 @@
 {
     NSDate *lastTyping;
     BPFriend *personTyping;
+    BOOL isReloading;
 }
 @property (strong, nonatomic) BPThread *detailItem;
 @property BOOL encryptionEnabled;

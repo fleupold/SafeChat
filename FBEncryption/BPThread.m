@@ -11,7 +11,7 @@
 #import "FCBaseChatRequestManager.h"
 
 @implementation BPThread
-@synthesize updated_at, unread, messages, participants, delegate;
+@synthesize updated_at, unread, messages, participants, delegate, nextPage;
 
 + (BPThread *)threadFromFBGraphObject: (FBGraphObject *)object
 {
@@ -32,6 +32,7 @@
         BPMessage *message = [BPMessage messageFromFBGraphObject: messageObject];
         [self.messages addObject: message];
     }
+    self.nextPage = [[[object objectForKey: @"messages"] objectForKey:@"paging"] objectForKey: @"next"];
     
     //Initialize Participants
     NSArray *_participants = [[object objectForKey: @"participants"] objectForKey: @"data"];
@@ -44,6 +45,7 @@
     
     self.unread = [[object objectForKey:@"unread_count"] integerValue];
     self.id = [object objectForKey:@"id"];
+    
     return self;
 }
 
@@ -68,13 +70,23 @@
         
         if (self.participants.count > 3) {
             //too many to display
-            return [NSString stringWithFormat: @"%@, +%u", participant.name, self.participants.count - 2];
+            return [NSString stringWithFormat: @"%@, +%i", participant.name, (int)(self.participants.count - 2)];
         }
         
         [preview appendString: [NSString stringWithFormat: @"%@, ", participant.name]];
     }
     [preview deleteCharactersInRange: NSMakeRange(preview.length-2,2)];
     return preview;
+}
+
+-(void)setNextPage: (NSString *)page
+{
+    NSURL *nextPageURL = [NSURL URLWithString: page];
+    nextPage = [NSString stringWithFormat:@"%@?%@", nextPageURL.relativePath, nextPageURL.query];
+}
+
+-(NSString *)nextPage{
+    return nextPage;
 }
 
 -(void)checkEncryptionSupport

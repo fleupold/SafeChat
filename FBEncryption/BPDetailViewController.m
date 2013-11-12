@@ -234,4 +234,37 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     }
 }
 
+- (void)loadMore {
+    if (isReloading){
+        return;
+    }        
+    isReloading = YES;
+    
+    if (FBSession.activeSession.isOpen) {
+        [[FBRequest requestForGraphPath: self.detailItem.nextPage] startWithCompletionHandler:
+         ^(FBRequestConnection *connection,
+           NSDictionary<FBGraphObject> *thread,
+           NSError *error) {
+             if (!error) {
+                 NSArray *messages = [thread objectForKey:@"data"];
+                 for (FBGraphObject *messageInformation in messages)
+                 {
+                     BPMessage *message = [BPMessage messageFromFBGraphObject: messageInformation];
+                     [self.detailItem.messages insertObject: message atIndex: 0];
+                 }
+                 self.detailItem.nextPage = [[thread objectForKey:@"paging"] objectForKey: @"next"];
+                 
+                 [self reloadData];
+                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow: messages.count - 2 inSection:0];
+                 [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                 isReloading = NO;
+             }
+             else {
+                 isReloading = NO;
+                 NSLog(@"%@", error);
+             }
+         }];
+    }
+}
+
 @end

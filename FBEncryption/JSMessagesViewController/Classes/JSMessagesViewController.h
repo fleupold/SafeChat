@@ -91,7 +91,7 @@ typedef NS_ENUM(NSUInteger, JSMessagesViewSubtitlePolicy) {
 /**
  *  The delegate of a `JSMessagesViewController` must adopt the `JSMessagesViewDelegate` protocol.
  */
-@protocol JSMessagesViewDelegate <NSObject>
+@protocol JSMessagesViewDelegate <UITableViewDelegate>
 
 @required
 
@@ -180,6 +180,8 @@ typedef NS_ENUM(NSUInteger, JSMessagesViewSubtitlePolicy) {
  *  @return A custom `UIButton` to use in messageInputView.
  */
 - (UIButton *)sendButtonForInputView;
+
+-(void)loadMore;
 
 @end
 
