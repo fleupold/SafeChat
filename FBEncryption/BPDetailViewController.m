@@ -11,15 +11,18 @@
 #import "BPEncryptedObject.h"
 #import "FCBaseChatRequestManager.h"
 #import "BPFriend.h"
-
-#define kOFFSET_FOR_KEYBOARD 220.0
+#import "BPMessageMashupImageView.h"
+#import "BPFacebookDateFormatter.h"
 
 @interface BPDetailViewController ()
 - (void)configureView;
 @end
 
 @implementation BPDetailViewController
-@synthesize messageView, lockImage, messageInput;
+@synthesize lockImage;
+
+NSTimeInterval const secondsBetweenNewTimestamps = 60 * 60;
+NSTimeInterval const secondsForTypingIndicator = 10;
 
 #pragma mark - Managing the detail item
 
@@ -38,45 +41,36 @@
 - (void)configureView
 {
     // Update the user interface for the detail item.
-
-    if (self.detailItem) {
-        self.messageView.text = @"";
-        for (BPMessage *message in self.detailItem.messages)
-        {
-            [self  addMessageToView: message];
-        }
-    }
+    self.view.backgroundColor = [UIColor whiteColor];
     self.lockImage.hidden = !self.encryptionEnabled;
     self.title = self.detailItem.participantsPreview;
-    [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:.1];
-}
+    [self setBackgroundColor: [UIColor whiteColor]];
 
--(void)scrollToBottom
-{
-    CGPoint bottomOffset = CGPointMake(0, [self.messageView contentSize].height - self.messageView.bounds.size.height);
-    [self.messageView setContentOffset:bottomOffset animated:NO];
+    //no support for group chats yet
+    if (self.detailItem.participants.count > 2) {
+        self.messageInputView.userInteractionEnabled = NO;
+        self.messageInputView.alpha = .3;
+    }
 }
 
 - (void)viewDidLoad
 {
+    self.dataSource = self;
+    self.delegate = self;
+    
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
     
-    // register for keyboard notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-    //register keyboard dismiss gesture
-    UITapGestureRecognizer *singleFingerTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(dismissKeyboard)];
-    [self.messageView addGestureRecognizer:singleFingerTap];
+    //Register for message receive notifications
+    [[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(receivedMessage:) name: @"kFCMessageDidComeNotification" object: nil];
+    
+    //connect with Chat service so that we can receive incoming messages
+    [FCBaseChatRequestManager getInstance];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self.detailItem update];
 }
  
 - (void)didReceiveMemoryWarning
@@ -85,18 +79,52 @@
     // Dispose of any resources that can be recreated.
 }
 
--(IBAction)sendMessage:(id)sender {
-    [self.detailItem sendMessage: messageInput.text encrypted: self.encryptionEnabled];
-    [self addMessageToView: self.detailItem.messages.lastObject];
-    self.messageInput.text = @"";
-    [self performSelector:@selector(scrollToBottom) withObject:nil afterDelay:.2];
+-(BPMessage *)messageForRowAtIndexPath: (NSIndexPath *)indexPath
+{
+    if (indexPath.row == self.detailItem.messages.count) {
+        BPMessage *placeholder = [BPMessage messageFromText: @"typing..."];
+        placeholder.created = lastTyping;
+        placeholder.from = personTyping;
+        return placeholder;
+    }
+    return [self.detailItem.messages objectAtIndex: indexPath.row];
 }
 
--(void)addMessageToView: (BPMessage *)message
+-(void)receivedMessage:(NSNotification *)notification
 {
-    NSString *newText = [NSString stringWithFormat: @"%@: %@\n\n", message.from.name, message.text];
-    self.messageView.text = [self.messageView.text stringByAppendingString:newText];
+    XMPPMessage *message = notification.object;
+    NSString *senderID = [message.fromStr componentsSeparatedByString:@"@"].firstObject; //still has the minus as first character
+    senderID = [senderID substringFromIndex:1];
+    
+    BPFriend *sender = [BPFriend findOrCreateFriendWithId: senderID andName: nil];
+    
+    if (![self.detailItem.participants containsObject: sender]) {
+        return;
+    }
+    
+    if ([message.compactXMLString rangeOfString: @"composing"].location != NSNotFound)
+    {
+        lastTyping = [NSDate date];
+        personTyping = sender;
+        [self reloadData];
+        [self scrollToBottomAnimated:YES];
+        [self performSelector:@selector(reloadData) withObject:nil afterDelay: secondsForTypingIndicator]; //hide typing indicator
+    }
+    
+    if (message.body) {
+        lastTyping = nil;
+        [self.detailItem addIncomingMessage:message.body from:sender];
+        [self reloadData];
+        [self scrollToBottomAnimated:YES];
+    }
 }
+
+-(BOOL)isTyping
+{
+    return lastTyping != nil && [lastTyping timeIntervalSinceNow] > -1 * secondsForTypingIndicator;
+}
+
+#pragma mark - BPThreadDelegate methods
 
 -(void)encryptionSupportHasBeenCheckedAndIsAvailable:(BOOL)isAvailable
 {
@@ -104,58 +132,106 @@
     self.lockImage.hidden = !isAvailable;
 }
 
--(void)dismissKeyboard
+-(void)hasUpdatedThread:(BPThread *)thread
 {
-    [self.view endEditing:NO];
+    [self reloadData];
 }
 
--(void)keyboardWillShow {
-    //prepare for sending message
-    [FCBaseChatRequestManager getInstance];
+#pragma mark - Messages view data source
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if([self isTyping])
+        return self.detailItem.messages.count + 1; //space for typing indicator
     
-    // Animate the current view out of the way
-    if (self.view.frame.origin.y >= 0)
-    {
-        [self setViewMovedUp:YES];
-    }
-    else if (self.view.frame.origin.y < 0)
-    {
-        [self setViewMovedUp:NO];
-    }
+    return self.detailItem.messages.count;
 }
 
--(void)keyboardWillHide {
-    if (self.view.frame.origin.y >= 0)
-    {
-        [self setViewMovedUp:YES];
-    }
-    else if (self.view.frame.origin.y < 0)
-    {
-        [self setViewMovedUp:NO];
-    }
+- (NSString *)textForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self messageForRowAtIndexPath:indexPath].text;
 }
 
--(void)setViewMovedUp:(BOOL)movedUp
+
+- (NSDate *)timestampForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self messageForRowAtIndexPath:indexPath].created;
+}
+
+- (UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath {
+    BPMessageMashupImageView *avatar = [[BPMessageMashupImageView alloc] initWithStyle: BPMessageMashupStyleCircle];
+    BPFriend *sender = [self messageForRowAtIndexPath:indexPath].from;
+    avatar.userID = sender.id;
+    return avatar;
+}
+
+- (NSString *)subtitleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self messageForRowAtIndexPath:indexPath].from.name;
+}
+
+
+#pragma mark - Messages view delegate
+
+- (void)didSendText:(NSString *)text {
+    [self.detailItem sendMessage: text encrypted: self.encryptionEnabled];
+    [self finishSend];
+    [self scrollToBottomAnimated: YES];
+}
+
+- (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if([[self messageForRowAtIndexPath:indexPath].from isMe])
+    {
+        return JSBubbleMessageTypeOutgoing;
+    }
+    return JSBubbleMessageTypeIncoming;
+}
+
+- (UIImageView *)bubbleImageViewWithType:(JSBubbleMessageType)type
+                       forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3]; // if you want to slide up the view
+    /*
+    if ([self messageForRowAtIndexPath: indexPath].text == nil && [self isTyping]) {
+        return [JSBubbleImageViewFactory  bubbleImageViewForType: JSBubbleMessageTypeOutgoing style:JSBubbleImageViewStyleTyping];
+    }*/
     
-    CGRect rect = self.view.frame;
-    if (movedUp)
-    {
-        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
-        // 2. increase the size of the view so that the area behind the keyboard is covered up.
-        rect.origin.y -= kOFFSET_FOR_KEYBOARD;
-        rect.size.height += kOFFSET_FOR_KEYBOARD;
+    if (type == JSBubbleMessageTypeOutgoing) {
+        return [JSBubbleImageViewFactory bubbleImageViewForType:type
+                                                          style:JSBubbleImageViewStyleClassicSquareBlue];
     }
-    else
-    {
-        // revert back to the normal state.
-        rect.origin.y += kOFFSET_FOR_KEYBOARD;
-        rect.size.height -= kOFFSET_FOR_KEYBOARD;
-    }
-    self.view.frame = rect;
-    
-    [UIView commitAnimations];
+    return [JSBubbleImageViewFactory bubbleImageViewForType:type
+                                                      style:JSBubbleImageViewStyleClassicSquareGray];
 }
+
+- (JSMessagesViewTimestampPolicy)timestampPolicy {
+    return JSMessagesViewTimestampPolicyCustom;
+}
+
+- (JSMessagesViewAvatarPolicy)avatarPolicy {
+    return JSMessagesViewAvatarPolicyIncomingOnly;
+}
+
+- (JSMessagesViewSubtitlePolicy)subtitlePolicy {
+    if(self.detailItem.participants.count < 3) {
+        return JSMessagesViewSubtitlePolicyNone;
+    }
+    return JSMessagesViewSubtitlePolicyIncomingOnly;
+}
+
+- (BOOL)hasTimestampForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if(indexPath.row == 0) {
+        return YES;
+    }
+    
+    NSIndexPath *lastMessagePath = [NSIndexPath indexPathForRow: indexPath.row - 1 inSection:indexPath.section];
+    BPMessage *thisMessage = [self messageForRowAtIndexPath: indexPath];
+    BPMessage *lastMessage = [self messageForRowAtIndexPath: lastMessagePath];
+    
+    return ([thisMessage.created timeIntervalSinceDate: lastMessage.created] > secondsBetweenNewTimestamps);
+}
+
+- (void)configureCell:(JSBubbleMessageCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([[self messageForRowAtIndexPath: indexPath].text isEqualToString:@"typing..."]) {
+        cell.bubbleView.font = [UIFont italicSystemFontOfSize: 16];
+    }
+}
+
 @end

@@ -155,7 +155,8 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         BPThread *object = _objects[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
+        if(((BPDetailViewController *)[segue destinationViewController]).detailItem == nil)
+            [[segue destinationViewController] setDetailItem:object];
     }
 }
 

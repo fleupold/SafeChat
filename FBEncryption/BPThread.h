@@ -8,10 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "BPMessage.h"
 
+@class BPThread;
 @protocol BPThreadDelegate <NSObject>
 @required
 -(void)encryptionSupportHasBeenCheckedAndIsAvailable: (BOOL)isAvailable;
+
+@optional
+- (void)hasUpdatedThread: (BPThread *)thread;
 @end
 
 @interface BPThread : NSObject
@@ -31,5 +36,7 @@
 
 -(void)checkEncryptionSupport;
 -(void)sendMessage: (NSString *)text encrypted: (BOOL)shouldBeEncrypted;
+-(void)addIncomingMessage: (NSString *)text from: (BPFriend *)friend;
 
+-(void)update;
 @end

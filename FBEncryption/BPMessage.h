@@ -18,8 +18,8 @@
 @property NSDate *created;
 @property BPFriend *from;
 
-+(BPMessage *)messageFromFBGraphObject: (FBGraphObject *)object;
-+(BPMessage *)messageFromText:(NSString *)text;
++(id)messageFromFBGraphObject: (FBGraphObject *)object;
++(id)messageFromText:(NSString *)text;
 
 -(NSString *)encryptForParticipants: (NSArray *)participants;
 

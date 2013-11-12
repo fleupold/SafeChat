@@ -13,7 +13,7 @@
 @implementation BPMessage
 @synthesize id, created, from;
 
-+(BPMessage *)messageFromFBGraphObject: (FBGraphObject *)object {
++(id)messageFromFBGraphObject: (FBGraphObject *)object {
     BPMessage *message = [[BPMessage alloc] init];
     
     NSString *createdString = [object objectForKey:@"created_time"];
@@ -28,7 +28,7 @@
     return message;
 }
 
-+(BPMessage *)messageFromText:(NSString *)text
++(id)messageFromText:(NSString *)text
 {
     BPMessage *message = [[BPMessage alloc] init];
     message.from = [BPFriend me];
@@ -39,7 +39,7 @@
 
 -(NSString *)text
 {
-    if ([_text rangeOfString: @"BLOCKPRISM.ORG"].location != NSNotFound) {
+    if (_text != nil && [_text rangeOfString: @"BLOCKPRISM.ORG"].location != NSNotFound) {
         self.text = [self decryptMessage: _text];
     }
     return _text;

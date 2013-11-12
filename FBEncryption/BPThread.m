@@ -7,8 +7,6 @@
 //
 
 #import "BPThread.h"
-#import "BPMessage.h"
-#import "BPThread.h"
 #import "BPFacebookDateFormatter.h"
 #import "FCBaseChatRequestManager.h"
 
@@ -17,33 +15,36 @@
 
 + (BPThread *)threadFromFBGraphObject: (FBGraphObject *)object
 {
-    BPThread *thread = [[BPThread alloc] init];
-    
+    return [[[BPThread alloc] init] configureWithFBGraphObject:object];
+}
+
+-(BPThread *)configureWithFBGraphObject: (FBGraphObject *)object
+{
     //Initialize Date
     NSString *dateString = [object objectForKey:@"updated_time"];
-    thread.updated_at = [[[BPFacebookDateFormatter alloc] init] dateFromString: dateString];
+    self.updated_at = [[[BPFacebookDateFormatter alloc] init] dateFromString: dateString];
     
     //Initialize Messages
-    NSArray *messages = [[object objectForKey: @"messages"] objectForKey: @"data"];
-    thread.messages = [NSMutableArray array];
-    for (FBGraphObject *messageObject in [messages reverseObjectEnumerator])
+    NSArray *_messages = [[object objectForKey: @"messages"] objectForKey: @"data"];
+    self.messages = [NSMutableArray array];
+    for (FBGraphObject *messageObject in [_messages reverseObjectEnumerator])
     {
         BPMessage *message = [BPMessage messageFromFBGraphObject: messageObject];
-        [thread.messages addObject: message];
+        [self.messages addObject: message];
     }
     
     //Initialize Participants
-    NSArray *participants = [[object objectForKey: @"participants"] objectForKey: @"data"];
-    thread.participants = [NSMutableArray array];
-    for (FBGraphObject *participantObject in participants) {
+    NSArray *_participants = [[object objectForKey: @"participants"] objectForKey: @"data"];
+    self.participants = [NSMutableArray array];
+    for (FBGraphObject *participantObject in _participants) {
         BPFriend *participant = [BPFriend findOrCreateFriendWithId:[participantObject objectForKey:@"id"]
                                                            andName:[participantObject objectForKey:@"name"]];
-        [thread.participants addObject: participant];
+        [self.participants addObject: participant];
     }
     
-    thread.unread = [[object objectForKey:@"unread_count"] integerValue];
-    thread.id = [object objectForKey:@"id"];
-    return thread;
+    self.unread = [[object objectForKey:@"unread_count"] integerValue];
+    self.id = [object objectForKey:@"id"];
+    return self;
 }
 
 -(UIImage *)avatar
@@ -64,6 +65,12 @@
     {
         if([participant isMe])
             continue;
+        
+        if (self.participants.count > 3) {
+            //too many to display
+            return [NSString stringWithFormat: @"%@, +%u", participant.name, self.participants.count - 2];
+        }
+        
         [preview appendString: [NSString stringWithFormat: @"%@, ", participant.name]];
     }
     [preview deleteCharactersInRange: NSMakeRange(preview.length-2,2)];
@@ -128,6 +135,32 @@
             continue;
         }
         [[FCBaseChatRequestManager getInstance] sendMessageToFacebook: text withFriendFacebookID:participant.id];
+    }
+}
+
+-(void)addIncomingMessage: (NSString *)text from: (BPFriend *)friend
+{
+    BPMessage *newMessage = [BPMessage messageFromText: text];
+    newMessage.from = friend;
+    newMessage.created = [NSDate date];
+    [self.messages addObject:newMessage];
+}
+
+-(void)update
+{
+    if (FBSession.activeSession.isOpen) {
+        [[FBRequest requestForGraphPath: self.id] startWithCompletionHandler:
+         ^(FBRequestConnection *connection,
+           FBGraphObject *thread,
+           NSError *error) {
+             if (!error) {
+                 [self configureWithFBGraphObject:thread];
+                 [self.delegate hasUpdatedThread: self];
+             }
+             else {
+                 NSLog(@"%@", error);
+             }
+         }];
     }
 }
 @end

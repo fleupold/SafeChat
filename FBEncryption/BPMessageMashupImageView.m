@@ -7,6 +7,7 @@
 //
 
 #import "BPMessageMashupImageView.h"
+#import "UIImage+JSMessagesView.h"
 
 @implementation BPMessageMashupImageView {
 }
@@ -22,22 +23,40 @@ static NSMutableDictionary *cache;
     return self;
 }
 
+-(id)initWithStyle: (BPMessageMashupStyle)aStyle {
+    style = aStyle;
+    return [super init];
+}
+
 -(void)setUserID:(NSString *)userID
 {
     if (!cache) {
         cache = [NSMutableDictionary dictionary];
     }
+    
     _userID = userID;
     if ([cache objectForKey: userID] != nil) {
         self.image = [cache objectForKey: userID];
-        return;
+    } else {
+        self.image = [UIImage imageNamed:@"defaultUserIcon"];
+        [self performSelectorInBackground:@selector(fetchImageForUser:) withObject:userID];
     }
-    self.image = [UIImage imageNamed:@"defaultUserIcon"];
-    [self performSelectorInBackground:@selector(fetchImageForUser:) withObject:userID];
 }
 -(NSString*)userID
 {
     return _userID;
+}
+
+-(void)setImage:(UIImage *)image {
+    if (style == BPMessageMashupStyleCircle) {
+        image = [image js_imageAsCircle:YES
+                                      withDiamter:50.0
+                                      borderColor:[UIColor colorWithHue:0.0f saturation:0.0f brightness:0.8f alpha:1.0f]
+                                      borderWidth:1.0f
+                                     shadowOffSet:CGSizeMake(0.0f, 1.0f)];
+        
+    }
+    [super setImage:image];
 }
 
 -(void)fetchImageForUser:(NSString *)userID
@@ -45,8 +64,9 @@ static NSMutableDictionary *cache;
     NSString *url = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square", userID];
     NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: url]];
     
-    self.image = [UIImage imageWithData:imageData];
-    [cache setObject:self.image forKey:userID];
+    UIImage *image = [UIImage imageWithData:imageData];
+    [cache setObject:image forKey:userID];
+    self.image = image;
 }
 
 /*

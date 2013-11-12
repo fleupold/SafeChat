@@ -8,13 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BPMessageMashupImageView : UIImageView {
+typedef NS_ENUM(NSUInteger, BPMessageMashupStyle) {
+    BPMessageMashupStyleSqaure,
+    BPMessageMashupStyleCircle
+};
 
+@interface BPMessageMashupImageView : UIImageView {
+    BPMessageMashupStyle style;
     NSString *_userID;
 }
 
-
 @property (nonatomic) NSString *userID;
 
+-(id)initWithStyle: (BPMessageMashupStyle)aStyle;
 
 @end

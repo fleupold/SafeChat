@@ -9,15 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "BPThread.h"
 #import <JavaScriptCore/JavaScriptCore.h>
+#import "JSMessagesViewController.h"
 
-@interface BPDetailViewController : UIViewController <BPThreadDelegate, UITextViewDelegate>
-
+@interface BPDetailViewController : JSMessagesViewController <BPThreadDelegate, JSMessagesViewDataSource, JSMessagesViewDelegate>
+{
+    NSDate *lastTyping;
+    BPFriend *personTyping;
+}
 @property (strong, nonatomic) BPThread *detailItem;
 @property BOOL encryptionEnabled;
 
-@property IBOutlet UITextView *messageView;
 @property IBOutlet UIImageView *lockImage;
-@property IBOutlet UITextField *messageInput;
+@property IBOutlet UIButton *sendButton;
 
--(IBAction)sendMessage:(id)sender;
 @end
