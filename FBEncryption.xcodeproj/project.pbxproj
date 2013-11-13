@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08509FF11833998500D6B22E /* BPComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08509FF01833998500D6B22E /* BPComposeViewController.m */; };
+		08509FF71833A37D00D6B22E /* BPRecipientsTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 08509FF61833A37D00D6B22E /* BPRecipientsTableDataSource.m */; };
+		08509FFB1833BE4A00D6B22E /* BPRecipientSuggestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08509FFA1833BE4A00D6B22E /* BPRecipientSuggestionTableViewCell.m */; };
+		0850A0011833CA4900D6B22E /* BPFqlRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0850A0001833CA4900D6B22E /* BPFqlRequestManager.m */; };
 		085754471816AB92006C1DD9 /* cryptico.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 085754461816AB92006C1DD9 /* cryptico.min.js */; };
 		0857544D1817BB17006C1DD9 /* BPFacebookLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */; };
 		0857544F1817BD77006C1DD9 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0857544E1817BD77006C1DD9 /* FacebookSDK.framework */; };
@@ -159,6 +163,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		08509FEF1833998500D6B22E /* BPComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPComposeViewController.h; sourceTree = "<group>"; };
+		08509FF01833998500D6B22E /* BPComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPComposeViewController.m; sourceTree = "<group>"; };
+		08509FF51833A37D00D6B22E /* BPRecipientsTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPRecipientsTableDataSource.h; sourceTree = "<group>"; };
+		08509FF61833A37D00D6B22E /* BPRecipientsTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPRecipientsTableDataSource.m; sourceTree = "<group>"; };
+		08509FF91833BE4A00D6B22E /* BPRecipientSuggestionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPRecipientSuggestionTableViewCell.h; sourceTree = "<group>"; };
+		08509FFA1833BE4A00D6B22E /* BPRecipientSuggestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPRecipientSuggestionTableViewCell.m; sourceTree = "<group>"; };
+		08509FFF1833CA4900D6B22E /* BPFqlRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPFqlRequestManager.h; sourceTree = "<group>"; };
+		0850A0001833CA4900D6B22E /* BPFqlRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPFqlRequestManager.m; sourceTree = "<group>"; };
 		085754461816AB92006C1DD9 /* cryptico.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cryptico.min.js; path = ../cryptico.min.js; sourceTree = "<group>"; };
 		0857544B1817BB17006C1DD9 /* BPFacebookLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPFacebookLoginViewController.h; sourceTree = "<group>"; };
 		0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPFacebookLoginViewController.m; sourceTree = "<group>"; };
@@ -412,6 +424,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08509FF81833BD9400D6B22E /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				0860F82E182BC258007A63EE /* BPMessageTableViewCell.h */,
+				0860F82F182BC258007A63EE /* BPMessageTableViewCell.m */,
+				08509FF91833BE4A00D6B22E /* BPRecipientSuggestionTableViewCell.h */,
+				08509FFA1833BE4A00D6B22E /* BPRecipientSuggestionTableViewCell.m */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
 		085754501817E60E006C1DD9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,6 +459,8 @@
 				085754561817EAE0006C1DD9 /* BPFacebookDateFormatter.m */,
 				0857546418180C36006C1DD9 /* BPJavascriptRuntime.h */,
 				0857546518180C36006C1DD9 /* BPJavascriptRuntime.m */,
+				08509FFF1833CA4900D6B22E /* BPFqlRequestManager.h */,
+				0850A0001833CA4900D6B22E /* BPFqlRequestManager.m */,
 				085759EB181A5A9D006C1DD9 /* BPServerRequestManager.h */,
 				085759EC181A5A9D006C1DD9 /* BPServerRequestManager.m */,
 				0860F831182BE9CF007A63EE /* BPMessageMashupImageView.h */,
@@ -931,6 +956,7 @@
 			children = (
 				085754541817EAB5006C1DD9 /* Utilities */,
 				085754501817E60E006C1DD9 /* Models */,
+				08509FF81833BD9400D6B22E /* TableViewCells */,
 				0873371718150CC5004A0AE3 /* BPAppDelegate.h */,
 				0873371818150CC5004A0AE3 /* BPAppDelegate.m */,
 				0873371A18150CC5004A0AE3 /* Main.storyboard */,
@@ -938,10 +964,12 @@
 				0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */,
 				0873371D18150CC5004A0AE3 /* BPConversationMasterViewController.h */,
 				0873371E18150CC5004A0AE3 /* BPConversationMasterViewController.m */,
-				0860F82E182BC258007A63EE /* BPMessageTableViewCell.h */,
-				0860F82F182BC258007A63EE /* BPMessageTableViewCell.m */,
 				0873372018150CC5004A0AE3 /* BPConversationDetailViewController.h */,
 				0873372118150CC5004A0AE3 /* BPConversationDetailViewController.m */,
+				08509FEF1833998500D6B22E /* BPComposeViewController.h */,
+				08509FF01833998500D6B22E /* BPComposeViewController.m */,
+				08509FF51833A37D00D6B22E /* BPRecipientsTableDataSource.h */,
+				08509FF61833A37D00D6B22E /* BPRecipientsTableDataSource.m */,
 				08575467181813DF006C1DD9 /* BPConfigurationViewController.h */,
 				08575468181813DF006C1DD9 /* BPConfigurationViewController.m */,
 				0873372318150CC5004A0AE3 /* Images.xcassets */,
@@ -1146,6 +1174,7 @@
 				085759D61819622E006C1DD9 /* GCDAsyncSocket.m in Sources */,
 				085759C31819622E006C1DD9 /* XMPPPlainAuthentication.m in Sources */,
 				085759C41819622E006C1DD9 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
+				0850A0011833CA4900D6B22E /* BPFqlRequestManager.m in Sources */,
 				0860F8761830D31F007A63EE /* JSAvatarImageFactory.m in Sources */,
 				08575A13181BE468006C1DD9 /* jsbn.js in Sources */,
 				0860F8751830D31F007A63EE /* UIImage+JSMessagesView.m in Sources */,
@@ -1158,10 +1187,12 @@
 				085759DD1819622E006C1DD9 /* DispatchQueueLogFormatter.m in Sources */,
 				0860F8781830D31F007A63EE /* JSBubbleMessageCell.m in Sources */,
 				085759D31819622E006C1DD9 /* XMPPIDTracker.m in Sources */,
+				08509FFB1833BE4A00D6B22E /* BPRecipientSuggestionTableViewCell.m in Sources */,
 				085759C11819622E006C1DD9 /* XMPPDeprecatedPlainAuthentication.m in Sources */,
 				085759C91819622E006C1DD9 /* XMPPIQ.m in Sources */,
 				085759D21819622E006C1DD9 /* RFImageToDataTransformer.m in Sources */,
 				085759C21819622E006C1DD9 /* XMPPDigestMD5Authentication.m in Sources */,
+				08509FF71833A37D00D6B22E /* BPRecipientsTableDataSource.m in Sources */,
 				0860F8721830D31F007A63EE /* NSString+JSMessagesView.m in Sources */,
 				085759DC1819622E006C1DD9 /* ContextFilterLogFormatter.m in Sources */,
 				085759CD1819622E006C1DD9 /* XMPPParser.m in Sources */,
@@ -1199,6 +1230,7 @@
 				0860F8771830D31F007A63EE /* JSBubbleImageViewFactory.m in Sources */,
 				08575A03181A65A9006C1DD9 /* AFHTTPRequestOperationManager.m in Sources */,
 				0860F8731830D31F007A63EE /* UIButton+JSMessagesView.m in Sources */,
+				08509FF11833998500D6B22E /* BPComposeViewController.m in Sources */,
 				085759C01819622E006C1DD9 /* XMPPDeprecatedDigestAuthentication.m in Sources */,
 				0873372218150CC5004A0AE3 /* BPConversationDetailViewController.m in Sources */,
 				085759D71819622E006C1DD9 /* DDAbstractDatabaseLogger.m in Sources */,

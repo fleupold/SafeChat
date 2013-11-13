@@ -56,6 +56,11 @@ static BPFriend *me;
     return nil;
 }
 
++(NSArray *)allFriends
+{
+    return [friendList allValues];
+}
+
 -(BOOL)isMe
 {
     return self == me;

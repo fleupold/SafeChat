@@ -14,11 +14,12 @@ typedef NS_ENUM(NSUInteger, BPMessageMashupStyle) {
 };
 
 @interface BPMessageMashupImageView : UIImageView {
-    BPMessageMashupStyle style;
+
     NSString *_userID;
 }
 
 @property (nonatomic) NSString *userID;
+@property BPMessageMashupStyle style;
 
 -(id)initWithStyle: (BPMessageMashupStyle)aStyle;
 

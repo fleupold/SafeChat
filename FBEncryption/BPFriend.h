@@ -26,6 +26,7 @@ typedef NSInteger BPEncryptionsSupport;
 +(BPFriend *)me;
 +(BPFriend *)findByUsername: (NSString *)username;
 
++(NSArray *)allFriends;
 
 -(BOOL)isMe;
 -(void)checkEncryptionSupportAndExecuteOnCompletion: (void (^)(BOOL))completionHandler;

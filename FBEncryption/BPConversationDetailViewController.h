@@ -24,4 +24,5 @@
 @property IBOutlet UIButton *sendButton;
 @property IBOutlet UIActivityIndicatorView *spinner;
 
+-(void)extendDetailItemWith: (FBGraphObject *)thread;
 @end

@@ -31,6 +31,7 @@
 @property NSString *nextPage;
 
 + (BPThread *)threadFromFBGraphObject: (FBGraphObject *)object;
++ (BPThread *)emptyThreadWith:(BPFriend *)user;
 
 -(NSString *)participantsPreview;
 -(NSString *)textPreview;

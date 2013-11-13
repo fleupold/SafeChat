@@ -11,6 +11,7 @@
 
 @implementation BPMessageMashupImageView {
 }
+@synthesize style;
 
 static NSMutableDictionary *cache;
 static NSLock *cache_lock;
@@ -63,6 +64,10 @@ static NSLock *cache_lock;
 
 -(void)fetchImageForUser:(NSString *)userID
 {
+    if (!userID) {
+        return;
+    }
+    
     NSString *url = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square", userID];
     NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: url]];
     
@@ -73,7 +78,8 @@ static NSLock *cache_lock;
     [cache setObject:image forKey:userID];
     [cache_lock unlock];    
     
-    self.image = image;
+    if (userID == _userID) //might have been overwritten by now
+        self.image = image;
 }
 
 /*

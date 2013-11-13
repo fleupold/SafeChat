@@ -18,6 +18,16 @@
     return [[[BPThread alloc] init] configureWithFBGraphObject:object];
 }
 
++ (BPThread *)emptyThreadWith:(BPFriend *)user
+{
+    BPThread *thread = [[BPThread alloc] init];
+    thread.updated_at = [NSDate date];
+    thread.unread = 0;
+    thread.messages = [NSMutableArray array];
+    thread.participants = [NSMutableArray arrayWithArray: @[user, [BPFriend me]]];
+    return thread;
+}
+
 -(BPThread *)configureWithFBGraphObject: (FBGraphObject *)object
 {
     //Initialize Date

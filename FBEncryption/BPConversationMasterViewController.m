@@ -54,8 +54,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
                                              initWithImage:icon
                                              style:UIBarButtonItemStylePlain
-                                             target:nil
-                                             action:@selector(configButtonWasPressed:)];
+                                             target:self
+                                             action:@selector(composeButtonWasPressed:)];
 
     //Somehow the views from to superclass cannot be connected in the storyboard file, use own
     self.headerView = self.tableHeaderView;
@@ -165,6 +165,11 @@
     [self performSegueWithIdentifier:@"load_configuration" sender:sender];
 }
 
+-(void)composeButtonWasPressed:(id)sender
+{
+    [self performSegueWithIdentifier:@"composeMessage" sender:sender];
+}
+
 -(void)fetchThreads
 {
     //Trigger the Facebook REST API call to get a list of all message threads
@@ -203,7 +208,7 @@
     nextPage = [NSString stringWithFormat:@"%@?%@", nextPageURL.relativePath, nextPageURL.query];
 }
 
-//STTabelViewControllerMethods
+# pragma mark - STTabelViewController methods
 - (BOOL) refresh
 {
     [super refresh];

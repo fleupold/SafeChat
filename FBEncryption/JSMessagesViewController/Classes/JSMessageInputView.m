@@ -38,11 +38,10 @@
     self.opaque = YES;
     self.userInteractionEnabled = YES;
     
-    self.clipsToBounds = YES;
     CALayer *topBorder = [CALayer layer];
     topBorder.borderColor = [UIColor grayColor].CGColor;
     topBorder.borderWidth = .5;
-    topBorder.frame = CGRectMake(-.5, .5 - CGRectGetHeight(self.frame), CGRectGetWidth(self.frame) + 1, CGRectGetHeight(self.frame));
+    topBorder.frame = CGRectMake(-.5, 0, CGRectGetHeight([[UIScreen mainScreen] bounds]) + 1, .5);
     [self.layer addSublayer: topBorder];
     
     

@@ -241,7 +241,7 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 }
 
 - (void)loadMore {
-    if (isReloading){
+    if (!self.detailItem || !self.detailItem.nextPage || isReloading){
         return;
     }
     [self showSpinner];
@@ -251,20 +251,10 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     if (FBSession.activeSession.isOpen) {
         [[FBRequest requestForGraphPath: self.detailItem.nextPage] startWithCompletionHandler:
          ^(FBRequestConnection *connection,
-           NSDictionary<FBGraphObject> *thread,
+           FBGraphObject *thread,
            NSError *error) {
              if (!error) {
-                 NSArray *messages = [thread objectForKey:@"data"];
-                 for (FBGraphObject *messageInformation in messages)
-                 {
-                     BPMessage *message = [BPMessage messageFromFBGraphObject: messageInformation];
-                     [self.detailItem.messages insertObject: message atIndex: 0];
-                 }
-                 self.detailItem.nextPage = [[thread objectForKey:@"paging"] objectForKey: @"next"];
-                 
-                 [self reloadData];
-                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow: messages.count - 2 inSection:0];
-                 [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                 [self extendDetailItemWith:thread];
              }
              else {
                  NSLog(@"%@", error);
@@ -272,6 +262,33 @@ NSTimeInterval const secondsForTypingIndicator = 10;
              isReloading = NO;
              [self hideSpinner];
          }];
+    }
+}
+
+-(void)extendDetailItemWith: (FBGraphObject *)thread {
+    NSIndexPath *indexPath;
+    
+    if (!self.detailItem) {
+        self.detailItem = [BPThread threadFromFBGraphObject: thread];
+    }
+    else {
+        NSArray *messages = [thread objectForKey:@"data"];
+        for (FBGraphObject *messageInformation in messages)
+        {
+            BPMessage *message = [BPMessage messageFromFBGraphObject: messageInformation];
+            [self.detailItem.messages insertObject: message atIndex: 0];
+            indexPath = [NSIndexPath indexPathForRow: messages.count - 2 inSection:0];
+        }
+    }
+    
+    self.detailItem.nextPage = [[thread objectForKey:@"paging"] objectForKey: @"next"];
+    [self reloadData];
+    
+    if(indexPath) {
+        [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }
+    else {
+        [self scrollToBottomAnimated:NO];
     }
 }
 
