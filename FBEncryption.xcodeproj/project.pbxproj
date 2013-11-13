@@ -134,8 +134,8 @@
 		0873371518150CC5004A0AE3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0873371418150CC5004A0AE3 /* main.m */; };
 		0873371918150CC5004A0AE3 /* BPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0873371818150CC5004A0AE3 /* BPAppDelegate.m */; };
 		0873371C18150CC5004A0AE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0873371A18150CC5004A0AE3 /* Main.storyboard */; };
-		0873371F18150CC5004A0AE3 /* BPMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0873371E18150CC5004A0AE3 /* BPMasterViewController.m */; };
-		0873372218150CC5004A0AE3 /* BPDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0873372118150CC5004A0AE3 /* BPDetailViewController.m */; };
+		0873371F18150CC5004A0AE3 /* BPConversationMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0873371E18150CC5004A0AE3 /* BPConversationMasterViewController.m */; };
+		0873372218150CC5004A0AE3 /* BPConversationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0873372118150CC5004A0AE3 /* BPConversationDetailViewController.m */; };
 		0873372418150CC5004A0AE3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0873372318150CC5004A0AE3 /* Images.xcassets */; };
 		0873372B18150CC5004A0AE3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0873372A18150CC5004A0AE3 /* XCTest.framework */; };
 		0873372C18150CC5004A0AE3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0873370818150CC5004A0AE3 /* Foundation.framework */; };
@@ -368,10 +368,10 @@
 		0873371718150CC5004A0AE3 /* BPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BPAppDelegate.h; sourceTree = "<group>"; };
 		0873371818150CC5004A0AE3 /* BPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BPAppDelegate.m; sourceTree = "<group>"; };
 		0873371B18150CC5004A0AE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0873371D18150CC5004A0AE3 /* BPMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BPMasterViewController.h; sourceTree = "<group>"; };
-		0873371E18150CC5004A0AE3 /* BPMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BPMasterViewController.m; sourceTree = "<group>"; };
-		0873372018150CC5004A0AE3 /* BPDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BPDetailViewController.h; sourceTree = "<group>"; };
-		0873372118150CC5004A0AE3 /* BPDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BPDetailViewController.m; sourceTree = "<group>"; };
+		0873371D18150CC5004A0AE3 /* BPConversationMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BPConversationMasterViewController.h; sourceTree = "<group>"; };
+		0873371E18150CC5004A0AE3 /* BPConversationMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BPConversationMasterViewController.m; sourceTree = "<group>"; };
+		0873372018150CC5004A0AE3 /* BPConversationDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BPConversationDetailViewController.h; sourceTree = "<group>"; };
+		0873372118150CC5004A0AE3 /* BPConversationDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BPConversationDetailViewController.m; sourceTree = "<group>"; };
 		0873372318150CC5004A0AE3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0873372918150CC5004A0AE3 /* FBEncryptionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FBEncryptionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0873372A18150CC5004A0AE3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -936,12 +936,12 @@
 				0873371A18150CC5004A0AE3 /* Main.storyboard */,
 				0857544B1817BB17006C1DD9 /* BPFacebookLoginViewController.h */,
 				0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */,
-				0873371D18150CC5004A0AE3 /* BPMasterViewController.h */,
-				0873371E18150CC5004A0AE3 /* BPMasterViewController.m */,
+				0873371D18150CC5004A0AE3 /* BPConversationMasterViewController.h */,
+				0873371E18150CC5004A0AE3 /* BPConversationMasterViewController.m */,
 				0860F82E182BC258007A63EE /* BPMessageTableViewCell.h */,
 				0860F82F182BC258007A63EE /* BPMessageTableViewCell.m */,
-				0873372018150CC5004A0AE3 /* BPDetailViewController.h */,
-				0873372118150CC5004A0AE3 /* BPDetailViewController.m */,
+				0873372018150CC5004A0AE3 /* BPConversationDetailViewController.h */,
+				0873372118150CC5004A0AE3 /* BPConversationDetailViewController.m */,
 				08575467181813DF006C1DD9 /* BPConfigurationViewController.h */,
 				08575468181813DF006C1DD9 /* BPConfigurationViewController.m */,
 				0873372318150CC5004A0AE3 /* Images.xcassets */,
@@ -1128,7 +1128,7 @@
 				0860F8791830D31F007A63EE /* JSBubbleView.m in Sources */,
 				085759E11819622E006C1DD9 /* DDXMLElement.m in Sources */,
 				0857547018193553006C1DD9 /* STableViewController.m in Sources */,
-				0873371F18150CC5004A0AE3 /* BPMasterViewController.m in Sources */,
+				0873371F18150CC5004A0AE3 /* BPConversationMasterViewController.m in Sources */,
 				085759C61819622E006C1DD9 /* NSNumber+XMPP.m in Sources */,
 				0860F87D1830D31F007A63EE /* JSMessagesViewController.m in Sources */,
 				085759E01819622E006C1DD9 /* DDXMLDocument.m in Sources */,
@@ -1200,7 +1200,7 @@
 				08575A03181A65A9006C1DD9 /* AFHTTPRequestOperationManager.m in Sources */,
 				0860F8731830D31F007A63EE /* UIButton+JSMessagesView.m in Sources */,
 				085759C01819622E006C1DD9 /* XMPPDeprecatedDigestAuthentication.m in Sources */,
-				0873372218150CC5004A0AE3 /* BPDetailViewController.m in Sources */,
+				0873372218150CC5004A0AE3 /* BPConversationDetailViewController.m in Sources */,
 				085759D71819622E006C1DD9 /* DDAbstractDatabaseLogger.m in Sources */,
 				0857545A1817EDE3006C1DD9 /* BPMessage.m in Sources */,
 				085759CF1819622E006C1DD9 /* XMPPStream.m in Sources */,

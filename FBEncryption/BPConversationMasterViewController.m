@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Felix Leupold. All rights reserved.
 //
 
-#import "BPMasterViewController.h"
-#import "BPDetailViewController.h"
+#import "BPConversationMasterViewController.h"
+#import "BPConversationDetailViewController.h"
 #import "BPFacebookLoginViewController.h"
 #import "BPThread.h"
 #import "BPFriend.h"
@@ -16,12 +16,12 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "IonIcons.h"
 
-@interface BPMasterViewController () {
+@interface BPConversationMasterViewController () {
     NSMutableArray *_objects;
 }
 @end
 
-@implementation BPMasterViewController
+@implementation BPConversationMasterViewController
 
 - (void)awakeFromNib
 {
@@ -155,7 +155,7 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         BPThread *object = _objects[indexPath.row];
-        if(((BPDetailViewController *)[segue destinationViewController]).detailItem == nil)
+        if(((BPConversationDetailViewController *)[segue destinationViewController]).detailItem == nil)
             [[segue destinationViewController] setDetailItem:object];
     }
 }

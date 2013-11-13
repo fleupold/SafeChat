@@ -11,7 +11,7 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 #import "JSMessagesViewController.h"
 
-@interface BPDetailViewController : JSMessagesViewController <BPThreadDelegate, JSMessagesViewDataSource, JSMessagesViewDelegate>
+@interface BPConversationDetailViewController : JSMessagesViewController <BPThreadDelegate, JSMessagesViewDataSource, JSMessagesViewDelegate>
 {
     NSDate *lastTyping;
     BPFriend *personTyping;

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Felix Leupold. All rights reserved.
 //
 
-#import "BPDetailViewController.h"
+#import "BPConversationDetailViewController.h"
 #import "BPMessage.h"
 #import "BPEncryptedObject.h"
 #import "FCBaseChatRequestManager.h"
@@ -14,11 +14,11 @@
 #import "BPMessageMashupImageView.h"
 #import "BPFacebookDateFormatter.h"
 
-@interface BPDetailViewController ()
+@interface BPConversationDetailViewController ()
 - (void)configureView;
 @end
 
-@implementation BPDetailViewController
+@implementation BPConversationDetailViewController
 @synthesize lockImage;
 
 NSTimeInterval const secondsBetweenNewTimestamps = 60 * 60;

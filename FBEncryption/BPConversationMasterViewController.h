@@ -10,7 +10,7 @@
 #import "STableViewController.h"
 #import "STHeaderView.h"
 
-@interface BPMasterViewController : STableViewController {
+@interface BPConversationMasterViewController : STableViewController {
     @protected
     
     NSString *nextPage;
