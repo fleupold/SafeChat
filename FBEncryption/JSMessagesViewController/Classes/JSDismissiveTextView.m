@@ -39,7 +39,7 @@
     if(self) {
         self.editable = YES;
         self.layer.cornerRadius = 5;
-        self.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        self.layer.borderColor = [UIColor darkGrayColor].CGColor;
         self.layer.borderWidth = .5;
         
         // FIXME: this is a hack

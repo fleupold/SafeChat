@@ -235,6 +235,7 @@ typedef NS_ENUM(NSUInteger, JSMessagesViewSubtitlePolicy) {
  */
 @interface JSMessagesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
+@property (weak, nonatomic) UITableView *tableView;
 /**
  *  The object that acts as the delegate of the receiving messages view.
  */

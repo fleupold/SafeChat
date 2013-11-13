@@ -33,10 +33,18 @@
 - (void)setup
 {
     //self.image = [[UIImage imageNamed:@"input-bar-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(19.0f, 3.0f, 19.0f, 3.0f)];
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor colorWithRed:224/255.0 green:224/255.0 blue:224/255.0 alpha:1.0];
     self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
     self.opaque = YES;
     self.userInteractionEnabled = YES;
+    
+    self.clipsToBounds = YES;
+    CALayer *topBorder = [CALayer layer];
+    topBorder.borderColor = [UIColor grayColor].CGColor;
+    topBorder.borderWidth = .5;
+    topBorder.frame = CGRectMake(-.5, .5 - CGRectGetHeight(self.frame), CGRectGetWidth(self.frame) + 1, CGRectGetHeight(self.frame));
+    [self.layer addSublayer: topBorder];
+    
     
     CGFloat width = self.frame.size.width - SEND_BUTTON_WIDTH;
     CGFloat height = [JSMessageInputView textViewLineHeight];

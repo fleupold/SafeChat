@@ -45,7 +45,13 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     self.lockImage.hidden = !self.encryptionEnabled;
     self.title = self.detailItem.participantsPreview;
     [self setBackgroundColor: [UIColor whiteColor]];
-
+    
+    //Activity Indicator to load older messanges
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.frame = CGRectMake(0, -30, 30, 30);
+    [self.tableView addSubview: spinner];
+    self.spinner = spinner;
+    
     //no support for group chats yet
     if (self.detailItem.participants.count > 2) {
         self.messageInputView.userInteractionEnabled = NO;
@@ -237,8 +243,10 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 - (void)loadMore {
     if (isReloading){
         return;
-    }        
+    }
+    [self showSpinner];
     isReloading = YES;
+    
     
     if (FBSession.activeSession.isOpen) {
         [[FBRequest requestForGraphPath: self.detailItem.nextPage] startWithCompletionHandler:
@@ -257,14 +265,27 @@ NSTimeInterval const secondsForTypingIndicator = 10;
                  [self reloadData];
                  NSIndexPath *indexPath = [NSIndexPath indexPathForRow: messages.count - 2 inSection:0];
                  [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-                 isReloading = NO;
              }
              else {
-                 isReloading = NO;
                  NSLog(@"%@", error);
              }
+             isReloading = NO;
+             [self hideSpinner];
          }];
     }
+}
+
+-(void)showSpinner {
+    self.spinner.frame = CGRectMake(self.tableView.frame.size.width/2 - 15, -30, 30, 30);
+    [self.spinner startAnimating];
+    [UIView animateWithDuration:0.3 animations:^(void) {
+        self.tableView.contentInset = UIEdgeInsetsMake(self.spinner.frame.size.height, 0, 0, 0);
+    }];
+}
+
+-(void)hideSpinner {
+    [self.spinner stopAnimating];
+    self.tableView.contentInset = UIEdgeInsetsZero;
 }
 
 @end

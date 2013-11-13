@@ -21,7 +21,6 @@
 
 @interface JSMessagesViewController () <JSDismissiveTextViewDelegate>
 
-@property (weak, nonatomic) UITableView *tableView;
 
 @property (assign, nonatomic) CGFloat previousTextViewContentHeight;
 @property (assign, nonatomic) BOOL isUserScrolling;
@@ -89,6 +88,7 @@
         //sendButton = [UIButton js_defaultSendButton_iOS6];
         sendButton = [UIButton buttonWithType: UIButtonTypeSystem];
         [sendButton setTitle:@"Send" forState:UIControlStateNormal];
+        [sendButton setTitleColor: [UIColor grayColor] forState:UIControlStateDisabled];
         sendButton.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin);
         sendButton.titleLabel.textColor = [UIColor blueColor];
     }

@@ -22,5 +22,6 @@
 
 @property IBOutlet UIImageView *lockImage;
 @property IBOutlet UIButton *sendButton;
+@property IBOutlet UIActivityIndicatorView *spinner;
 
 @end
