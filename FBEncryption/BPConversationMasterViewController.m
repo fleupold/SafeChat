@@ -62,6 +62,8 @@
     self.footerView = self.tableFooterView;
     self.footerView.hidden = YES;
     self.tableHeaderView.title.font = [IonIcons fontWithSize:15];
+    
+    [self performSelector:@selector(fetchThreads) withObject:nil afterDelay:0.5];
 }
 
 
@@ -103,17 +105,28 @@
     cell.previewLabel.text = [object textPreview];
     cell.timeLabel.text = [BPFacebookDateFormatter prettyPrint: object.updated_at];
     
-    BPFriend *user = object.participants.lastObject;
-    if ([user isMe]) {
-        user = object.participants.firstObject;
+    
+    //Mashup Image
+    NSMutableArray *userIDs = [NSMutableArray array];
+    for (BPFriend *user in object.participants) {
+        if (userIDs.count > 2)
+            break;
+        if([user isMe])
+            continue;
+        [userIDs addObject: user.id];
     }
-    cell.messageImage.userID = user.id;
+    [cell.messageImage setUserIDs: userIDs];
     
     if (object.unread > 0) {
-        cell.timeLabel.textColor = self.view.window.tintColor ;
+        cell.timeLabel.textColor = self.view.window.tintColor;
         cell.previewLabel.textColor = [UIColor blackColor];
         cell.previewLabel.font = [UIFont boldSystemFontOfSize:13];
         cell.participantsLabel.font = [UIFont boldSystemFontOfSize:14];
+    } else {
+        cell.timeLabel.textColor = [UIColor darkGrayColor];
+        cell.previewLabel.textColor = [UIColor darkGrayColor];
+        cell.previewLabel.font = [UIFont systemFontOfSize:13];
+        cell.participantsLabel.font = [UIFont systemFontOfSize:14];
     }
         
     return cell;
@@ -145,7 +158,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(resizeHeaderAndFooter)  name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self resizeHeaderAndFooter];
     
-    [self fetchThreads];
     [super viewDidAppear:animated];
 }
 

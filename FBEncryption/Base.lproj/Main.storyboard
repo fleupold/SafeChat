@@ -262,6 +262,7 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultUserIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="EBZ-qf-HcK" customClass="BPMessageMashupImageView">
                                             <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="55" id="Oez-6d-Kst"/>
                                                 <constraint firstAttribute="width" constant="55" id="qNN-dP-HgM"/>

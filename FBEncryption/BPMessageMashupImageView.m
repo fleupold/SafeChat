@@ -32,6 +32,10 @@ static NSLock *cache_lock;
 
 -(void)setUserID:(NSString *)userID
 {
+    leftImage = nil;
+    topRightImage = nil;
+    bottomRightImage = nil;
+    
     if (!cache) {
         cache = [NSMutableDictionary dictionary];
         cache_lock = [[NSLock alloc] init];
@@ -39,12 +43,59 @@ static NSLock *cache_lock;
     
     _userID = userID;
     if ([cache objectForKey: userID] != nil) {
-        self.image = [cache objectForKey: userID];
+        leftImage = [cache objectForKey: userID];
     } else {
-        self.image = [UIImage imageNamed:@"defaultUserIcon"];
-        [self performSelectorInBackground:@selector(fetchImageForUser:) withObject:userID];
+        leftImage = [UIImage imageNamed:@"defaultUserIcon"];
+        [self performSelectorInBackground:@selector(fetchImageForUsers:) withObject:@{userID: [NSNumber numberWithInt: 0]}];
     }
+    self.image = [self mashup];
 }
+
+-(void)setUserIDs: (NSArray *)userIDs
+{
+    leftImage = nil;
+    topRightImage = nil;
+    bottomRightImage = nil;
+    
+    if (!cache) {
+        cache = [NSMutableDictionary dictionary];
+        cache_lock = [[NSLock alloc] init];
+    }
+    
+    if (userIDs.count == 0)
+        return;
+    
+    NSMutableDictionary *missingImages = [NSMutableDictionary dictionary];
+    if (userIDs.count >= 1) {
+        NSString *firstUser = userIDs.firstObject;
+        leftImage = [cache objectForKey: firstUser];
+        if (!leftImage) {
+            leftImage = [UIImage imageNamed:@"defaultUserIcon"];
+            [missingImages setObject: [NSNumber numberWithInt: 0] forKey:firstUser];
+        }
+    }
+    
+    if (userIDs.count >= 2)
+    {
+        NSString *secondUser = [userIDs objectAtIndex:1];
+        topRightImage = [cache objectForKey: secondUser];
+        if (!topRightImage)
+            topRightImage = [UIImage imageNamed:@"defaultUserIcon"];
+            [missingImages setObject: [NSNumber numberWithInt: 1] forKey:secondUser];
+    }
+    
+    if (userIDs.count >= 3)
+    {
+        NSString *thirdUser = [userIDs objectAtIndex:2];
+        bottomRightImage = [cache objectForKey: thirdUser];
+        if (!bottomRightImage)
+            bottomRightImage = [UIImage imageNamed:@"defaultUserIcon"];
+            [missingImages setObject: [NSNumber numberWithInt: 2] forKey:thirdUser];
+    }
+    self.image = [self mashup];
+    [self performSelectorInBackground:@selector(fetchImageForUsers:) withObject: missingImages];
+}
+
 -(NSString*)userID
 {
     return _userID;
@@ -59,10 +110,29 @@ static NSLock *cache_lock;
                                      shadowOffSet:CGSizeMake(0.0f, 1.0f)];
         
     }
+    
     [super setImage:image];
 }
 
--(void)fetchImageForUser:(NSString *)userID
+-(void)fetchImageForUsers:(NSDictionary *)userIDs
+{
+    for (NSString *userID in userIDs.keyEnumerator) {
+        NSNumber *index = [userIDs objectForKey: userID];
+        
+        UIImage *temp;
+        [self fetchImageForUser: userID to: &temp];
+        
+        if ([index intValue] == 0)
+            leftImage = temp;
+        else if ([index intValue] == 1)
+            topRightImage = temp;
+        else
+            bottomRightImage = temp;
+    }    
+    self.image = [self mashup];
+}
+
+-(void)fetchImageForUser:(NSString *)userID to: (UIImage **)image
 {
     if (!userID) {
         return;
@@ -71,15 +141,47 @@ static NSLock *cache_lock;
     NSString *url = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=square", userID];
     NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: url]];
     
-    UIImage *image = [UIImage imageWithData:imageData];
+    UIImage *newImage = [UIImage imageWithData:imageData];
     
     //cache write operation has to be thread safe
     [cache_lock lock];
-    [cache setObject:image forKey:userID];
-    [cache_lock unlock];    
+    [cache setObject:newImage forKey:userID];
+    [cache_lock unlock];
     
-    if (userID == _userID) //might have been overwritten by now
-        self.image = image;
+    *image = newImage;
+}
+
+-(UIImage *)mashup {
+    CGSize size = self.frame.size;
+    UIGraphicsBeginImageContext(size);
+    
+    //For seperator lines
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextSetLineWidth(context, 1.0);
+    
+    if (!topRightImage) {
+        [leftImage drawInRect: CGRectMake(0, 0, size.width, size.height)];
+    } else {
+        [leftImage drawInRect:CGRectMake(-size.width/4, 0, size.width, size.height)];
+        CGContextMoveToPoint(context, size.width/2, 0);
+        CGContextAddLineToPoint(context, size.width/2, size.height);
+        
+        if (!bottomRightImage)
+            [topRightImage drawInRect: CGRectMake(size.width/2 + 1, 0, size.width, size.height)];
+        else {
+            [topRightImage drawInRect: CGRectMake(size.width/2 + 1, 0, size.width/2, size.height/2)];
+            [bottomRightImage drawInRect: CGRectMake(size.width/2, size.height/2, size.width/2, size.height/2)];
+            
+            CGContextMoveToPoint(context, size.width/2, size.height/2);
+            CGContextAddLineToPoint(context, size.width, size.height/2);
+        }
+    }
+    CGContextStrokePath(context);
+
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 /*

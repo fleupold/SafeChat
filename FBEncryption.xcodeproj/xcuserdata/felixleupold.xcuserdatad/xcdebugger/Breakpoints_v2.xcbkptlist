@@ -200,11 +200,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "406035127.739315"
+            timestampString = "406127890.920144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -328,11 +328,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "406121117.668957"
+            timestampString = "406129134.689955"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
             landmarkName = "-pinHeaderView"
             landmarkType = "5">
          </BreakpointContent>
@@ -376,11 +376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "406121117.668957"
+            timestampString = "406129134.689955"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "259"
-            endingLineNumber = "259"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
             landmarkName = "-unpinHeaderView"
             landmarkType = "5">
          </BreakpointContent>
@@ -392,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "406121117.668957"
+            timestampString = "406129134.689955"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "248"
-            endingLineNumber = "248"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
             landmarkName = "-loadMore"
             landmarkType = "5">
          </BreakpointContent>
@@ -408,11 +408,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "406035127.739315"
+            timestampString = "406127890.920144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -424,11 +424,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "406121117.668957"
+            timestampString = "406129134.689955"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
             landmarkName = "-prepareForSegue:sender:"
             landmarkType = "5">
          </BreakpointContent>
@@ -440,11 +440,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "406121117.668957"
+            timestampString = "406129134.689955"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "-prepareForSegue:sender:"
             landmarkType = "5">
          </BreakpointContent>
@@ -462,22 +462,6 @@
             startingLineNumber = "28"
             endingLineNumber = "28"
             landmarkName = "+prettyPrint:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "406121117.668957"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -520,11 +504,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPMessageMashupImageView.m"
-            timestampString = "406121064.202843"
+            timestampString = "406125611.95494"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
             landmarkName = "-setUserID:"
             landmarkType = "5">
          </BreakpointContent>
@@ -808,11 +792,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "406121117.668957"
+            timestampString = "406129134.689955"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
             landmarkName = "-fetchThreads"
             landmarkType = "5">
          </BreakpointContent>
@@ -948,11 +932,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "406121117.668957"
+            timestampString = "406129134.689955"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "-composeButtonWasPressed:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1394,11 +1378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPMessageMashupImageView.m"
-            timestampString = "406121135.700602"
+            timestampString = "406128016.404417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
             landmarkName = "-setImage:"
             landmarkType = "5">
             <Locations>
@@ -1440,12 +1424,234 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPMessageMashupImageView.m"
-            timestampString = "406121155.153714"
+            timestampString = "406128016.404417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "-setImage:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPMessageMashupImageView.m"
+            timestampString = "406126336.195577"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "-setUserIDs:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPMessageMashupImageView.m"
+            timestampString = "406125611.95494"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "-setUserID:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPMessageMashupImageView.m"
+            timestampString = "406128665.933296"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "-fetchImageForUser:to:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPMessageMashupImageView.m"
+            timestampString = "406128665.933296"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "-mashup"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPMessageMashupImageView.m"
+            timestampString = "406128665.933296"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "-mashup"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPMessageMashupImageView.m"
+            timestampString = "406128665.933296"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
+            landmarkName = "-mashup"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPMessageMashupImageView.m"
+            timestampString = "406128488.356097"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "-fetchImageForUsers:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPMessageMashupImageView.m"
+            timestampString = "406128665.933296"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "-fetchImageForUsers:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BPMessageMashupImageView fetchImageForUsers:]"
+                  moduleName = "FBEncryption"
+                  urlString = "file://localhost/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/BPMessageMashupImageView.m"
+                  timestampString = "406127261.815671"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "122"
+                  endingLineNumber = "122"
+                  offsetFromSymbolStart = "376">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BPMessageMashupImageView fetchImageForUsers:]"
+                  moduleName = "FBEncryption"
+                  urlString = "file://localhost/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/BPMessageMashupImageView.m"
+                  timestampString = "406127261.815903"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "122"
+                  endingLineNumber = "122"
+                  offsetFromSymbolStart = "464">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPMessageMashupImageView.m"
+            timestampString = "406128665.933296"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "-fetchImageForUsers:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPConversationMasterViewController.m"
+            timestampString = "406128063.081612"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPMessageMashupImageView.m"
+            timestampString = "406128226.434578"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "-setUserIDs:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FBEncryption/BPConversationDetailViewController.m"
+            timestampString = "406128860.779061"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
+            landmarkName = "-avatarImageViewForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

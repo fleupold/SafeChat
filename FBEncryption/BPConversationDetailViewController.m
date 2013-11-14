@@ -179,7 +179,7 @@ NSTimeInterval const secondsForTypingIndicator = 10;
         return nil;
     
     } else {
-        BPMessageMashupImageView *avatar = [[BPMessageMashupImageView alloc] initWithStyle: BPMessageMashupStyleCircle];
+        BPMessageMashupImageView *avatar = [[BPMessageMashupImageView alloc] initWithFrame: CGRectMake(0, 0, 40, 40)];
         avatar.userID = sender.id;
         return avatar;
     }
