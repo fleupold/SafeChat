@@ -32,7 +32,7 @@
     
     NSMutableArray *filteredCandidates = [NSMutableArray array];
     for (BPFriend *candidate in suggestions) {
-        if ([candidate.name rangeOfString: self.searchTerm].location != NSNotFound) {
+        if ([candidate.name.lowercaseString rangeOfString: self.searchTerm.lowercaseString].location != NSNotFound) {
             [filteredCandidates addObject: candidate];
         }
     }

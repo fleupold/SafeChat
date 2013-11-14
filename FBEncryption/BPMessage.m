@@ -11,7 +11,7 @@
 #import "BPJavascriptRuntime.h"
 
 @implementation BPMessage
-@synthesize id, created, from;
+@synthesize id, created, from, failedToSend, encrypted;
 
 +(id)messageFromFBGraphObject: (FBGraphObject *)object {
     BPMessage *message = [[BPMessage alloc] init];
@@ -37,6 +37,14 @@
     return message;
 }
 
+-(id)init
+{
+    self = [super init];
+    self.failedToSend = NO;
+    self.encrypted = NO;
+    return self;
+}
+
 -(NSString *)text
 {
     if (_text != nil && [_text rangeOfString: @"BLOCKPRISM.ORG"].location != NSNotFound) {
@@ -52,6 +60,7 @@
 
 -(NSString *)decryptMessage: (NSString *)message
 {
+    self.encrypted = YES;
     //Each message consists of multiple ciphers, one for each user.
     //We break up the message into a submessage for each user and
     //look for the one that is currently logged in.
@@ -96,6 +105,7 @@
         NSString *encryptedPart = [NSString stringWithFormat: @"BLOCKPRISM.ORG_%@@%@@%@", me.username, participant.username, cipher];
         encryptedMessage = [encryptedMessage stringByAppendingString: encryptedPart];
     }
+    self.encrypted = YES;
     return encryptedMessage;
 }
 

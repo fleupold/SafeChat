@@ -96,8 +96,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BPMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"messageCell" forIndexPath:indexPath];
-    cell.unreadLabel.font = [IonIcons fontWithSize:20.0f];
-    cell.unreadLabel.text = icon_radio_waves;
 
    
     BPThread *object = _objects[indexPath.row];
@@ -111,10 +109,11 @@
     }
     cell.messageImage.userID = user.id;
     
-    if (object.unread == 0) {
-        cell.unreadLabel.hidden = YES;
-    } else {
-        cell.unreadLabel.hidden = NO;
+    if (object.unread > 0) {
+        cell.timeLabel.textColor = self.view.window.tintColor ;
+        cell.previewLabel.textColor = [UIColor blackColor];
+        cell.previewLabel.font = [UIFont boldSystemFontOfSize:13];
+        cell.participantsLabel.font = [UIFont boldSystemFontOfSize:14];
     }
         
     return cell;

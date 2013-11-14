@@ -8,7 +8,6 @@
 
 #import "BPThread.h"
 #import "BPFacebookDateFormatter.h"
-#import "FCBaseChatRequestManager.h"
 
 @implementation BPThread
 @synthesize updated_at, unread, messages, participants, delegate, nextPage;
@@ -99,6 +98,12 @@
     return nextPage;
 }
 
+-(void)prepareForSending
+{
+    requestManager = [[FCBaseChatRequestManager alloc] init];
+    requestManager.delegate = self;
+}
+
 -(void)checkEncryptionSupport
 {
     //Asynchronously check if all participants have a public key on the server and
@@ -156,7 +161,7 @@
         if ([participant isMe]) {
             continue;
         }
-        [[FCBaseChatRequestManager getInstance] sendMessageToFacebook: text withFriendFacebookID:participant.id];
+        [requestManager sendMessageToFacebook: text withFriendFacebookID:participant.id];
     }
 }
 
@@ -184,5 +189,16 @@
              }
          }];
     }
+}
+
+-(void)didFailToSendMessage: (NSString *)text
+{
+    for (BPMessage *message in self.messages.reverseObjectEnumerator) {
+        if([message.text isEqualToString: text]) {
+            message.failedToSend = YES;
+            break;
+        }
+    }
+    [self.delegate hasUpdatedThread:self];
 }
 @end

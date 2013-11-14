@@ -14,6 +14,8 @@
 #import "BPMessageMashupImageView.h"
 #import "BPFacebookDateFormatter.h"
 
+#import "IonIcons.h"
+
 @interface BPConversationDetailViewController ()
 - (void)configureView;
 @end
@@ -72,7 +74,7 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     [[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(receivedMessage:) name: @"kFCMessageDidComeNotification" object: nil];
     
     //connect with Chat service so that we can receive incoming messages
-    [FCBaseChatRequestManager getInstance];
+    [self.detailItem prepareForSending];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -163,10 +165,24 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 }
 
 - (UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BPMessageMashupImageView *avatar = [[BPMessageMashupImageView alloc] initWithStyle: BPMessageMashupStyleCircle];
     BPFriend *sender = [self messageForRowAtIndexPath:indexPath].from;
-    avatar.userID = sender.id;
-    return avatar;
+
+    if ([sender isMe]) {
+        BPMessage *message = [self messageForRowAtIndexPath:indexPath];
+        if(message.failedToSend) {
+            UIImage *alert = [IonIcons imageWithIcon:icon_alert_circled iconColor:[UIColor grayColor] iconSize:20 imageSize: CGSizeMake(20, 40)];
+            return [[UIImageView alloc] initWithImage:alert];
+        } else if(message.encrypted) {
+            UIImage *lock = [IonIcons imageWithIcon:icon_locked iconColor:[UIColor grayColor] iconSize:20 imageSize: CGSizeMake(40, 40)];
+            return [[UIImageView alloc] initWithImage:lock];
+        }
+        return nil;
+    
+    } else {
+        BPMessageMashupImageView *avatar = [[BPMessageMashupImageView alloc] initWithStyle: BPMessageMashupStyleCircle];
+        avatar.userID = sender.id;
+        return avatar;
+    }
 }
 
 - (NSString *)subtitleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -211,7 +227,7 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 }
 
 - (JSMessagesViewAvatarPolicy)avatarPolicy {
-    return JSMessagesViewAvatarPolicyIncomingOnly;
+    return JSMessagesViewAvatarPolicyCustom;
 }
 
 - (JSMessagesViewSubtitlePolicy)subtitlePolicy {
@@ -231,6 +247,14 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     BPMessage *lastMessage = [self messageForRowAtIndexPath: lastMessagePath];
     
     return ([thisMessage.created timeIntervalSinceDate: lastMessage.created] > secondsBetweenNewTimestamps);
+}
+
+-(BOOL)hasAvatarForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self messageTypeForRowAtIndexPath: indexPath] == JSBubbleMessageTypeIncoming)
+        return YES;
+    
+    BPMessage *message = [self messageForRowAtIndexPath:indexPath];
+    return message.failedToSend || message.encrypted;
 }
 
 - (void)configureCell:(JSBubbleMessageCell *)cell atIndexPath:(NSIndexPath *)indexPath
@@ -266,30 +290,18 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 }
 
 -(void)extendDetailItemWith: (FBGraphObject *)thread {
-    NSIndexPath *indexPath;
-    
-    if (!self.detailItem) {
-        self.detailItem = [BPThread threadFromFBGraphObject: thread];
+    NSArray *messages = [thread objectForKey:@"data"];
+    for (FBGraphObject *messageInformation in messages)
+    {
+        BPMessage *message = [BPMessage messageFromFBGraphObject: messageInformation];
+        [self.detailItem.messages insertObject: message atIndex: 0];
     }
-    else {
-        NSArray *messages = [thread objectForKey:@"data"];
-        for (FBGraphObject *messageInformation in messages)
-        {
-            BPMessage *message = [BPMessage messageFromFBGraphObject: messageInformation];
-            [self.detailItem.messages insertObject: message atIndex: 0];
-            indexPath = [NSIndexPath indexPathForRow: messages.count - 2 inSection:0];
-        }
-    }
-    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow: messages.count - 2 inSection:0];
+
     self.detailItem.nextPage = [[thread objectForKey:@"paging"] objectForKey: @"next"];
     [self reloadData];
     
-    if(indexPath) {
-        [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-    }
-    else {
-        [self scrollToBottomAnimated:NO];
-    }
+    [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 -(void)showSpinner {

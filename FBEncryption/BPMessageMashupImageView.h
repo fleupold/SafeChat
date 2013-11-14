@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSUInteger, BPMessageMashupStyle) {
-    BPMessageMashupStyleSqaure,
-    BPMessageMashupStyleCircle
+    BPMessageMashupStyleCircle,
+    BPMessageMashupStyleSqaure
 };
 
 @interface BPMessageMashupImageView : UIImageView {

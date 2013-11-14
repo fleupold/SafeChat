@@ -9,8 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "XMPP.h"
 
+@protocol FCBaseChatRequestManagerDelegate <NSObject>
+
+@optional
+-(void)didFailToSendMessage: (NSString *)text;
+@end
+
 @interface FCBaseChatRequestManager : NSObject <XMPPStreamDelegate>
+
 @property (readonly, nonatomic, strong) XMPPStream *xmppStream;
+@property id<FCBaseChatRequestManagerDelegate> delegate;
 
 - (void)sendMessageToFacebook:(NSString*)textMessage
          withFriendFacebookID:(NSString*)friendID;

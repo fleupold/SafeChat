@@ -66,7 +66,8 @@
             [self setDetailItemWithThreadID: threadID];
             return;
         }
-        [BPThread emptyThreadWith: user];
+        self.detailItem = [BPThread emptyThreadWith: user];
+        [self.detailItem prepareForSending];
     } failure:^(NSError *error) {
         NSLog(@"%@", error);
     }];
@@ -80,11 +81,27 @@
        NSError *error) {
          if (!error) {
              [self extendDetailItemWith:thread];
+             [self.detailItem prepareForSending];
          }
          else {
              NSLog(@"%@", error);
          }
      }];
+}
+
+-(void)extendDetailItemWith:(FBGraphObject *)thread
+{
+    if (!self.detailItem) {
+        self.detailItem = [BPThread threadFromFBGraphObject: thread];
+        [self.detailItem prepareForSending];
+        [super extendDetailItemWith:thread];
+        
+        [self scrollToBottomAnimated:NO];
+        self.detailItem.nextPage = [[[thread objectForKey: @"messages"] objectForKey:@"paging"] objectForKey: @"next"];
+    } else {
+        [super extendDetailItemWith:thread];
+    }
+    
 }
 
 #pragma mark - UITextFieldDelegate Methods
@@ -94,6 +111,7 @@
     self.recipientTableView.dataSource = recipientTableViewDataSource;
     self.recipientTableView.hidden = NO;
     [self.recipientTableView reloadData];
+    
 }
 
 #pragma mark - UITableViewDelegate methods

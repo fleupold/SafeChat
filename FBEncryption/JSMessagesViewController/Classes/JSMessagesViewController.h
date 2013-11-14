@@ -63,7 +63,12 @@ typedef NS_ENUM(NSUInteger, JSMessagesViewAvatarPolicy) {
     /**
      *  Does not display any avatars.
      */
-    JSMessagesViewAvatarPolicyNone
+    JSMessagesViewAvatarPolicyNone,
+    /**
+     *  Displays a timestamp based on the result of the optional delegate method `hasAvatarForRowAtIndexPath:`.
+     *  @see JSMessagesViewDelegate.
+     */
+    JSMessagesViewAvatarPolicyCustom
 };
 
 /**
@@ -166,6 +171,7 @@ typedef NS_ENUM(NSUInteger, JSMessagesViewSubtitlePolicy) {
  *  @return `YES` if the row should display a timestamp, `NO` otherwise.
  */
 - (BOOL)hasTimestampForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (BOOL)hasAvatarForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 /**
  *  Asks the delegate if should always scroll to bottom automatically when new messages are sent or received.

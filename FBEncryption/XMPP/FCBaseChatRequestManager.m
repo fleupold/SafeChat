@@ -17,6 +17,7 @@
 @end
 
 @implementation FCBaseChatRequestManager
+@synthesize delegate;
 
 static FCBaseChatRequestManager *instance;
 
@@ -40,7 +41,6 @@ static FCBaseChatRequestManager *instance;
     }
     return self;
 }
-
 
 #pragma mark XMPPStream Delegate methods
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
@@ -125,9 +125,17 @@ static FCBaseChatRequestManager *instance;
     NSLog(@"Failed to send message: %@", error);
     NSInteger numberOfTries = [[[message attributeForName: @"attempt"] stringValue] integerValue];
     if (numberOfTries <= REPEATS_ON_FAILURE) {
-        [message addAttributeWithName:@"attempt" stringValue:[NSString stringWithFormat: @"%d", numberOfTries+1]];
+        [message addAttributeWithName:@"attempt" stringValue:[NSString stringWithFormat: @"%ld", numberOfTries+1]];
         [self.xmppStream performSelector:@selector(sendElement:) withObject:message afterDelay: WAIT_BETWEEN_REPEATS];
+    } else {
+        if([self.delegate respondsToSelector:@selector(didFailToSendMessage:)]) {
+            [self.delegate didFailToSendMessage: message.body];
+        }
     }
+}
+
+- (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message {
+    NSLog(@"sent");
 }
 
 - (void)xmppStreamConnectDidTimeout:(XMPPStream *)sender {

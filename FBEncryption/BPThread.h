@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "FCBaseChatRequestManager.h"
 #import "BPMessage.h"
 
 @class BPThread;
@@ -19,7 +20,9 @@
 - (void)hasUpdatedThread: (BPThread *)thread;
 @end
 
-@interface BPThread : NSObject
+@interface BPThread : NSObject <FCBaseChatRequestManagerDelegate> {
+    FCBaseChatRequestManager *requestManager;
+}
 
 @property id<BPThreadDelegate> delegate;
 
@@ -36,6 +39,8 @@
 -(NSString *)participantsPreview;
 -(NSString *)textPreview;
 -(UIImage *)avatar;
+
+-(void)prepareForSending;
 
 -(void)checkEncryptionSupport;
 -(void)sendMessage: (NSString *)text encrypted: (BOOL)shouldBeEncrypted;

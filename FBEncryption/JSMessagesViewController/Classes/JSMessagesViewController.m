@@ -219,6 +219,7 @@
     }
 	
     if(hasAvatar) {
+        
         [cell setAvatarImageView:[self.dataSource avatarImageViewForRowAtIndexPath:indexPath]];
     }
     
@@ -282,7 +283,9 @@
 		case JSMessagesViewAvatarPolicyOutgoingOnly:
 			return [self.delegate messageTypeForRowAtIndexPath:indexPath] == JSBubbleMessageTypeOutgoing;
             
-        case JSMessagesViewAvatarPolicyNone:
+        case JSMessagesViewAvatarPolicyCustom:
+            if([self.delegate respondsToSelector:@selector(hasAvatarForRowAtIndexPath:)])
+                return [self.delegate hasAvatarForRowAtIndexPath:indexPath];
         default:
             return NO;
     }
