@@ -59,6 +59,7 @@ NSTimeInterval const secondsForTypingIndicator = 10;
         self.messageInputView.userInteractionEnabled = NO;
         self.messageInputView.alpha = .3;
     }
+    
 }
 
 - (void)viewDidLoad
@@ -136,8 +137,9 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 
 -(void)encryptionSupportHasBeenCheckedAndIsAvailable:(BOOL)isAvailable
 {
+    self.encryptionAvailable = isAvailable;
     self.encryptionEnabled = isAvailable;
-    self.lockImage.hidden = !isAvailable;
+    [self configureLockButton];
 }
 
 -(void)hasUpdatedThread:(BPThread *)thread
@@ -315,6 +317,56 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 -(void)hideSpinner {
     [self.spinner stopAnimating];
     self.tableView.contentInset = UIEdgeInsetsZero;
+}
+
+-(void)configureLockButton {
+    
+    UIButton *lock = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    lock.frame = CGRectMake(3, 11, 25, 25);
+
+    UIImage *lockIcon;
+
+    
+    if (!self.encryptionAvailable) {
+        lockIcon = [self encryptionNotSupportedImage];
+        lock.userInteractionEnabled = NO;
+    }
+    else if (self.encryptionEnabled) {
+        lockIcon = [self lockedImage];
+    }
+    else {
+        lockIcon = [self unlockedImage];
+    }
+    
+    [lock setImage: lockIcon forState:UIControlStateNormal];
+    [lock addTarget:self action:@selector(toggleEncryption:) forControlEvents:UIControlEventTouchDown];
+    [self.messageInputView addSubview: lock];
+}
+
+-(void)toggleEncryption: (UIButton *)sender
+{
+    if(self.encryptionEnabled) {
+        self.encryptionEnabled = NO;
+        [sender setImage: [self lockedImage] forState:UIControlStateNormal];
+    } else {
+        self.encryptionEnabled = YES;
+        [sender setImage: [self unlockedImage] forState:UIControlStateNormal];
+    }
+}
+
+-(UIImage *)lockedImage
+{
+    return [IonIcons imageWithIcon:icon_locked iconColor:[UIColor darkGrayColor] iconSize:20 imageSize:CGSizeMake(20, 20)];
+}
+
+-(UIImage *)unlockedImage
+{
+    return [IonIcons imageWithIcon:icon_unlocked iconColor:[UIColor darkGrayColor] iconSize:20 imageSize:CGSizeMake(20, 20)];
+}
+
+-(UIImage *)encryptionNotSupportedImage
+{
+    return [IonIcons imageWithIcon:icon_alert_circled iconColor:[UIColor darkGrayColor] iconSize:20 imageSize:CGSizeMake(20, 20)];
 }
 
 @end

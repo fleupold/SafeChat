@@ -15,6 +15,7 @@
 #import "JSMessageInputView.h"
 #import "JSBubbleView.h"
 #import "NSString+JSMessagesView.h"
+#import "IonIcons.h"
 
 #define SEND_BUTTON_WIDTH 78.0f
 
@@ -45,10 +46,10 @@
     [self.layer addSublayer: topBorder];
     
     
-    CGFloat width = self.frame.size.width - SEND_BUTTON_WIDTH;
+    CGFloat width = self.frame.size.width - SEND_BUTTON_WIDTH - 25;
     CGFloat height = [JSMessageInputView textViewLineHeight];
     
-    JSMessageTextView *textView = [[JSMessageTextView  alloc] initWithFrame:CGRectMake(6.0f, 6.0f, width, height)];
+    JSMessageTextView *textView = [[JSMessageTextView  alloc] initWithFrame:CGRectMake(32.0f, 6.0f, width, height)];
     [self addSubview:textView];
 	_textView = textView;
     
@@ -74,7 +75,7 @@
         [self setup];
         _textView.delegate = delegate;
         _textView.keyboardDelegate = keyboardDelegate;
-        _textView.dismissivePanGestureRecognizer = panGestureRecognizer;
+        //_textView.dismissivePanGestureRecognizer = panGestureRecognizer;
     }
     return self;
 }

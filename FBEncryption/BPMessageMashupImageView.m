@@ -16,15 +16,6 @@
 static NSMutableDictionary *cache;
 static NSLock *cache_lock;
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        
-    }
-    return self;
-}
-
 -(id)initWithStyle: (BPMessageMashupStyle)aStyle {
     style = aStyle;
     return [super init];
@@ -32,30 +23,12 @@ static NSLock *cache_lock;
 
 -(void)setUserID:(NSString *)userID
 {
-    leftImage = nil;
-    topRightImage = nil;
-    bottomRightImage = nil;
-    
-    if (!cache) {
-        cache = [NSMutableDictionary dictionary];
-        cache_lock = [[NSLock alloc] init];
-    }
-    
-    _userID = userID;
-    if ([cache objectForKey: userID] != nil) {
-        leftImage = [cache objectForKey: userID];
-    } else {
-        leftImage = [UIImage imageNamed:@"defaultUserIcon"];
-        [self performSelectorInBackground:@selector(fetchImageForUsers:) withObject:@{userID: [NSNumber numberWithInt: 0]}];
-    }
-    self.image = [self mashup];
+    [self setUserIDs:@[userID]];
 }
 
 -(void)setUserIDs: (NSArray *)userIDs
 {
-    leftImage = nil;
-    topRightImage = nil;
-    bottomRightImage = nil;
+    [self resetImage];
     
     if (!cache) {
         cache = [NSMutableDictionary dictionary];
@@ -92,13 +65,10 @@ static NSLock *cache_lock;
             bottomRightImage = [UIImage imageNamed:@"defaultUserIcon"];
             [missingImages setObject: [NSNumber numberWithInt: 2] forKey:thirdUser];
     }
+    _userIDs = userIDs;
     self.image = [self mashup];
-    [self performSelectorInBackground:@selector(fetchImageForUsers:) withObject: missingImages];
-}
-
--(NSString*)userID
-{
-    return _userID;
+    _missingImages = missingImages;
+    [self fetchMissingImagesAsync];
 }
 
 -(void)setImage:(UIImage *)image {
@@ -114,10 +84,19 @@ static NSLock *cache_lock;
     [super setImage:image];
 }
 
--(void)fetchImageForUsers:(NSDictionary *)userIDs
+-(void)fetchMissingImagesAsync
 {
-    for (NSString *userID in userIDs.keyEnumerator) {
-        NSNumber *index = [userIDs objectForKey: userID];
+    fetchMissingImagesThread = [[NSThread alloc] initWithTarget:self selector:@selector(fetchMissingImages) object:nil];
+    [fetchMissingImagesThread start];
+}
+
+-(void)fetchMissingImages
+{
+    for (NSString *userID in _missingImages.keyEnumerator) {
+        NSNumber *index = [_missingImages objectForKey: userID];
+        if (index == nil || [NSThread currentThread].isCancelled) {
+            return;
+        }
         
         UIImage *temp;
         [self fetchImageForUser: userID to: &temp];
@@ -126,7 +105,7 @@ static NSLock *cache_lock;
             leftImage = temp;
         else if ([index intValue] == 1)
             topRightImage = temp;
-        else
+        else if ([index intValue] == 2)
             bottomRightImage = temp;
     }    
     self.image = [self mashup];
@@ -142,6 +121,9 @@ static NSLock *cache_lock;
     NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: url]];
     
     UIImage *newImage = [UIImage imageWithData:imageData];
+    if (newImage == nil) {
+        return;
+    }
     
     //cache write operation has to be thread safe
     [cache_lock lock];
@@ -160,14 +142,14 @@ static NSLock *cache_lock;
     CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
     CGContextSetLineWidth(context, 1.0);
     
-    if (!topRightImage) {
+    if (_userIDs.count == 1) {
         [leftImage drawInRect: CGRectMake(0, 0, size.width, size.height)];
     } else {
         [leftImage drawInRect:CGRectMake(-size.width/4, 0, size.width, size.height)];
         CGContextMoveToPoint(context, size.width/2, 0);
         CGContextAddLineToPoint(context, size.width/2, size.height);
         
-        if (!bottomRightImage)
+        if (_userIDs.count == 2)
             [topRightImage drawInRect: CGRectMake(size.width/2 + 1, 0, size.width, size.height)];
         else {
             [topRightImage drawInRect: CGRectMake(size.width/2 + 1, 0, size.width/2, size.height/2)];
@@ -184,13 +166,14 @@ static NSLock *cache_lock;
     return newImage;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+-(void)resetImage
 {
-    // Drawing code
+    [fetchMissingImagesThread cancel];
+    _missingImages = nil;
+    _userIDs = nil;
+    leftImage = nil;
+    topRightImage = nil;
+    bottomRightImage = nil;
 }
-*/
 
 @end

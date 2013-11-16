@@ -18,7 +18,7 @@
     BOOL isReloading;
 }
 @property (strong, nonatomic) BPThread *detailItem;
-@property BOOL encryptionEnabled;
+@property BOOL encryptionEnabled, encryptionAvailable;
 
 @property IBOutlet UIImageView *lockImage;
 @property IBOutlet UIButton *sendButton;
