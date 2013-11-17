@@ -17,7 +17,6 @@
 @end
 
 @implementation FCBaseChatRequestManager
-@synthesize delegate;
 
 static FCBaseChatRequestManager *instance;
 
@@ -118,19 +117,17 @@ static FCBaseChatRequestManager *instance;
 {
     // we recived message
     NSLog(@"Message received: %@", message.description);
-    [self.delegate didReceiveMessage: message];
+    [[NSNotificationCenter defaultCenter] postNotificationName: @"didReceiveMessage" object:message];
 }
 
 -(void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error {
     NSLog(@"Failed to send message: %@", error);
     NSInteger numberOfTries = [[[message attributeForName: @"attempt"] stringValue] integerValue];
     if (numberOfTries <= REPEATS_ON_FAILURE) {
-        [message addAttributeWithName:@"attempt" stringValue:[NSString stringWithFormat: @"%ld", numberOfTries+1]];
+        [message addAttributeWithName:@"attempt" stringValue:[NSString stringWithFormat: @"%ld", (long)numberOfTries+1]];
         [self.xmppStream performSelector:@selector(sendElement:) withObject:message afterDelay: WAIT_BETWEEN_REPEATS];
     } else {
-        if([self.delegate respondsToSelector:@selector(didFailToSendMessage:)]) {
-            [self.delegate didFailToSendMessage: message.body];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName: @"didFailToSendMessage" object: message];
     }
 }
 

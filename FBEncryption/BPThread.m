@@ -104,10 +104,14 @@
     return nextPage;
 }
 
+-(BOOL)isGroupChat
+{
+    return self.participants.count > 2;
+}
+
 -(void)prepareForSending
 {
-    requestManager = [[FCBaseChatRequestManager alloc] init];
-    requestManager.delegate = self;
+    [FCBaseChatRequestManager getInstance];
 }
 
 -(void)checkEncryptionSupport
@@ -167,7 +171,7 @@
         if ([participant isMe]) {
             continue;
         }
-        [requestManager sendMessageToFacebook: text withFriendFacebookID:participant.id];
+        [[FCBaseChatRequestManager getInstance] sendMessageToFacebook: text withFriendFacebookID:participant.id];
     }
 }
 
@@ -194,39 +198,6 @@
                  NSLog(@"%@", error);
              }
          }];
-    }
-}
-
--(void)didFailToSendMessage: (NSString *)text
-{
-    for (BPMessage *message in self.messages.reverseObjectEnumerator) {
-        if([message.text isEqualToString: text]) {
-            message.failedToSend = YES;
-            break;
-        }
-    }
-    [self.delegate hasUpdatedThread:self scrollToRow:self.messages.count-1];
-}
-
--(void)didReceiveMessage:(XMPPMessage *)message {
-    NSString *senderID = [message.fromStr componentsSeparatedByString:@"@"].firstObject; //still has the minus as first character
-    senderID = [senderID substringFromIndex:1];
-    
-    BPFriend *sender = [BPFriend findOrCreateFriendWithId: senderID andName: nil];
-    
-    if (![self.participants containsObject: sender]) {
-        return;
-    }
-    
-    if ([message.compactXMLString rangeOfString: @"composing"].location != NSNotFound)
-    {
-        [self.delegate startTypingBy: sender];
-    }
-    
-    if (message.body) {
-        [self.delegate stopTyping];
-        [self addIncomingMessage:message.body from:sender];
-        [self.delegate hasUpdatedThread: self scrollToRow: self.messages.count - 1];
     }
 }
 @end

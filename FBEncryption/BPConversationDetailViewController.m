@@ -72,6 +72,10 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
     
+    //Register for FBChatRequestManager Notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMessage:) name:@"didReceiveMessage" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailToSendMessage:) name:@"didFailToSendMessage" object: nil];
+    
     //connect with Chat service so that we can receive incoming messages
     [self.detailItem prepareForSending];
 }
@@ -97,6 +101,43 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     }
     return [self.detailItem.messages objectAtIndex: indexPath.row];
 }
+
+-(void)didReceiveMessage:(NSNotification *)notification {
+    XMPPMessage *message = notification.object;
+    NSString *senderID = [message.fromStr componentsSeparatedByString:@"@"].firstObject; //still has the minus as first character
+    senderID = [senderID substringFromIndex:1];
+    
+    BPFriend *sender = [BPFriend findOrCreateFriendWithId: senderID andName: nil];
+    
+    if (self.detailItem.isGroupChat || ![self.detailItem.participants containsObject: sender]) {
+        return;
+    }
+    
+    if ([message.compactXMLString rangeOfString: @"composing"].location != NSNotFound)
+    {
+        [self startTypingBy: sender];
+    }
+    
+    if (message.body) {
+        [self stopTyping];
+        [self.detailItem addIncomingMessage:message.body from:sender];
+        [self.tableView reloadData];
+        [self scrollToBottomAnimated: YES];
+    }
+}
+
+-(void)didFailToSendMessage: (NSNotification *)notification
+{
+    XMPPMessage *xmppMessage = notification.object;
+    
+    for (BPMessage *message in self.detailItem.messages.reverseObjectEnumerator) {
+        if([message.text isEqualToString: xmppMessage.body]) {
+            message.failedToSend = YES;
+            break;
+        }
+    }
+}
+
 
 -(BOOL)isTyping
 {

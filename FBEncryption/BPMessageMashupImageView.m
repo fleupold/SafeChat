@@ -41,29 +41,22 @@ static NSLock *cache_lock;
     NSMutableDictionary *missingImages = [NSMutableDictionary dictionary];
     if (userIDs.count >= 1) {
         NSString *firstUser = userIDs.firstObject;
-        //leftImage = [cache objectForKey: firstUser];
-        if (!leftImage) {
-            leftImage = [UIImage imageNamed:@"defaultUserIcon"];
-            [missingImages setObject: [NSNumber numberWithInt: 0] forKey:firstUser];
+        leftImage = [UIImage imageNamed:@"defaultUserIcon"];
+        [missingImages setObject: [NSNumber numberWithInt: 0] forKey:firstUser];
         }
-    }
     
     if (userIDs.count >= 2)
     {
         NSString *secondUser = [userIDs objectAtIndex:1];
-        //topRightImage = [cache objectForKey: secondUser];
-        if (!topRightImage)
-            topRightImage = [UIImage imageNamed:@"defaultUserIcon"];
-            [missingImages setObject: [NSNumber numberWithInt: 1] forKey:secondUser];
+        topRightImage = [UIImage imageNamed:@"defaultUserIcon"];
+        [missingImages setObject: [NSNumber numberWithInt: 1] forKey:secondUser];
     }
     
     if (userIDs.count >= 3)
     {
         NSString *thirdUser = [userIDs objectAtIndex:2];
-        //bottomRightImage = [cache objectForKey: thirdUser];
-        if (!bottomRightImage)
-            bottomRightImage = [UIImage imageNamed:@"defaultUserIcon"];
-            [missingImages setObject: [NSNumber numberWithInt: 2] forKey:thirdUser];
+        bottomRightImage = [UIImage imageNamed:@"defaultUserIcon"];
+        [missingImages setObject: [NSNumber numberWithInt: 2] forKey:thirdUser];
     }
     _userIDs = userIDs;
     self.image = [self mashup];
