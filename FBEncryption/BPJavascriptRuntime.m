@@ -34,14 +34,15 @@ static BPJavascriptRuntime *instance;
 }
 
 +(BOOL)privateKeyAvailable {
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey: private_key_identifier]);
     return [[NSUserDefaults standardUserDefaults] objectForKey: private_key_identifier] != nil;
 }
 
 +(void)resetPrivateKey
 {
+    [BPFriend resetAllSessionKeys];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey: private_key_identifier];
 }
-
 
 -(id)init{
     _myPrivateKey = [[NSUserDefaults standardUserDefaults] objectForKey: private_key_identifier];

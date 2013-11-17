@@ -65,9 +65,29 @@
     self.footerView.hidden = YES;
     self.tableHeaderView.title.font = [IonIcons fontWithSize:15];
     
+    [self checkEncryptionConfigured];
+    
     [self performSelector:@selector(fetchThreads) withObject:nil afterDelay:0.5];
 }
 
+-(void)checkEncryptionConfigured
+{
+    if([BPFriend meHasEncryptionConfigured]) {
+        return;
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No Private Key"
+                                                    message: @"Do you want to set up encryption now?"
+                                                   delegate: self
+                                          cancelButtonTitle: @"Yes"
+                                          otherButtonTitles:@"No", nil];
+    [alert show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == 0)
+        [self performSegueWithIdentifier: @"load_configuration"  sender: alertView];
+}
 
 - (void)didReceiveMemoryWarning
 {

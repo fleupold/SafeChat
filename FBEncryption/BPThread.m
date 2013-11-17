@@ -120,6 +120,11 @@
     //notify the delegate once done. If only one participant does not have
     //encryption supper we are done. After each successful response, we may check if all participants
     //have complete information
+    if (![BPFriend meHasEncryptionConfigured]) {
+        [self.delegate encryptionSupportHasBeenCheckedAndIsAvailable:NO];
+        return;
+    }
+    
     for (BPFriend *participant in self.participants)
     {
         if (participant.encryptionSupport == EncryptionNotAvailable)

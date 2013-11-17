@@ -11,7 +11,7 @@
 #import "STHeaderView.h"
 #import "BPThread.h"
 
-@interface BPConversationMasterViewController : STableViewController <BPThreadDelegate>{
+@interface BPConversationMasterViewController : STableViewController <BPThreadDelegate, UIAlertViewDelegate>{
     @protected
     
     NSString *nextPage;

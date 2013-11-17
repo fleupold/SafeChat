@@ -44,6 +44,11 @@ static BPFriend *me;
 {
     return me;
 }
+
++(BOOL)meHasEncryptionConfigured
+{
+    return [BPJavascriptRuntime privateKeyAvailable];
+}
     
 +(BPFriend *)findByUsername: (NSString *)username
 {
@@ -61,6 +66,14 @@ static BPFriend *me;
     return [friendList allValues];
 }
 
++(void)resetAllSessionKeys
+{
+    for (BPFriend *friend in [BPFriend allFriends])
+    {
+        friend.sessionKey = nil;
+    }
+}
+
 -(BOOL)isMe
 {
     return self == me;
@@ -68,6 +81,11 @@ static BPFriend *me;
 
 -(void)checkEncryptionSupportAndExecuteOnCompletion: (void (^)(BOOL))completionHandler
 {
+    if ([self isMe]) {
+        completionHandler([BPJavascriptRuntime privateKeyAvailable]);
+        return;
+    }
+    
     if (self.username == nil)
     {
         if (FBSession.activeSession.isOpen) {
