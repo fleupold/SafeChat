@@ -15,9 +15,11 @@
 @protocol BPThreadDelegate <NSObject>
 @required
 -(void)encryptionSupportHasBeenCheckedAndIsAvailable: (BOOL)isAvailable;
+-(void)startTypingBy: (BPFriend *)typer;
+-(void)stopTyping;
 
 @optional
-- (void)hasUpdatedThread: (BPThread *)thread;
+- (void)hasUpdatedThread: (BPThread *)thread scrollToRow: (NSInteger)row;
 @end
 
 @interface BPThread : NSObject <FCBaseChatRequestManagerDelegate> {

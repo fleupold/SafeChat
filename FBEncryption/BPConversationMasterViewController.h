@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "STableViewController.h"
 #import "STHeaderView.h"
+#import "BPThread.h"
 
-@interface BPConversationMasterViewController : STableViewController {
+@interface BPConversationMasterViewController : STableViewController <BPThreadDelegate>{
     @protected
     
     NSString *nextPage;

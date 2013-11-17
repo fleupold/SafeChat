@@ -13,6 +13,7 @@
 #import "BPFriend.h"
 #import "BPMessageMashupImageView.h"
 #import "BPFacebookDateFormatter.h"
+#import "BPFqlThread.h"
 
 #import "IonIcons.h"
 
@@ -71,15 +72,13 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
     
-    //Register for message receive notifications
-    [[NSNotificationCenter defaultCenter] addObserver: self selector:@selector(receivedMessage:) name: @"kFCMessageDidComeNotification" object: nil];
-    
     //connect with Chat service so that we can receive incoming messages
     [self.detailItem prepareForSending];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self.detailItem update];
+    if (!((BPFqlThread *)self.detailItem).hasLoadedMessages)
+        [self.detailItem update];
 }
  
 - (void)didReceiveMemoryWarning
@@ -99,35 +98,6 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     return [self.detailItem.messages objectAtIndex: indexPath.row];
 }
 
--(void)receivedMessage:(NSNotification *)notification
-{
-    XMPPMessage *message = notification.object;
-    NSString *senderID = [message.fromStr componentsSeparatedByString:@"@"].firstObject; //still has the minus as first character
-    senderID = [senderID substringFromIndex:1];
-    
-    BPFriend *sender = [BPFriend findOrCreateFriendWithId: senderID andName: nil];
-    
-    if (![self.detailItem.participants containsObject: sender]) {
-        return;
-    }
-    
-    if ([message.compactXMLString rangeOfString: @"composing"].location != NSNotFound)
-    {
-        lastTyping = [NSDate date];
-        personTyping = sender;
-        [self reloadData];
-        [self scrollToBottomAnimated:YES];
-        [self performSelector:@selector(reloadData) withObject:nil afterDelay: secondsForTypingIndicator]; //hide typing indicator
-    }
-    
-    if (message.body) {
-        lastTyping = nil;
-        [self.detailItem addIncomingMessage:message.body from:sender];
-        [self reloadData];
-        [self scrollToBottomAnimated:YES];
-    }
-}
-
 -(BOOL)isTyping
 {
     return lastTyping != nil && [lastTyping timeIntervalSinceNow] > -1 * secondsForTypingIndicator;
@@ -142,9 +112,27 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     [self configureLockButton];
 }
 
--(void)hasUpdatedThread:(BPThread *)thread
+-(void)hasUpdatedThread:(BPThread *)thread scrollToRow:(NSInteger)row
 {
     [self reloadData];
+    [self.spinner stopAnimating];
+    isReloading = NO;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:row inSection:0];
+    [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated: NO];
+}
+
+-(void)startTypingBy:(BPFriend *)typer
+{
+    lastTyping = [NSDate date];
+    personTyping = typer;
+    [self reloadData];
+    [self scrollToBottomAnimated:YES];
+    [self performSelector:@selector(reloadData) withObject:nil afterDelay: secondsForTypingIndicator]; //hide typing indicator
+}
+
+-(void)stopTyping
+{
+    lastTyping = nil;
 }
 
 #pragma mark - Messages view data source
@@ -264,16 +252,22 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     if ([[self messageForRowAtIndexPath: indexPath].text isEqualToString:@"typing..."]) {
         cell.bubbleView.font = [UIFont italicSystemFontOfSize: 16];
     }
+    
+    if(cell.messageType == JSBubbleMessageTypeOutgoing) {
+        cell.bubbleView.textColor = [UIColor whiteColor];
+    }
 }
 
 - (void)loadMore {
-    if (!self.detailItem || !self.detailItem.nextPage || isReloading){
+    if (!self.detailItem || isReloading){
         return;
     }
     [self showSpinner];
     isReloading = YES;
     
+    [self.detailItem update];
     
+    /*
     if (FBSession.activeSession.isOpen) {
         [[FBRequest requestForGraphPath: self.detailItem.nextPage] startWithCompletionHandler:
          ^(FBRequestConnection *connection,
@@ -289,6 +283,7 @@ NSTimeInterval const secondsForTypingIndicator = 10;
              [self hideSpinner];
          }];
     }
+     */
 }
 
 -(void)extendDetailItemWith: (FBGraphObject *)thread {
@@ -347,26 +342,26 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 {
     if(self.encryptionEnabled) {
         self.encryptionEnabled = NO;
-        [sender setImage: [self lockedImage] forState:UIControlStateNormal];
+        [sender setImage: [self unlockedImage] forState:UIControlStateNormal];
     } else {
         self.encryptionEnabled = YES;
-        [sender setImage: [self unlockedImage] forState:UIControlStateNormal];
+        [sender setImage: [self lockedImage] forState:UIControlStateNormal];
     }
 }
 
 -(UIImage *)lockedImage
 {
-    return [IonIcons imageWithIcon:icon_locked iconColor:[UIColor darkGrayColor] iconSize:20 imageSize:CGSizeMake(20, 20)];
+    return [IonIcons imageWithIcon:icon_locked iconColor:[UIColor colorWithRed:0 green:0.478431 blue:1 alpha:1] iconSize:20 imageSize:CGSizeMake(20, 20)];
 }
 
 -(UIImage *)unlockedImage
 {
-    return [IonIcons imageWithIcon:icon_unlocked iconColor:[UIColor darkGrayColor] iconSize:20 imageSize:CGSizeMake(20, 20)];
+    return [IonIcons imageWithIcon:icon_unlocked iconColor:[UIColor colorWithRed:0 green:0.478431 blue:1 alpha:1] iconSize:20 imageSize:CGSizeMake(20, 20)];
 }
 
 -(UIImage *)encryptionNotSupportedImage
 {
-    return [IonIcons imageWithIcon:icon_alert_circled iconColor:[UIColor darkGrayColor] iconSize:20 imageSize:CGSizeMake(20, 20)];
+    return [IonIcons imageWithIcon:icon_alert_circled iconColor:[UIColor colorWithRed:0 green:0.478431 blue:1 alpha:1] iconSize:20 imageSize:CGSizeMake(20, 20)];
 }
 
 @end

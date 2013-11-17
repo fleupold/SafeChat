@@ -58,6 +58,11 @@
     return self;
 }
 
+-(void)loadMessages
+{
+    
+}
+
 -(UIImage *)avatar
 {
     return [UIImage imageNamed: @"defaultUserIcon"];
@@ -84,7 +89,8 @@
         
         [preview appendString: [NSString stringWithFormat: @"%@, ", participant.name]];
     }
-    [preview deleteCharactersInRange: NSMakeRange(preview.length-2,2)];
+    if (preview.length > 1)
+        [preview deleteCharactersInRange: NSMakeRange(preview.length-2,2)];
     return preview;
 }
 
@@ -182,7 +188,7 @@
            NSError *error) {
              if (!error) {
                  [self configureWithFBGraphObject:thread];
-                 [self.delegate hasUpdatedThread: self];
+                 [self.delegate hasUpdatedThread: self scrollToRow: 0];
              }
              else {
                  NSLog(@"%@", error);
@@ -199,6 +205,28 @@
             break;
         }
     }
-    [self.delegate hasUpdatedThread:self];
+    [self.delegate hasUpdatedThread:self scrollToRow:self.messages.count-1];
+}
+
+-(void)didReceiveMessage:(XMPPMessage *)message {
+    NSString *senderID = [message.fromStr componentsSeparatedByString:@"@"].firstObject; //still has the minus as first character
+    senderID = [senderID substringFromIndex:1];
+    
+    BPFriend *sender = [BPFriend findOrCreateFriendWithId: senderID andName: nil];
+    
+    if (![self.participants containsObject: sender]) {
+        return;
+    }
+    
+    if ([message.compactXMLString rangeOfString: @"composing"].location != NSNotFound)
+    {
+        [self.delegate startTypingBy: sender];
+    }
+    
+    if (message.body) {
+        [self.delegate stopTyping];
+        [self addIncomingMessage:message.body from:sender];
+        [self.delegate hasUpdatedThread: self scrollToRow: self.messages.count - 1];
+    }
 }
 @end

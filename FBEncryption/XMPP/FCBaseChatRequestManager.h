@@ -13,6 +13,7 @@
 
 @optional
 -(void)didFailToSendMessage: (NSString *)text;
+-(void)didReceiveMessage: (XMPPMessage *)message;
 @end
 
 @interface FCBaseChatRequestManager : NSObject <XMPPStreamDelegate>

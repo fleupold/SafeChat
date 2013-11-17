@@ -9,8 +9,10 @@
 #import "BPConversationMasterViewController.h"
 #import "BPConversationDetailViewController.h"
 #import "BPFacebookLoginViewController.h"
-#import "BPThread.h"
 #import "BPFriend.h"
+#import "BPInboxThread.h"
+#import "BPFqlThread.h"
+#import "BPFqlRequestManager.h"
 #import "BPFacebookDateFormatter.h"
 #import "BPMessageTableViewCell.h"
 #import <FacebookSDK/FacebookSDK.h>
@@ -98,7 +100,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BPMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"messageCell" forIndexPath:indexPath];
-
    
     BPThread *object = _objects[indexPath.row];
     cell.participantsLabel.text = [object participantsPreview];
@@ -153,7 +154,6 @@
     return YES;
 }
 */
-
 - (void) viewDidAppear:(BOOL) animated {
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(resizeHeaderAndFooter)  name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self resizeHeaderAndFooter];
@@ -165,9 +165,11 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        BPThread *object = _objects[indexPath.row];
-        if(((BPConversationDetailViewController *)[segue destinationViewController]).detailItem == nil)
-            [[segue destinationViewController] setDetailItem:object];
+        BPFqlThread *object = _objects[indexPath.row];
+        
+        BPConversationDetailViewController *destination = ((BPConversationDetailViewController *)[segue destinationViewController]);
+        if(destination.detailItem == nil)
+            [destination setDetailItem:object];
     }
 }
 
@@ -183,9 +185,75 @@
 
 -(void)fetchThreads
 {
+    [self fetchThreads: NO];
+}
+
+-(void)fetchThreads: (BOOL)loadingMore
+{
+    /*
+     * Asynchronously fetch all thread_ids, snippets, etc using FQL
+     * Fql only gives us the participants ids, no username etc.
+     * Therefore there has to be another intermediate asyn call to the friends API
+     *
+     * Is either called to load older messages or the most recent ones, which is indicated
+     * by the boolean parameter
+    */
+    
+    NSDate *threadsBefore = [NSDate date];
+    if (loadingMore) {
+        threadsBefore = ((BPThread *)[_objects lastObject]).updated_at;
+    }
+    
+    [BPFqlRequestManager requestThreadsBefore: threadsBefore
+                               withCompletion:
+     ^(NSDictionary *response) {
+         FBGraphObject *threadInformation;
+         
+         //First get information about involved friends, on completion continue initializing the threads
+         NSMutableSet *userIDs = [NSMutableSet set];
+         for (threadInformation in [response objectForKey:@"data"])
+         {
+             NSArray *recipients = [threadInformation objectForKey:@"recipients"];
+             [userIDs unionSet: [NSSet setWithArray: recipients]];
+         }
+         [BPFqlRequestManager createUsersWithIDs: userIDs
+                                      completion:
+          ^{
+              if (!loadingMore)
+                  _objects = [NSMutableArray array];
+              
+              for (threadInformation in [response objectForKey:@"data"])
+              {
+                  BPThread *thread = [BPFqlThread threadFromFBGraphObject: threadInformation];
+                  [_objects addObject: thread];
+              }
+              //adjustments that are necessary after first loading
+              self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+              self.footerView.hidden = NO;
+              
+              [self.tableView reloadData];
+
+              if (loadingMore)
+              {
+                  [self loadMoreCompleted];
+              } else {
+                  [self refreshCompleted];
+              }
+
+          } failure:
+          ^(NSError *error) {
+              NSLog(@"%@", error);
+          }];
+     }
+                                      failure:
+     ^(NSError *error) {
+          NSLog(@"%@", error);
+      }];
+    
+    /*
     //Trigger the Facebook REST API call to get a list of all message threads
     if (FBSession.activeSession.isOpen) {
-        [[FBRequest requestForGraphPath: @"me/threads"] startWithCompletionHandler:
+        [[FBRequest requestForGraphPath: @"me/inbox"] startWithCompletionHandler:
          ^(FBRequestConnection *connection,
            NSDictionary<FBGraphUser> *inbox,
            NSError *error) {
@@ -193,7 +261,7 @@
                  _objects = [NSMutableArray array];
                  for (FBGraphObject *threadInformation in [inbox objectForKey:@"data"])
                  {
-                     BPThread *thread = [BPThread threadFromFBGraphObject: threadInformation];
+                     BPThread *thread = [BPInboxThread threadFromFBGraphObject: threadInformation];
                      [_objects addObject: thread];
                  }
                  [self setNextPage: [[inbox objectForKey:@"paging"] objectForKey: @"next"]];
@@ -211,12 +279,19 @@
          }];
     }
     NSLog(@"%@", [FBSession activeSession].accessTokenData);
+    */
 }
 
 -(void)setNextPage: (NSString *)page
 {
     NSURL *nextPageURL = [NSURL URLWithString: page];
     nextPage = [NSString stringWithFormat:@"%@?%@", nextPageURL.relativePath, nextPageURL.query];
+}
+
+-(void)encryptionSupportHasBeenCheckedAndIsAvailable:(BOOL)isAvailable {
+    if (isAvailable) {
+        [self.tableView reloadData];
+    }
 }
 
 # pragma mark - STTabelViewController methods
@@ -231,13 +306,15 @@
 {
     if (![super loadMore])
         return NO;
-
-    if (!nextPage)
-        return NO;
     
     if (!FBSession.activeSession.isOpen)
         return NO;
     
+    [self fetchThreads: YES];
+    
+    /*
+    if (!nextPage)
+        return NO;
     [[FBRequest requestForGraphPath: nextPage] startWithCompletionHandler:
      ^(FBRequestConnection *connection,
        NSDictionary<FBGraphUser> *inbox,
@@ -245,7 +322,7 @@
          if (!error) {
              for (FBGraphObject *threadInformation in [inbox objectForKey:@"data"])
              {
-                 BPThread *thread = [BPThread threadFromFBGraphObject: threadInformation];
+                 BPThread *thread = [BPInboxThread threadFromFBGraphObject: threadInformation];
                  [_objects addObject: thread];
              }
              [self setNextPage: [[inbox objectForKey:@"paging"] objectForKey: @"next"]];
@@ -257,6 +334,7 @@
              NSLog(@"%@", error);
          }
      }]; 
+     */
     return YES;
 }
 

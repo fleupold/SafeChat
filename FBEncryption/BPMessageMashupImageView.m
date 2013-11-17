@@ -41,7 +41,7 @@ static NSLock *cache_lock;
     NSMutableDictionary *missingImages = [NSMutableDictionary dictionary];
     if (userIDs.count >= 1) {
         NSString *firstUser = userIDs.firstObject;
-        leftImage = [cache objectForKey: firstUser];
+        //leftImage = [cache objectForKey: firstUser];
         if (!leftImage) {
             leftImage = [UIImage imageNamed:@"defaultUserIcon"];
             [missingImages setObject: [NSNumber numberWithInt: 0] forKey:firstUser];
@@ -51,7 +51,7 @@ static NSLock *cache_lock;
     if (userIDs.count >= 2)
     {
         NSString *secondUser = [userIDs objectAtIndex:1];
-        topRightImage = [cache objectForKey: secondUser];
+        //topRightImage = [cache objectForKey: secondUser];
         if (!topRightImage)
             topRightImage = [UIImage imageNamed:@"defaultUserIcon"];
             [missingImages setObject: [NSNumber numberWithInt: 1] forKey:secondUser];
@@ -60,7 +60,7 @@ static NSLock *cache_lock;
     if (userIDs.count >= 3)
     {
         NSString *thirdUser = [userIDs objectAtIndex:2];
-        bottomRightImage = [cache objectForKey: thirdUser];
+        //bottomRightImage = [cache objectForKey: thirdUser];
         if (!bottomRightImage)
             bottomRightImage = [UIImage imageNamed:@"defaultUserIcon"];
             [missingImages setObject: [NSNumber numberWithInt: 2] forKey:thirdUser];
@@ -98,8 +98,10 @@ static NSLock *cache_lock;
             return;
         }
         
-        UIImage *temp;
-        [self fetchImageForUser: userID to: &temp];
+        UIImage *temp = [cache objectForKey: userID];
+        if (!temp) {
+            [self fetchImageForUser: userID to: &temp];
+        }
         
         if ([index intValue] == 0)
             leftImage = temp;
@@ -133,7 +135,7 @@ static NSLock *cache_lock;
     *image = newImage;
 }
 
--(UIImage *)mashup {
+-(UIImage *)mashup {   
     CGSize size = self.frame.size;
     UIGraphicsBeginImageContext(size);
     

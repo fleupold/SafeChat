@@ -11,7 +11,7 @@
 
 @implementation BPServerRequestManager
 
-const NSString *BaseUrl = @"http://192.168.178.28:8000";
+const NSString *BaseUrl = @"http://blockprism2.likescale.com";
 
 +(void)publicKeyForID: (NSString *)facebookID
            completion: (void(^)(AFHTTPRequestOperation *operation, id responseObject))successBlock

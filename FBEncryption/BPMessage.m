@@ -48,7 +48,7 @@
 -(NSString *)text
 {
     if (_text != nil && [_text rangeOfString: @"BLOCKPRISM.ORG"].location != NSNotFound) {
-        self.text = [self decryptMessage: _text];
+        _text = [self decryptMessage: _text];
     }
     return _text;
 }

@@ -118,7 +118,7 @@ static FCBaseChatRequestManager *instance;
 {
     // we recived message
     NSLog(@"Message received: %@", message.description);
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"kFCMessageDidComeNotification" object:message];
+    [self.delegate didReceiveMessage: message];
 }
 
 -(void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error {
