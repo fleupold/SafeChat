@@ -127,6 +127,11 @@
     
     for (BPFriend *participant in self.participants)
     {
+        if ([participant isMe]) {
+            participant.encryptionSupport = EncryptionAvailable;
+            continue;
+        }
+        
         if (participant.encryptionSupport == EncryptionNotAvailable)
         {
             [self.delegate encryptionSupportHasBeenCheckedAndIsAvailable: NO];

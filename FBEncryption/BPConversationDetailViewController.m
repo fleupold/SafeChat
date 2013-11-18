@@ -365,7 +365,6 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     
     if (!self.encryptionAvailable) {
         lockIcon = [self encryptionNotSupportedImage];
-        lock.userInteractionEnabled = NO;
     }
     else if (self.encryptionEnabled) {
         lockIcon = [self lockedImage];
@@ -381,6 +380,15 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 
 -(void)toggleEncryption: (UIButton *)sender
 {
+    if (!self.encryptionAvailable) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Encryption not available"
+                                                        message:@"Tell your friend!"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     if(self.encryptionEnabled) {
         self.encryptionEnabled = NO;
         [sender setImage: [self unlockedImage] forState:UIControlStateNormal];

@@ -34,7 +34,6 @@ static BPJavascriptRuntime *instance;
 }
 
 +(BOOL)privateKeyAvailable {
-    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey: private_key_identifier]);
     return [[NSUserDefaults standardUserDefaults] objectForKey: private_key_identifier] != nil;
 }
 
