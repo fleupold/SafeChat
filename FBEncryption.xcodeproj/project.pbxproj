@@ -14,6 +14,9 @@
 		0850A0041837ED8800D6B22E /* BPInboxThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 0850A0031837ED8800D6B22E /* BPInboxThread.m */; };
 		0850A0071837FA5F00D6B22E /* BPFqlThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 0850A0061837FA5F00D6B22E /* BPFqlThread.m */; };
 		0850A00A1838185000D6B22E /* BPFqlMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0850A0091838185000D6B22E /* BPFqlMessage.m */; };
+		0850A01D183A44A700D6B22E /* logo_58.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01A183A44A700D6B22E /* logo_58.png */; };
+		0850A01E183A44A700D6B22E /* logo_80.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01B183A44A700D6B22E /* logo_80.png */; };
+		0850A01F183A44A700D6B22E /* logo_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01C183A44A700D6B22E /* logo_120.png */; };
 		085754471816AB92006C1DD9 /* cryptico.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 085754461816AB92006C1DD9 /* cryptico.min.js */; };
 		0857544D1817BB17006C1DD9 /* BPFacebookLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */; };
 		0857544F1817BD77006C1DD9 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0857544E1817BD77006C1DD9 /* FacebookSDK.framework */; };
@@ -180,6 +183,9 @@
 		0850A0061837FA5F00D6B22E /* BPFqlThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPFqlThread.m; sourceTree = "<group>"; };
 		0850A0081838185000D6B22E /* BPFqlMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPFqlMessage.h; sourceTree = "<group>"; };
 		0850A0091838185000D6B22E /* BPFqlMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPFqlMessage.m; sourceTree = "<group>"; };
+		0850A01A183A44A700D6B22E /* logo_58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_58.png; sourceTree = "<group>"; };
+		0850A01B183A44A700D6B22E /* logo_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_80.png; sourceTree = "<group>"; };
+		0850A01C183A44A700D6B22E /* logo_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_120.png; sourceTree = "<group>"; };
 		085754461816AB92006C1DD9 /* cryptico.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cryptico.min.js; path = ../cryptico.min.js; sourceTree = "<group>"; };
 		0857544B1817BB17006C1DD9 /* BPFacebookLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPFacebookLoginViewController.h; sourceTree = "<group>"; };
 		0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPFacebookLoginViewController.m; sourceTree = "<group>"; };
@@ -444,6 +450,16 @@
 			name = TableViewCells;
 			sourceTree = "<group>";
 		};
+		0850A013183A434800D6B22E /* app_icon */ = {
+			isa = PBXGroup;
+			children = (
+				0850A01A183A44A700D6B22E /* logo_58.png */,
+				0850A01B183A44A700D6B22E /* logo_80.png */,
+				0850A01C183A44A700D6B22E /* logo_120.png */,
+			);
+			name = app_icon;
+			sourceTree = "<group>";
+		};
 		085754501817E60E006C1DD9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +503,7 @@
 		0857545E1817FA7C006C1DD9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0850A013183A434800D6B22E /* app_icon */,
 				0868936E182A57CA0087048C /* ionicons */,
 				08575A0B181A6D81006C1DD9 /* lock_closed.png */,
 				0857545F1817FAE2006C1DD9 /* defaultUserIcon.png */,
@@ -1120,6 +1137,7 @@
 				08575A19181BF2C1006C1DD9 /* sec.js in Resources */,
 				0860F88B1830D31F007A63EE /* bubble-classic-square-gray.png in Resources */,
 				0860F87F1830D31F007A63EE /* bubble-classic-blue.png in Resources */,
+				0850A01E183A44A700D6B22E /* logo_80.png in Resources */,
 				0860F8931830D31F007A63EE /* send-button-pressed.png in Resources */,
 				0860F88A1830D31F007A63EE /* bubble-classic-square-blue@2x.png in Resources */,
 				08689376182A57CA0087048C /* ionicons.ttf in Resources */,
@@ -1130,6 +1148,7 @@
 				08689378182A57CA0087048C /* README.md in Resources */,
 				0860F8881830D31F007A63EE /* bubble-classic-typing@2x.png in Resources */,
 				085754601817FAE2006C1DD9 /* defaultUserIcon.png in Resources */,
+				0850A01F183A44A700D6B22E /* logo_120.png in Resources */,
 				0860F88D1830D31F007A63EE /* bubble-classic-square-selected.png in Resources */,
 				0860F88E1830D31F007A63EE /* bubble-classic-square-selected@2x.png in Resources */,
 				0860F8851830D31F007A63EE /* bubble-classic-selected.png in Resources */,
@@ -1148,6 +1167,7 @@
 				085759E31819622E006C1DD9 /* build-libidn.sh in Resources */,
 				0860F8941830D31F007A63EE /* send-button-pressed@2x.png in Resources */,
 				0860F8891830D31F007A63EE /* bubble-classic-square-blue.png in Resources */,
+				0850A01D183A44A700D6B22E /* logo_58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1379,7 +1399,6 @@
 		0873373B18150CC5004A0AE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1406,7 +1425,6 @@
 		0873373C18150CC5004A0AE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
