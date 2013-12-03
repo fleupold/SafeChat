@@ -136,7 +136,12 @@
             continue;
         [userIDs addObject: user.id];
     }
-    [cell.messageImage setUserIDs: userIDs];
+    BPMessageMashupImageView *newMashup = [[BPMessageMashupImageView alloc] initWithFrame: cell.messageImage.frame];
+    [newMashup setUserIDs: userIDs];
+    [cell.messageImageContainer addSubview: newMashup];
+    [cell.messageImage removeFromSuperview];
+    cell.messageImage = newMashup;
+    
     
     if (object.unread > 0) {
         cell.timeLabel.textColor = self.view.window.tintColor;

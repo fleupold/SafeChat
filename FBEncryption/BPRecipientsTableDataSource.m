@@ -59,8 +59,13 @@
     BPRecipientSuggestionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"recipientSuggestionCell"];
     BPFriend *suggestion = [self friendForRowAtIndexPath: indexPath];
     cell.name.text = suggestion.name;
-    cell.icon.userID = suggestion.id;
-    cell.icon.style = BPMessageMashupStyleCircle;
+    
+    BPMessageMashupImageView *newIcon = [[BPMessageMashupImageView alloc] initWithFrame: cell.icon.frame];
+    newIcon.userID = suggestion.id;
+    [cell addSubview: newIcon];
+    [cell.icon removeFromSuperview];
+    cell.icon = newIcon;
+
     return cell;
 }
 

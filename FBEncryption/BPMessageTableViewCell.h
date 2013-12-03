@@ -11,6 +11,7 @@
 @interface BPMessageTableViewCell : UITableViewCell
 
 @property IBOutlet BPMessageMashupImageView *messageImage;
+@property IBOutlet UIView *messageImageContainer;
 @property IBOutlet UILabel *previewLabel, *participantsLabel, *timeLabel, *unreadLabel;
 
 @end

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rS3-R9-Ivy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rS3-R9-Ivy">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -259,15 +259,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultUserIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="EBZ-qf-HcK" customClass="BPMessageMashupImageView">
-                                            <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="55" id="Oez-6d-Kst"/>
-                                                <constraint firstAttribute="width" constant="55" id="qNN-dP-HgM"/>
-                                            </constraints>
-                                        </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Bob, Alice" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49G-Gp-Svc">
                                             <rect key="frame" x="63" y="8" width="220" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -289,21 +280,41 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PtV-I2-M4G">
+                                            <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="defaultUserIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="EBZ-qf-HcK" customClass="BPMessageMashupImageView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="55" id="Oez-6d-Kst"/>
+                                                        <constraint firstAttribute="width" constant="55" id="qNN-dP-HgM"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="55" id="BcJ-B2-Bby"/>
+                                                <constraint firstAttribute="width" constant="55" id="wNJ-tp-6cp"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="EBZ-qf-HcK" firstAttribute="leading" secondItem="A9s-HP-V6H" secondAttribute="leading" id="787-3f-ais"/>
-                                        <constraint firstItem="0GZ-q1-UM3" firstAttribute="leading" secondItem="EBZ-qf-HcK" secondAttribute="trailing" constant="8" id="CdV-Cx-4Cr"/>
+                                        <constraint firstItem="PtV-I2-M4G" firstAttribute="leading" secondItem="A9s-HP-V6H" secondAttribute="leading" id="4HW-NJ-nfc"/>
                                         <constraint firstAttribute="trailing" secondItem="ZR5-S3-IPA" secondAttribute="trailing" constant="10" id="KB6-ZY-s5o"/>
                                         <constraint firstItem="49G-Gp-Svc" firstAttribute="top" secondItem="A9s-HP-V6H" secondAttribute="top" constant="8" id="NbK-H2-Cx8"/>
                                         <constraint firstAttribute="trailing" secondItem="0GZ-q1-UM3" secondAttribute="trailing" constant="9" id="OTJ-sG-CmM"/>
                                         <constraint firstAttribute="trailing" secondItem="49G-Gp-Svc" secondAttribute="trailing" constant="50" id="P4M-Ve-nzy"/>
-                                        <constraint firstItem="EBZ-qf-HcK" firstAttribute="top" secondItem="A9s-HP-V6H" secondAttribute="top" id="hnS-fg-DFu"/>
+                                        <constraint firstItem="0GZ-q1-UM3" firstAttribute="leading" secondItem="PtV-I2-M4G" secondAttribute="trailing" constant="8" id="aGR-hu-G88"/>
                                         <constraint firstItem="0GZ-q1-UM3" firstAttribute="top" secondItem="49G-Gp-Svc" secondAttribute="bottom" constant="5" id="hvc-Tb-afr"/>
-                                        <constraint firstItem="49G-Gp-Svc" firstAttribute="leading" secondItem="EBZ-qf-HcK" secondAttribute="trailing" constant="8" id="qEP-FI-oqw"/>
+                                        <constraint firstItem="49G-Gp-Svc" firstAttribute="leading" secondItem="PtV-I2-M4G" secondAttribute="trailing" constant="8" id="uRa-iu-3yt"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="messageImage" destination="EBZ-qf-HcK" id="J9A-UH-UJj"/>
+                                    <outlet property="messageImageContainer" destination="PtV-I2-M4G" id="Mxw-Gb-i9F"/>
                                     <outlet property="participantsLabel" destination="49G-Gp-Svc" id="U8M-4c-tZs"/>
                                     <outlet property="previewLabel" destination="0GZ-q1-UM3" id="PrO-Rp-eDa"/>
                                     <outlet property="timeLabel" destination="ZR5-S3-IPA" id="Rhv-XR-AAH"/>

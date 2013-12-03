@@ -33,12 +33,16 @@ static FCBaseChatRequestManager *instance;
         _xmppStream = [[XMPPStream alloc] initWithFacebookAppId:FBSession.activeSession.appID];
         [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
         
-        NSError *error= nil;
-        if (![_xmppStream connectWithTimeout:DEFAULT_TIMEOUT error:&error]) {
-            NSLog(@"Couldn't connect: %@", error);
-        }
+        [self connect];
     }
     return self;
+}
+-(void) connect
+{
+    NSError *error= nil;
+    if (![_xmppStream connectWithTimeout:DEFAULT_TIMEOUT error:&error]) {
+        NSLog(@"Couldn't connect: %@", error);
+    }
 }
 
 #pragma mark XMPPStream Delegate methods
@@ -146,7 +150,11 @@ static FCBaseChatRequestManager *instance;
 
 #pragma mark send message to Facebook.
 - (void)sendMessageToFacebook:(NSString*)textMessage withFriendFacebookID:(NSString*)friendID
-{    
+{
+    if (!self.xmppStream.isConnected) {
+        [self connect];
+    }
+    
     if([textMessage length] > 0) {
         NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
         [body setStringValue:textMessage];
