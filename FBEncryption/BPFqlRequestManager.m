@@ -15,20 +15,24 @@
 
 static const NSString *fqlUrl = @"https://graph.facebook.com/fql?q=";
 
-+(void)requestThreadIdForUser: (NSString *)name
-                   completion: (void(^)(NSString *threadID))successBlock
++(void)requestThreadIdForUser: (NSString *)userId
+                   completion: (void(^)(NSDictionary *thread))successBlock
                       failure: (void(^)(NSError *error))failureBlock
 {
-    NSString *fql = [NSString stringWithFormat:@"SELECT thread_id from unified_thread  where '%@' in thread_and_participants_name AND not is_group_conversation", name];
+    NSString *fql = [NSString stringWithFormat:@"SELECT thread_id,  updated_time, snippet, snippet_author, unread, recipients from thread  where '%@' in recipients AND folder_id = 0", userId];
 
     AFHTTPRequestOperation *operation = [BPFqlRequestManager operationForFql:fql];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *data = [responseObject objectForKey: @"data"];
-        if (data.count == 0) {
-            successBlock(nil);
+        NSArray *data = [responseObject objectForKey: @"data"];        
+        for (NSDictionary *thread in data) {
+            NSArray *recipients  = [thread objectForKey: @"recipients"];
+            if (recipients.count == 2) {
+                successBlock(thread);
+                return;
+            }
         }
-        NSString *threadID = [data.firstObject objectForKey: @"thread_id"];
-        successBlock(threadID);
+        successBlock(nil);
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error);
     }];

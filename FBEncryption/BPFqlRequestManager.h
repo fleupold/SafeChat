@@ -11,7 +11,7 @@
 @interface BPFqlRequestManager : NSObject
 
 +(void)requestThreadIdForUser: (NSString *)name
-                   completion: (void(^)(NSString *threadID))successBlock
+                   completion: (void(^)(NSDictionary *thread))successBlock
                       failure: (void(^)(NSError *error))failureBlock;
 
 +(void)requestThreadsBefore: (NSDate *)before

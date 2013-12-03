@@ -9,6 +9,7 @@
 #import "BPComposeViewController.h"
 #import "BPRecipientSuggestionTableViewCell.h"
 #import "BPFqlRequestManager.h"
+#import "BPFqlThread.h"
 
 @interface BPComposeViewController ()
 
@@ -61,47 +62,17 @@
 
 -(void)loadThreadForUser:(BPFriend *)user
 {
-    [BPFqlRequestManager requestThreadIdForUser:user.name completion:^(NSString *threadID) {
-        if (threadID) {
-            [self setDetailItemWithThreadID: threadID];
-            return;
+    [BPFqlRequestManager requestThreadIdForUser:user.id completion:^(NSDictionary *thread) {
+        if (thread) {
+            self.detailItem = [BPFqlThread threadFromFBGraphObject: (FBGraphObject *)thread];
+            [self.detailItem update];
+        } else {
+            self.detailItem = [BPFqlThread emptyThreadWith: user];
         }
-        self.detailItem = [BPThread emptyThreadWith: user];
         [self.detailItem prepareForSending];
     } failure:^(NSError *error) {
         NSLog(@"%@", error);
     }];
-}
-    
--(void)setDetailItemWithThreadID: (NSString *)threadID
-{
-    [[FBRequest requestForGraphPath: threadID] startWithCompletionHandler:
-     ^(FBRequestConnection *connection,
-       FBGraphObject *thread,
-       NSError *error) {
-         if (!error) {
-             [self extendDetailItemWith:thread];
-             [self.detailItem prepareForSending];
-         }
-         else {
-             NSLog(@"%@", error);
-         }
-     }];
-}
-
--(void)extendDetailItemWith:(FBGraphObject *)thread
-{
-    if (!self.detailItem) {
-        self.detailItem = [BPThread threadFromFBGraphObject: thread];
-        [self.detailItem prepareForSending];
-        [super extendDetailItemWith:thread];
-        
-        [self scrollToBottomAnimated:NO];
-        self.detailItem.nextPage = [[[thread objectForKey: @"messages"] objectForKey:@"paging"] objectForKey: @"next"];
-    } else {
-        [super extendDetailItemWith:thread];
-    }
-    
 }
 
 #pragma mark - UITextFieldDelegate Methods

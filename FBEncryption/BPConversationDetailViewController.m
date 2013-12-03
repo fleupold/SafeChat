@@ -307,40 +307,8 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     isReloading = YES;
     
     [self.detailItem update];
-    
-    /*
-    if (FBSession.activeSession.isOpen) {
-        [[FBRequest requestForGraphPath: self.detailItem.nextPage] startWithCompletionHandler:
-         ^(FBRequestConnection *connection,
-           FBGraphObject *thread,
-           NSError *error) {
-             if (!error) {
-                 [self extendDetailItemWith:thread];
-             }
-             else {
-                 NSLog(@"%@", error);
-             }
-             isReloading = NO;
-             [self hideSpinner];
-         }];
-    }
-     */
 }
 
--(void)extendDetailItemWith: (FBGraphObject *)thread {
-    NSArray *messages = [thread objectForKey:@"data"];
-    for (FBGraphObject *messageInformation in messages)
-    {
-        BPMessage *message = [BPMessage messageFromFBGraphObject: messageInformation];
-        [self.detailItem.messages insertObject: message atIndex: 0];
-    }
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow: messages.count - 2 inSection:0];
-
-    self.detailItem.nextPage = [[thread objectForKey:@"paging"] objectForKey: @"next"];
-    [self reloadData];
-    
-    [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-}
 
 -(void)showSpinner {
     self.spinner.frame = CGRectMake(self.tableView.frame.size.width/2 - 15, -30, 30, 30);
