@@ -89,6 +89,7 @@
     switch (state) {
         case FBSessionStateOpen: {
             [self registerMe];
+            [self fetchFriends];
             UIViewController *modalViewController = self.window.rootViewController.presentedViewController;
             if ([modalViewController isKindOfClass:[BPFacebookLoginViewController class]]) {
                 [modalViewController dismissViewControllerAnimated:YES completion:nil];
@@ -140,6 +141,24 @@
            NSError *error) {
              if (!error) {
                  [BPFriend createMe: user];
+             }
+         }];
+    }
+}
+
+-(void)fetchFriends
+{
+    if (FBSession.activeSession.isOpen) {
+        [[FBRequest requestForGraphPath:@"me/friends?fields=username,name"] startWithCompletionHandler:
+         ^(FBRequestConnection *connection,
+           NSDictionary *friends,
+           NSError *error) {
+             if (!error) {
+                 for (NSDictionary<FBGraphUser> *friend in [friends objectForKey: @"data"])
+                     [BPFriend findOrCreateFriendWithId: friend.id andName:friend.name];
+             }
+             else {
+                 NSLog(@"%@", error);
              }
          }];
     }
