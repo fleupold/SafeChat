@@ -182,6 +182,7 @@
 - (void) viewDidAppear:(BOOL) animated {
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(resizeHeaderAndFooter)  name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self resizeHeaderAndFooter];
+    [self fetchThreads];
     
     [super viewDidAppear:animated];
 }

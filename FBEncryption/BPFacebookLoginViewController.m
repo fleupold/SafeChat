@@ -31,20 +31,13 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [self.loginView setReadPermissions: @[@"read_mailbox", @"xmpp_login"]];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)performLogin:(id)sender
-{
-    [self.spinner startAnimating];
-    
-    BPAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate openSession];
 }
 
 - (void)loginFailed

@@ -20,6 +20,7 @@
 {
     // Override point for customization after application launch.
     [self.window makeKeyAndVisible];
+    [FBLoginView class];
     [BPJavascriptRuntime getInstance];
     self.navController = (UINavigationController *) self.window.rootViewController;
     
@@ -36,7 +37,10 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return [FBSession.activeSession handleOpenURL:url];
+    BOOL result = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    FBSession *activeSession = [FBSession activeSession];
+    [self sessionStateChanged: activeSession state: activeSession.state error:nil];
+    return result;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

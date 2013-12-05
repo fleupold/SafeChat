@@ -10,6 +10,7 @@
 #import "BPServerRequestManager.h"
 #import "BPFriend.h"
 #import "IonIcons.h"
+#import "BPAppDelegate.h"
 
 @interface BPConfigurationViewController ()
 
@@ -114,6 +115,26 @@
                                        }
                                    }];
 }
+/*
+- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
+    BOOL result = NO;
+    FBSession *session =
+    [[FBSession alloc] initWithAppID:nil
+                         permissions:nil
+                     urlSchemeSuffix:@"foo"
+                  tokenCacheStrategy:nil];
+    
+    if (allowLoginUI ||
+        (session.state == FBSessionStateCreatedTokenLoaded)) {
+        [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
+                completionHandler:
+         ^(FBSession *session, FBSessionState state, NSError *error) {
+             [self sessionStateChanged:session state:state error:error];
+         }];
+        result = session.isOpen;
+    }
+    return result;
+}*/
 
 -(void)alertError: (NSError *)error
 {
@@ -153,6 +174,8 @@
 
 -(void)logoutButtonWasPressed:(id)sender {
     [FBSession.activeSession closeAndClearTokenInformation];
+    BPAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate showLoginView];
 }
 
 -(void)handleBack:(id)sender

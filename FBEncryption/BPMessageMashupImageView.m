@@ -29,7 +29,6 @@ static NSLock *cache_lock;
 -(void)setUserIDs: (NSArray *)userIDs
 {
     [self resetImage];
-    
     if (!cache) {
         cache = [NSMutableDictionary dictionary];
         cache_lock = [[NSLock alloc] init];

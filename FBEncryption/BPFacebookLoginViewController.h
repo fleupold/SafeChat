@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface BPFacebookLoginViewController : UIViewController
 
 @property (weak) IBOutlet UIActivityIndicatorView *spinner;
+@property IBOutlet FBLoginView *loginView;
 
-- (IBAction)performLogin:(id)sender;
 - (void)loginFailed;
 
 @end
