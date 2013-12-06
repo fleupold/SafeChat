@@ -27,6 +27,7 @@ const NSString *BaseUrl = @"http://blockprism2.likescale.com";
     
 +(void)storePublicKey: (NSString *)key
                 forID: (NSString *)facebookID
+       withAccessToke: (NSString *)accessToken
              override: (BOOL) override
            completion: (void(^)(AFHTTPRequestOperation *operation, id responseObject))successBlock
               failure: (void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
@@ -35,7 +36,7 @@ const NSString *BaseUrl = @"http://blockprism2.likescale.com";
     NSString *urlString = [NSString stringWithFormat: @"%@/public_key/facebook/", BaseUrl];
     NSDictionary *params = @{@"facebook_id": facebookID,
                              @"public_key": key,
-                             @"access_token": [FBSession activeSession].accessTokenData,
+                             @"access_token": accessToken,
                              @"override": @(override)};
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

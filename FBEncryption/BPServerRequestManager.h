@@ -18,6 +18,7 @@
     
 +(void)storePublicKey: (NSString *)key
                 forID: (NSString *)facebookID
+       withAccessToke: (NSString *)accessToken
              override: (BOOL) override
            completion: (void(^)(AFHTTPRequestOperation *operation, id responseObject))successBlock
               failure: (void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock;

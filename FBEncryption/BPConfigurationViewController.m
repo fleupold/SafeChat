@@ -111,6 +111,7 @@
     
     [BPServerRequestManager storePublicKey:publicKey
                                      forID:[BPFriend me].username
+                            withAccessToke: token
                                   override: override
                                 completion:^(AFHTTPRequestOperation *operation, id responseObject) {
                                     [self keyPairGenerated];
