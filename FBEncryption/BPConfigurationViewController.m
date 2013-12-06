@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
     [self registerForKeyboardNotifications];
-    
+
     //iconize the navbar
     UIImage *backImage = [IonIcons imageWithIcon:icon_chevron_left
                                   iconColor:[UIColor grayColor]
@@ -89,13 +89,22 @@
     //Hide the keyboard
     [self.passphraseField resignFirstResponder];
     
+    if (!self.limitedAccessToken) {
+        [self openSessionForAuthenticatorAppOverride: NO];
+    }
+    else {
+        [self generateKeyPairWithAccessToken: self.limitedAccessToken override: NO];
+    }
+}
+    
+-(void)generateKeyPairWithAccessToken:(NSString *)token override: (BOOL)override
+{
     //start the activity view
     loadingView.hidden = NO;
     [spinner startAnimating];
     self.navigationItem.hidesBackButton = YES;
     
     //if the sender was an alertView it means we should override the public key
-    BOOL override = [sender isKindOfClass: [UIAlertView class]];
     
     BPJavascriptRuntime *jsRuntime = [BPJavascriptRuntime getInstance];
     NSString *publicKey = [jsRuntime generatePublicKeyWithPassphrase: self.passphraseField.text];
@@ -115,26 +124,56 @@
                                        }
                                    }];
 }
-/*
-- (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI {
-    BOOL result = NO;
-    FBSession *session =
-    [[FBSession alloc] initWithAppID:nil
-                         permissions:nil
-                     urlSchemeSuffix:@"foo"
-                  tokenCacheStrategy:nil];
+
+- (BOOL)openSessionForAuthenticatorAppOverride: (BOOL) override {
+    /*
+     * We need two kind of Access tokens: One that has full rights for reading and sending
+     * messages on behalf of the user. This token may not leave the application due to
+     * privacy concerns.
+     * We also need an accesstoken to validate that the user who is setting the public key
+     * on our server is authenticated with Facebook and authorized to do so.
+     * If we used the first access token for that purpose, the server would be able to read
+     * all unencrypted messages of the user.
+     * 
+     * Therefore, there is another application with minimal rights. The access token for this
+     * application is sent to our server to authenitcate the user.
+     */
+
+    NSString* authenticatorAppId = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AuthenticatorAppId"];
+    NSString* clientAppId = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"];
+
+
+    //We need a custom caching strategy, otherwise the old token will be reused...
+    FBSessionTokenCachingStrategy *cachingStrategy = [[FBSessionTokenCachingStrategy alloc] initWithUserDefaultTokenInformationKeyName: authenticatorAppId];
+    [cachingStrategy clearToken];
+    FBSession *session = [[FBSession alloc] initWithAppID: authenticatorAppId
+                                              permissions:nil
+                                          urlSchemeSuffix:nil
+                                       tokenCacheStrategy:cachingStrategy];
     
-    if (allowLoginUI ||
-        (session.state == FBSessionStateCreatedTokenLoaded)) {
-        [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
-                completionHandler:
-         ^(FBSession *session, FBSessionState state, NSError *error) {
-             [self sessionStateChanged:session state:state error:error];
-         }];
-        result = session.isOpen;
-    }
-    return result;
-}*/
+    //We also need to temporarily make the new session the active session to handle back entrance in our app after login
+    FBSession *mainSession = [FBSession activeSession];
+    FBAccessTokenData *mainToken = mainSession.accessTokenData;
+    [FBSession setActiveSession:session];
+    
+
+    [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
+            completionHandler:
+     ^(FBSession *session, FBSessionState state, NSError *error) {
+         if ([session isOpen]) {
+             self.limitedAccessToken = session.accessTokenData.accessToken;
+             [self generateKeyPairWithAccessToken: self.limitedAccessToken  override: override];
+         }
+         if (session.state != FBSessionStateClosed) {
+             [[FBSession alloc] openFromAccessTokenData: mainToken
+                                  completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                      session.appID = clientAppId;
+                                      [FBSession setActiveSession: session];
+                                  }];
+         }
+     }];
+    return session.isOpen;
+}
 
 -(void)alertError: (NSError *)error
 {
@@ -150,7 +189,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ([alertView.title isEqualToString: @"Wrong Password"] && buttonIndex == 0) {
-        [self generateKeyPair:alertView];
+        [self generateKeyPairWithAccessToken: self.limitedAccessToken override: YES];
         return;
     }
     [self resetPassword: nil];
@@ -225,7 +264,7 @@
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height + 20, 0, 0, 0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     self.scrollView.contentInset = contentInsets;
     self.scrollView.scrollIndicatorInsets = contentInsets;
 }

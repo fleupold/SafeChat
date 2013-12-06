@@ -326,7 +326,7 @@ typedef void (^FBSessionRenewSystemCredentialsHandler)(ACAccountCredentialRenewR
 @property (readonly) FBSessionState state;
 
 /*! @abstract Identifies the Facebook app which the session object represents. */
-@property (readonly, copy) NSString *appID;
+@property (copy) NSString *appID;
 
 /*! @abstract Identifies the URL Scheme Suffix used by the session. This is used when multiple iOS apps share a single Facebook app ID. */
 @property (readonly, copy) NSString *urlSchemeSuffix;

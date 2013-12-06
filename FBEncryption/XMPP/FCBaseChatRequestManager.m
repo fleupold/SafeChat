@@ -30,7 +30,8 @@ static FCBaseChatRequestManager *instance;
 - (id)init
 {
     if (self = [super init]) {
-        _xmppStream = [[XMPPStream alloc] initWithFacebookAppId:FBSession.activeSession.appID];
+        FBSession *activeSession = FBSession.activeSession;
+        _xmppStream = [[XMPPStream alloc] initWithFacebookAppId:activeSession.appID];
         [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
         
         [self connect];

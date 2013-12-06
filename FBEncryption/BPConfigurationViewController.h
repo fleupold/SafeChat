@@ -25,6 +25,8 @@
 @property IBOutlet UIView *securedView;
 @property IBOutlet UIImageView *lock;
 
+@property NSString *limitedAccessToken;
+
 -(IBAction)generateKeyPair:(id)sender;
 -(IBAction)resetPassword:(id)sender;
 

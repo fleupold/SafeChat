@@ -37,10 +37,17 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    BOOL result = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-    FBSession *activeSession = [FBSession activeSession];
-    [self sessionStateChanged: activeSession state: activeSession.state error:nil];
-    return result;
+    NSString* authenticatorAppId = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AuthenticatorAppId"];
+    if ([url.absoluteString hasPrefix: [@"fb" stringByAppendingString: authenticatorAppId]]) {
+        return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    }
+    else {
+        BOOL result = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+        FBSession *activeSession = [FBSession activeSession];
+        [self sessionStateChanged: activeSession state: activeSession.state error:nil];
+    
+        return result;
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -100,7 +107,6 @@
             }
         }
             break;
-        case FBSessionStateClosed:
         case FBSessionStateClosedLoginFailed:
             // Once the user has logged in, we want them to
             // be looking at the root view.

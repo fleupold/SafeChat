@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AuthenticatorAppId</key>
+	<string>218116941675093</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -44,6 +46,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb1378001845774632</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>logo_120</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb218116941675093</string>
 			</array>
 		</dict>
 	</array>
