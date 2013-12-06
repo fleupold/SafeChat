@@ -82,7 +82,7 @@ NSTimeInterval const secondsForTypingIndicator = 10;
 
 -(void)viewDidAppear:(BOOL)animated{
     if (!((BPFqlThread *)self.detailItem).hasLoadedMessages)
-        [self.detailItem update];
+        [self.detailItem loadMore];
 }
  
 - (void)didReceiveMemoryWarning
@@ -201,7 +201,7 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     if ([sender isMe]) {
         BPMessage *message = [self messageForRowAtIndexPath:indexPath];
         if(message.failedToSend) {
-            UIImage *alert = [IonIcons imageWithIcon:icon_alert_circled iconColor:[UIColor grayColor] iconSize:20 imageSize: CGSizeMake(20, 40)];
+            UIImage *alert = [IonIcons imageWithIcon:icon_alert_circled iconColor:[UIColor grayColor] iconSize:20 imageSize: CGSizeMake(40, 40)];
             return [[UIImageView alloc] initWithImage:alert];
         } else if(message.encrypted) {
             UIImage *lock = [IonIcons imageWithIcon:icon_locked iconColor:[UIColor grayColor] iconSize:20 imageSize: CGSizeMake(40, 40)];
@@ -306,7 +306,7 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     [self showSpinner];
     isReloading = YES;
     
-    [self.detailItem update];
+    [self.detailItem loadMore];
 }
 
 

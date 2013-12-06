@@ -8,7 +8,7 @@
 
 #import "BPThread.h"
 
-@interface BPFqlMessage : BPThread
+@interface BPFqlMessage : BPMessage
 +(id)messageFromFBGraphObject: (FBGraphObject *)object;
 
 @end

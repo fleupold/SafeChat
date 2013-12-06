@@ -65,7 +65,7 @@
     [BPFqlRequestManager requestThreadIdForUser:user.id completion:^(NSDictionary *thread) {
         if (thread) {
             self.detailItem = [BPFqlThread threadFromFBGraphObject: (FBGraphObject *)thread];
-            [self.detailItem update];
+            [self.detailItem loadMore];
         } else {
             self.detailItem = [BPFqlThread emptyThreadWith: user];
         }

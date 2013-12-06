@@ -48,7 +48,14 @@
     return self;
 }
 
--(void)update
+-(void)sendMessage: (NSString *)text encrypted: (BOOL)shouldBeEncrypted
+{
+    [super sendMessage:text encrypted:shouldBeEncrypted];
+    //make sure message made it to the server
+    [self performSelector: @selector(update) withObject:nil afterDelay:5];
+}
+
+-(void)loadMore
 {
     NSDate *loadBefore = [NSDate date];
     if (hasLoadedMessages && self.messages.count > 0) {
@@ -57,6 +64,7 @@
     
     [BPFqlRequestManager requestMessagesForThreadId: self.id
                                              before: loadBefore
+                                              after: [NSDate dateWithTimeIntervalSince1970:0]
                                          completion:
      ^(NSDictionary *response) {
          NSMutableArray *newMessages = [NSMutableArray array];
@@ -77,4 +85,54 @@
          NSLog(@"%@", error);
      }];
 }
+
+-(void)update
+{
+    //Find the last message in sync
+    NSPredicate *unsyncPredicate = [NSPredicate predicateWithFormat: @"not SELF.synced == 1"];
+    NSArray *unsyncedMessages = [self.messages filteredArrayUsingPredicate: unsyncPredicate];
+    [self.messages removeObjectsInArray: unsyncedMessages];
+    
+    NSDate *loadAfter = ((BPMessage *)self.messages.lastObject).created;
+    NSDate *loadBefore = [NSDate date];
+    
+    [BPFqlRequestManager requestMessagesForThreadId: self.id
+                                             before: loadBefore
+                                              after: loadAfter
+                                         completion:^(NSDictionary *response) {
+                                             [self handleUpdateResponse: response unsyncedMessages: [unsyncedMessages mutableCopy]];
+                                         } failure:^(NSError *error) {
+                                             [self handleUpdateResponse: [NSDictionary dictionary] unsyncedMessages: [unsyncedMessages mutableCopy]];
+                                             NSLog(@"%@", error);
+                                         }];
+}
+
+-(void)handleUpdateResponse: (NSDictionary *)response unsyncedMessages:(NSMutableArray *)unsyncedMessages
+{
+    NSMutableArray *newlySyncedMessages = [NSMutableArray array];
+    
+    for (NSDictionary *messageDict in [response objectForKey:@"data"]) {
+        BPFqlMessage *message = [BPFqlMessage messageFromFBGraphObject: (FBGraphObject *)messageDict];
+        [self.messages addObject: message];
+        
+        //See if this message is one that hasn't been synced
+        if (![message.from isMe]) {
+            continue;
+        }
+        for (BPMessage *unsyncedMessage in unsyncedMessages) {
+            if ([message.text isEqualToString: unsyncedMessage.text]) {
+                [newlySyncedMessages addObject: unsyncedMessage];
+            }
+        }
+    }
+    
+    //Finally all messages that are still not synced failed to send
+    [unsyncedMessages removeObjectsInArray: newlySyncedMessages];
+    for (BPMessage *unsyncedMessage in unsyncedMessages) {
+        unsyncedMessage.failedToSend = YES;
+    }
+    [self.messages addObjectsFromArray: unsyncedMessages];
+    [self.delegate hasUpdatedThread: self scrollToRow: self.messages.count - 1];
+}
+
 @end

@@ -24,6 +24,7 @@
 
 +(void)requestMessagesForThreadId: (NSString *)threadID
                            before: (NSDate *)before
+                            after: (NSDate *)after
                        completion: (void(^)(NSDictionary *response))successBlock
                           failure: (void(^)(NSError *error))failureBlock;
 @end

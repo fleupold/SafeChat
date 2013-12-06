@@ -45,5 +45,5 @@
 -(void)sendMessage: (NSString *)text encrypted: (BOOL)shouldBeEncrypted;
 -(void)addIncomingMessage: (NSString *)text from: (BPFriend *)friend;
 
--(void)update;
+-(void)loadMore;
 @end

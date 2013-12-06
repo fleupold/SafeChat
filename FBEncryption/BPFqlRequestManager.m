@@ -85,10 +85,11 @@ static const NSString *fqlUrl = @"https://graph.facebook.com/fql?q=";
 
 +(void)requestMessagesForThreadId: (NSString *)threadID
                            before: (NSDate *)before
+                            after: (NSDate *)after
                      completion: (void(^)(NSDictionary *response))successBlock
                         failure: (void(^)(NSError *error))failureBlock
 {
-    NSString *fql = [NSString stringWithFormat:@"SELECT author_id, body, created_time, message_id from message WHERE thread_id=%@ AND created_time < %.0f", threadID, [before timeIntervalSince1970]];
+    NSString *fql = [NSString stringWithFormat:@"SELECT author_id, body, created_time, message_id from message WHERE thread_id=%@ AND created_time < %.0f AND created_time > %.0f", threadID, [before timeIntervalSince1970], [after timeIntervalSince1970]];
     AFHTTPRequestOperation *operation = [BPFqlRequestManager operationForFql:fql];
 
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {

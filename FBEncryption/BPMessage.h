@@ -17,7 +17,7 @@
 @property NSString *id, *text;
 @property NSDate *created;
 @property BPFriend *from;
-@property BOOL failedToSend, encrypted;
+@property BOOL failedToSend, encrypted, synced;
 
 +(id)messageFromFBGraphObject: (FBGraphObject *)object;
 +(id)messageFromText:(NSString *)text;

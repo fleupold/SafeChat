@@ -11,7 +11,7 @@
 #import "BPJavascriptRuntime.h"
 
 @implementation BPMessage
-@synthesize id, created, from, failedToSend, encrypted;
+@synthesize id, created, from, failedToSend, encrypted, synced;
 
 +(id)messageFromFBGraphObject: (FBGraphObject *)object {
     BPMessage *message = [[BPMessage alloc] init];
@@ -34,6 +34,7 @@
     message.from = [BPFriend me];
     message.created = [NSDate date];
     message.text = text;
+    message.synced = NO;
     return message;
 }
 
@@ -42,6 +43,7 @@
     self = [super init];
     self.failedToSend = NO;
     self.encrypted = NO;
+    self.synced = YES;
     return self;
 }
 

@@ -193,7 +193,7 @@
     [self.messages addObject:newMessage];
 }
 
--(void)update
+-(void)loadMore
 {
     if (FBSession.activeSession.isOpen) {
         [[FBRequest requestForGraphPath: self.id] startWithCompletionHandler:
