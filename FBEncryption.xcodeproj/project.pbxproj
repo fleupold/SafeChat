@@ -132,6 +132,9 @@
 		08689376182A57CA0087048C /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08689372182A57CA0087048C /* ionicons.ttf */; };
 		08689377182A57CA0087048C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 08689373182A57CA0087048C /* LICENSE */; };
 		08689378182A57CA0087048C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 08689374182A57CA0087048C /* README.md */; };
+		086A05F61853952300D26488 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 086A05F51853952300D26488 /* Default-568h@2x.png */; };
+		086A05F9185395AB00D26488 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 086A05F7185395AB00D26488 /* splash.png */; };
+		086A05FA185395AB00D26488 /* splash_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 086A05F8185395AB00D26488 /* splash_small.png */; };
 		0873370918150CC5004A0AE3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0873370818150CC5004A0AE3 /* Foundation.framework */; };
 		0873370B18150CC5004A0AE3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0873370A18150CC5004A0AE3 /* CoreGraphics.framework */; };
 		0873370D18150CC5004A0AE3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0873370C18150CC5004A0AE3 /* UIKit.framework */; };
@@ -376,6 +379,11 @@
 		08689372182A57CA0087048C /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
 		08689373182A57CA0087048C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		08689374182A57CA0087048C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		086A05F3185394CF00D26488 /* splash_4inch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_4inch.png; sourceTree = "<group>"; };
+		086A05F4185394D800D26488 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
+		086A05F51853952300D26488 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		086A05F7185395AB00D26488 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
+		086A05F8185395AB00D26488 /* splash_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_small.png; sourceTree = "<group>"; };
 		0873370518150CC5004A0AE3 /* FBEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBEncryption.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0873370818150CC5004A0AE3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0873370A18150CC5004A0AE3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -495,6 +503,8 @@
 		0857545E1817FA7C006C1DD9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				086A05F7185395AB00D26488 /* splash.png */,
+				086A05F8185395AB00D26488 /* splash_small.png */,
 				0850A013183A434800D6B22E /* app_icon */,
 				0868936E182A57CA0087048C /* ionicons */,
 				08575A0B181A6D81006C1DD9 /* lock_closed.png */,
@@ -943,6 +953,9 @@
 		087336FC18150CC5004A0AE3 = {
 			isa = PBXGroup;
 			children = (
+				086A05F51853952300D26488 /* Default-568h@2x.png */,
+				086A05F4185394D800D26488 /* splash.png */,
+				086A05F3185394CF00D26488 /* splash_4inch.png */,
 				0873370E18150CC5004A0AE3 /* FBEncryption */,
 				0873373018150CC5004A0AE3 /* FBEncryptionTests */,
 				0873370718150CC5004A0AE3 /* Frameworks */,
@@ -1130,10 +1143,12 @@
 				0860F87F1830D31F007A63EE /* bubble-classic-blue.png in Resources */,
 				0850A01E183A44A700D6B22E /* logo_80.png in Resources */,
 				0860F8931830D31F007A63EE /* send-button-pressed.png in Resources */,
+				086A05F61853952300D26488 /* Default-568h@2x.png in Resources */,
 				0860F88A1830D31F007A63EE /* bubble-classic-square-blue@2x.png in Resources */,
 				08689376182A57CA0087048C /* ionicons.ttf in Resources */,
 				0873372418150CC5004A0AE3 /* Images.xcassets in Resources */,
 				0873371318150CC5004A0AE3 /* InfoPlist.strings in Resources */,
+				086A05FA185395AB00D26488 /* splash_small.png in Resources */,
 				0873371C18150CC5004A0AE3 /* Main.storyboard in Resources */,
 				08689377182A57CA0087048C /* LICENSE in Resources */,
 				08689378182A57CA0087048C /* README.md in Resources */,
@@ -1158,6 +1173,7 @@
 				0860F8941830D31F007A63EE /* send-button-pressed@2x.png in Resources */,
 				0860F8891830D31F007A63EE /* bubble-classic-square-blue.png in Resources */,
 				0850A01D183A44A700D6B22E /* logo_58.png in Resources */,
+				086A05F9185395AB00D26488 /* splash.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1383,7 +1399,6 @@
 		0873373B18150CC5004A0AE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/FBEncryption,
@@ -1409,7 +1424,6 @@
 		0873373C18150CC5004A0AE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/FBEncryption,
