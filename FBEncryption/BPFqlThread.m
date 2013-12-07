@@ -52,7 +52,8 @@
 {
     [super sendMessage:text encrypted:shouldBeEncrypted];
     //make sure message made it to the server
-    [self performSelector: @selector(update) withObject:nil afterDelay:5];
+    [self performSelector: @selector(update) withObject:nil afterDelay: 3];
+    [self performSelector: @selector(updateAndInvalidateUnsyncedMessages:) withObject:[NSNumber numberWithBool: YES] afterDelay: DEFAULT_TIMEOUT];
 }
 
 -(void)loadMore
@@ -86,7 +87,11 @@
      }];
 }
 
--(void)update
+-(void)update {
+    [self updateAndInvalidateUnsyncedMessages: NO];
+}
+
+-(void)updateAndInvalidateUnsyncedMessages: (BOOL)invalidate
 {
     //Find the last message in sync
     NSPredicate *unsyncPredicate = [NSPredicate predicateWithFormat: @"(SELF.from.isMe == 1) AND (not SELF.synced == 1)"];
@@ -100,14 +105,14 @@
                                              before: loadBefore
                                               after: loadAfter
                                          completion:^(NSDictionary *response) {
-                                             [self handleUpdateResponse: response unsyncedMessages: [unsyncedMessages mutableCopy]];
+                                             [self handleUpdateResponse: response unsyncedMessages: [unsyncedMessages mutableCopy] invalidate: invalidate];
                                          } failure:^(NSError *error) {
-                                             [self handleUpdateResponse: [NSDictionary dictionary] unsyncedMessages: [unsyncedMessages mutableCopy]];
+                                             [self handleUpdateResponse: [NSDictionary dictionary] unsyncedMessages: [unsyncedMessages mutableCopy] invalidate: invalidate];
                                              NSLog(@"%@", error);
                                          }];
 }
 
--(void)handleUpdateResponse: (NSDictionary *)response unsyncedMessages:(NSMutableArray *)unsyncedMessages
+-(void)handleUpdateResponse: (NSDictionary *)response unsyncedMessages:(NSMutableArray *)unsyncedMessages invalidate: (BOOL)invalidate
 {
     NSMutableArray *newlySyncedMessages = [NSMutableArray array];
     
@@ -128,8 +133,10 @@
     
     //Finally all messages that are still not synced failed to send
     [unsyncedMessages removeObjectsInArray: newlySyncedMessages];
-    for (BPMessage *unsyncedMessage in unsyncedMessages) {
-        unsyncedMessage.failedToSend = YES;
+    if (invalidate){
+        for (BPMessage *unsyncedMessage in unsyncedMessages) {
+            unsyncedMessage.failedToSend = YES;
+        }
     }
     [self.messages addObjectsFromArray: unsyncedMessages];
     [self.delegate hasUpdatedThread: self scrollToRow: self.messages.count - 1];

@@ -298,7 +298,8 @@ NSTimeInterval const secondsForTypingIndicator = 10;
         cell.bubbleView.textColor = [UIColor whiteColor];
     }
     
-    if (![self messageForRowAtIndexPath: indexPath].synced) {
+    BPMessage *message = [self messageForRowAtIndexPath: indexPath];
+    if ([message.from isMe] && !message.synced) {
         cell.bubbleView.alpha = 0.6;
     }
 }
