@@ -25,6 +25,13 @@
 
 @implementation BPConversationMasterViewController
 
+-(NSMutableArray *)objects {
+    if (!_objects) {
+        _objects = [NSMutableArray array];
+    }
+    return _objects;
+}
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -68,6 +75,8 @@
     [self checkEncryptionConfigured];
     
     [self performSelector:@selector(fetchThreads) withObject:nil afterDelay:0.5];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMessage:) name:@"didReceiveMessage" object: nil];
 }
 
 -(void)checkEncryptionConfigured
@@ -95,16 +104,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
-{
-    if (!_objects) {
-        _objects = [[NSMutableArray alloc] init];
-    }
-    [_objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -114,14 +113,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _objects.count;
+    return self.objects.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BPMessageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"messageCell" forIndexPath:indexPath];
    
-    BPThread *object = _objects[indexPath.row];
+    BPThread *object = self.objects[indexPath.row];
     cell.participantsLabel.text = [object participantsPreview];
     cell.previewLabel.text = [object textPreview];
     cell.timeLabel.text = [BPFacebookDateFormatter prettyPrint: object.updated_at];
@@ -191,7 +190,7 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        BPFqlThread *object = _objects[indexPath.row];
+        BPFqlThread *object = self.objects[indexPath.row];
         
         BPConversationDetailViewController *destination = ((BPConversationDetailViewController *)[segue destinationViewController]);
         if(destination.detailItem == nil)
@@ -207,6 +206,10 @@
 -(void)composeButtonWasPressed:(id)sender
 {
     [self performSegueWithIdentifier:@"composeMessage" sender:sender];
+}
+
+-(void)didReceiveMessage:(NSNotification *)notification {
+    [self fetchThreads];
 }
 
 -(void)fetchThreads
@@ -225,12 +228,20 @@
      * by the boolean parameter
     */
     
-    NSDate *threadsBefore = [NSDate date];
+    NSDate *threadsBefore;
+    NSDate *threadsAfter;
     if (loadingMore) {
-        threadsBefore = ((BPThread *)[_objects lastObject]).updated_at;
+        threadsAfter = [NSDate dateWithTimeIntervalSince1970: 0];
+        threadsBefore = ((BPThread *)[self.objects lastObject]).updated_at;
+    }
+    else {
+        threadsAfter = lastUpdated;
+        threadsBefore = [NSDate date];
+        lastUpdated = threadsBefore;
     }
     
     [BPFqlRequestManager requestThreadsBefore: threadsBefore
+                                        after: threadsAfter
                                withCompletion:
      ^(NSDictionary *response) {
          FBGraphObject *threadInformation;
@@ -242,70 +253,56 @@
              NSArray *recipients = [threadInformation objectForKey:@"recipients"];
              [userIDs unionSet: [NSSet setWithArray: recipients]];
          }
-         [BPFqlRequestManager createUsersWithIDs: userIDs
-                                      completion:
-          ^{
-              if (!loadingMore)
-                  _objects = [NSMutableArray array];
-              
-              for (threadInformation in [response objectForKey:@"data"])
-              {
-                  BPThread *thread = [BPFqlThread threadFromFBGraphObject: threadInformation];
-                  [_objects addObject: thread];
-              }
-              //adjustments that are necessary after first loading
-              self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-              self.footerView.hidden = NO;
-              
-              [self.tableView reloadData];
+         if (userIDs.count > 0) {
+             [BPFqlRequestManager createUsersWithIDs: userIDs
+                                          completion:
+              ^{
+                  [self handleThreadsReceivedAndMissingUsersCreated:response wasLoadingMore:loadingMore];
 
-              if (loadingMore)
-              {
-                  [self loadMoreCompleted];
-              } else {
-                  [self refreshCompleted];
-              }
-
-          } failure:
-          ^(NSError *error) {
-              NSLog(@"%@", error);
-          }];
+              } failure:
+              ^(NSError *error) {
+                  NSLog(@"%@", error);
+              }];
+         }
+         else {
+             [self handleThreadsReceivedAndMissingUsersCreated: response wasLoadingMore:loadingMore];
+         }
      }
                                       failure:
      ^(NSError *error) {
           NSLog(@"%@", error);
       }];
-    
-    /*
-    //Trigger the Facebook REST API call to get a list of all message threads
-    if (FBSession.activeSession.isOpen) {
-        [[FBRequest requestForGraphPath: @"me/inbox"] startWithCompletionHandler:
-         ^(FBRequestConnection *connection,
-           NSDictionary<FBGraphUser> *inbox,
-           NSError *error) {
-             if (!error) {
-                 _objects = [NSMutableArray array];
-                 for (FBGraphObject *threadInformation in [inbox objectForKey:@"data"])
-                 {
-                     BPThread *thread = [BPInboxThread threadFromFBGraphObject: threadInformation];
-                     [_objects addObject: thread];
-                 }
-                 [self setNextPage: [[inbox objectForKey:@"paging"] objectForKey: @"next"]];
-                 
-                 //adjustments that are necessary after first loading
-                 self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-                 self.footerView.hidden = NO;
-                 
-                 [self.tableView reloadData];
-                 [self refreshCompleted];
-             }
-             else {
-                 NSLog(@"%@", error);
-             }
-         }];
+}
+
+-(void)handleThreadsReceivedAndMissingUsersCreated:(NSDictionary *)response wasLoadingMore:(BOOL)loadingMore
+{
+    for (FBGraphObject *threadInformation in [response objectForKey:@"data"])
+    {
+        BPThread *thread = [BPFqlThread threadFromFBGraphObject: threadInformation];
+        NSInteger index = [self.objects indexOfObject: thread];
+        if (index == NSNotFound) {
+            [self.objects addObject: thread];
+        }
+        else {
+            BPFqlThread *savedThread = [self.objects objectAtIndex: index];
+            [savedThread updateWithThread: thread];
+        }
     }
-    NSLog(@"%@", [FBSession activeSession].accessTokenData);
-    */
+    NSSortDescriptor *sortByDate = [[NSSortDescriptor alloc] initWithKey: @"updated_at" ascending: NO];
+    [self.objects sortUsingDescriptors: @[sortByDate]];
+    
+    //adjustments that are necessary after first loading
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.footerView.hidden = NO;
+    
+    [self.tableView reloadData];
+    
+    if (loadingMore)
+    {
+        [self loadMoreCompleted];
+    } else {
+        [self refreshCompleted];
+    }
 }
 
 -(void)setNextPage: (NSString *)page

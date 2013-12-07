@@ -89,7 +89,7 @@
 -(void)update
 {
     //Find the last message in sync
-    NSPredicate *unsyncPredicate = [NSPredicate predicateWithFormat: @"not SELF.synced == 1"];
+    NSPredicate *unsyncPredicate = [NSPredicate predicateWithFormat: @"(SELF.from.isMe == 1) AND (not SELF.synced == 1)"];
     NSArray *unsyncedMessages = [self.messages filteredArrayUsingPredicate: unsyncPredicate];
     [self.messages removeObjectsInArray: unsyncedMessages];
     
@@ -134,5 +134,14 @@
     [self.messages addObjectsFromArray: unsyncedMessages];
     [self.delegate hasUpdatedThread: self scrollToRow: self.messages.count - 1];
 }
+
+-(void)updateWithThread: (BPThread *)newThread
+{
+    self.updated_at = newThread.updated_at;
+    self.unseen = newThread.unseen;
+    self.unread = newThread.unread;
+    [self update];
+}
+
 
 @end

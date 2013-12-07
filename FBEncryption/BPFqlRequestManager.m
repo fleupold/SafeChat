@@ -41,15 +41,17 @@ static const NSString *fqlUrl = @"https://graph.facebook.com/fql?q=";
 }
 
 +(void)requestThreadsBefore: (NSDate *)before
+                      after: (NSDate *)after
              withCompletion: (void(^)(NSDictionary *response))successBlock
                     failure: (void(^)(NSError *error))failureBlock
 {
-    NSString *fql = [NSString stringWithFormat: @"SELECT thread_id, updated_time, snippet, snippet_author, unread, recipients FROM thread where folder_id = 0 AND updated_time < %.0f ORDER BY updated_time DESC", [before timeIntervalSince1970]];
+    NSString *fql = [NSString stringWithFormat: @"SELECT thread_id, updated_time, snippet, snippet_author, unread, recipients FROM thread where folder_id = 0 AND updated_time < %.0f AND updated_time >= %.0f ORDER BY updated_time DESC", [before timeIntervalSince1970], [after timeIntervalSince1970]];
     AFHTTPRequestOperation *operation = [BPFqlRequestManager operationForFql:fql];
     
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", fql);
         failureBlock(error);
     }];
     

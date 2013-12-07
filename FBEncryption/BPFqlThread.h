@@ -11,4 +11,8 @@
 @interface BPFqlThread : BPThread
 
 @property BOOL hasLoadedMessages;
+
+-(void)updateWithThread: (BPThread *)newThread;
+-(void)update;
+
 @end

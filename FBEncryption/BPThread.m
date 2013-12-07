@@ -210,4 +210,9 @@
          }];
     }
 }
+
+-(BOOL)isEqual:(id)object
+{
+    return [object isMemberOfClass: [self class]] && [self.id isEqualToString: ((BPThread *)object).id];
+}
 @end

@@ -15,6 +15,7 @@
                       failure: (void(^)(NSError *error))failureBlock;
 
 +(void)requestThreadsBefore: (NSDate *)before
+                      after: (NSDate *)after
              withCompletion: (void(^)(NSDictionary *response))successBlock
                     failure: (void(^)(NSError *error))failureBlock;
 

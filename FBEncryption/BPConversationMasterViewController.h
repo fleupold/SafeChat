@@ -15,6 +15,7 @@
     @protected
     
     NSString *nextPage;
+    NSDate *lastUpdated;
 }
 
 @property IBOutlet STHeaderView *tableHeaderView;
