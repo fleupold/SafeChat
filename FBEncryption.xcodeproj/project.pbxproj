@@ -17,7 +17,6 @@
 		0850A01D183A44A700D6B22E /* logo_58.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01A183A44A700D6B22E /* logo_58.png */; };
 		0850A01E183A44A700D6B22E /* logo_80.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01B183A44A700D6B22E /* logo_80.png */; };
 		0850A01F183A44A700D6B22E /* logo_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01C183A44A700D6B22E /* logo_120.png */; };
-		085754471816AB92006C1DD9 /* cryptico.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 085754461816AB92006C1DD9 /* cryptico.min.js */; };
 		0857544D1817BB17006C1DD9 /* BPFacebookLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */; };
 		0857544F1817BD77006C1DD9 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0857544E1817BD77006C1DD9 /* FacebookSDK.framework */; };
 		085754531817E632006C1DD9 /* BPThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 085754521817E632006C1DD9 /* BPThread.m */; };
@@ -83,10 +82,6 @@
 		08575A09181A65A9006C1DD9 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 085759FF181A65A9006C1DD9 /* AFURLResponseSerialization.m */; };
 		08575A0A181A65A9006C1DD9 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08575A01181A65A9006C1DD9 /* AFURLSessionManager.m */; };
 		08575A0C181A6D81006C1DD9 /* lock_closed.png in Resources */ = {isa = PBXBuildFile; fileRef = 08575A0B181A6D81006C1DD9 /* lock_closed.png */; };
-		08575A12181BE468006C1DD9 /* ec.js in Sources */ = {isa = PBXBuildFile; fileRef = 08575A0E181BE468006C1DD9 /* ec.js */; };
-		08575A13181BE468006C1DD9 /* jsbn.js in Sources */ = {isa = PBXBuildFile; fileRef = 08575A0F181BE468006C1DD9 /* jsbn.js */; };
-		08575A14181BE468006C1DD9 /* jsbn2.js in Sources */ = {isa = PBXBuildFile; fileRef = 08575A10181BE468006C1DD9 /* jsbn2.js */; };
-		08575A15181BE468006C1DD9 /* sec.js in Sources */ = {isa = PBXBuildFile; fileRef = 08575A11181BE468006C1DD9 /* sec.js */; };
 		08575A16181BF2C1006C1DD9 /* ec.js in Resources */ = {isa = PBXBuildFile; fileRef = 08575A0E181BE468006C1DD9 /* ec.js */; };
 		08575A17181BF2C1006C1DD9 /* jsbn.js in Resources */ = {isa = PBXBuildFile; fileRef = 08575A0F181BE468006C1DD9 /* jsbn.js */; };
 		08575A18181BF2C1006C1DD9 /* jsbn2.js in Resources */ = {isa = PBXBuildFile; fileRef = 08575A10181BE468006C1DD9 /* jsbn2.js */; };
@@ -152,9 +147,7 @@
 		0873372D18150CC5004A0AE3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0873370C18150CC5004A0AE3 /* UIKit.framework */; };
 		0873373518150CC5004A0AE3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0873373318150CC5004A0AE3 /* InfoPlist.strings */; };
 		0873373718150CC5004A0AE3 /* FBEncryptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0873373618150CC5004A0AE3 /* FBEncryptionTests.m */; };
-		08B7A4B51827CC8A003C0B51 /* encryption.js in Sources */ = {isa = PBXBuildFile; fileRef = 08B7A4B41827CC8A003C0B51 /* encryption.js */; };
 		08B7A4B61827CCBB003C0B51 /* encryption.js in Resources */ = {isa = PBXBuildFile; fileRef = 08B7A4B41827CC8A003C0B51 /* encryption.js */; };
-		08B7A4B818291702003C0B51 /* gibberish-aes-1.0.0.min.js in Sources */ = {isa = PBXBuildFile; fileRef = 08B7A4B718291702003C0B51 /* gibberish-aes-1.0.0.min.js */; };
 		08B7A4B91829170F003C0B51 /* gibberish-aes-1.0.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 08B7A4B718291702003C0B51 /* gibberish-aes-1.0.0.min.js */; };
 /* End PBXBuildFile section */
 
@@ -186,7 +179,6 @@
 		0850A01A183A44A700D6B22E /* logo_58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_58.png; sourceTree = "<group>"; };
 		0850A01B183A44A700D6B22E /* logo_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_80.png; sourceTree = "<group>"; };
 		0850A01C183A44A700D6B22E /* logo_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_120.png; sourceTree = "<group>"; };
-		085754461816AB92006C1DD9 /* cryptico.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cryptico.min.js; path = ../cryptico.min.js; sourceTree = "<group>"; };
 		0857544B1817BB17006C1DD9 /* BPFacebookLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPFacebookLoginViewController.h; sourceTree = "<group>"; };
 		0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPFacebookLoginViewController.m; sourceTree = "<group>"; };
 		0857544E1817BD77006C1DD9 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -1015,7 +1007,6 @@
 			children = (
 				08575A0D181BE468006C1DD9 /* Javascript */,
 				0857545E1817FA7C006C1DD9 /* images */,
-				085754461816AB92006C1DD9 /* cryptico.min.js */,
 				08575461181802A0006C1DD9 /* BPEncryptedObject.h */,
 				08575462181802A0006C1DD9 /* BPEncryptedObject.m */,
 				0873371018150CC5004A0AE3 /* FBEncryption-Info.plist */,
@@ -1157,7 +1148,6 @@
 				0860F8971830D31F007A63EE /* message-received.aiff in Resources */,
 				0860F8801830D31F007A63EE /* bubble-classic-blue@2x.png in Resources */,
 				085759DE1819622E006C1DD9 /* README.txt in Resources */,
-				085754471816AB92006C1DD9 /* cryptico.min.js in Resources */,
 				0860F8811830D31F007A63EE /* bubble-classic-gray.png in Resources */,
 				0860F8961830D31F007A63EE /* send-button@2x.png in Resources */,
 				08575A0C181A6D81006C1DD9 /* lock_closed.png in Resources */,
@@ -1202,7 +1192,6 @@
 				0857546618180C36006C1DD9 /* BPJavascriptRuntime.m in Sources */,
 				08575463181802A0006C1DD9 /* BPEncryptedObject.m in Sources */,
 				0860F87A1830D31F007A63EE /* JSDismissiveTextView.m in Sources */,
-				08575A12181BE468006C1DD9 /* ec.js in Sources */,
 				08575A08181A65A9006C1DD9 /* AFURLRequestSerialization.m in Sources */,
 				08575A0A181A65A9006C1DD9 /* AFURLSessionManager.m in Sources */,
 				0857545D1817EEDB006C1DD9 /* BPFriend.m in Sources */,
@@ -1212,14 +1201,12 @@
 				085759C41819622E006C1DD9 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				0850A0011833CA4900D6B22E /* BPFqlRequestManager.m in Sources */,
 				0860F8761830D31F007A63EE /* JSAvatarImageFactory.m in Sources */,
-				08575A13181BE468006C1DD9 /* jsbn.js in Sources */,
 				0860F8751830D31F007A63EE /* UIImage+JSMessagesView.m in Sources */,
 				08575A02181A65A9006C1DD9 /* AFHTTPRequestOperation.m in Sources */,
 				085759D51819622E006C1DD9 /* XMPPStringPrep.m in Sources */,
 				0860F82D182BA559007A63EE /* STHeaderView.m in Sources */,
 				085754531817E632006C1DD9 /* BPThread.m in Sources */,
 				085759E21819622E006C1DD9 /* DDXMLNode.m in Sources */,
-				08575A14181BE468006C1DD9 /* jsbn2.js in Sources */,
 				085759DD1819622E006C1DD9 /* DispatchQueueLogFormatter.m in Sources */,
 				0860F8781830D31F007A63EE /* JSBubbleMessageCell.m in Sources */,
 				085759D31819622E006C1DD9 /* XMPPIDTracker.m in Sources */,
@@ -1235,7 +1222,6 @@
 				085759CC1819622E006C1DD9 /* XMPPModule.m in Sources */,
 				08575469181813DF006C1DD9 /* BPConfigurationViewController.m in Sources */,
 				0860F833182BE9CF007A63EE /* BPMessageMashupImageView.m in Sources */,
-				08B7A4B51827CC8A003C0B51 /* encryption.js in Sources */,
 				0860F87B1830D31F007A63EE /* JSMessageInputView.m in Sources */,
 				085759DB1819622E006C1DD9 /* DDTTYLogger.m in Sources */,
 				085759CE1819622E006C1DD9 /* XMPPPresence.m in Sources */,
@@ -1248,7 +1234,6 @@
 				085759CA1819622E006C1DD9 /* XMPPJID.m in Sources */,
 				0850A0041837ED8800D6B22E /* BPInboxThread.m in Sources */,
 				085759D41819622E006C1DD9 /* XMPPSRVResolver.m in Sources */,
-				08575A15181BE468006C1DD9 /* sec.js in Sources */,
 				085754C118195A7F006C1DD9 /* FCBaseChatRequestManager.m in Sources */,
 				0860F87C1830D31F007A63EE /* JSMessageSoundEffect.m in Sources */,
 				085759D91819622E006C1DD9 /* DDFileLogger.m in Sources */,
@@ -1261,7 +1246,6 @@
 				0873371518150CC5004A0AE3 /* main.m in Sources */,
 				08575A09181A65A9006C1DD9 /* AFURLResponseSerialization.m in Sources */,
 				085759C51819622E006C1DD9 /* NSData+XMPP.m in Sources */,
-				08B7A4B818291702003C0B51 /* gibberish-aes-1.0.0.min.js in Sources */,
 				08575A05181A65A9006C1DD9 /* AFNetworkReachabilityManager.m in Sources */,
 				085759ED181A5A9D006C1DD9 /* BPServerRequestManager.m in Sources */,
 				0860F8771830D31F007A63EE /* JSBubbleImageViewFactory.m in Sources */,

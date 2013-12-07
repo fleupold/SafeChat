@@ -48,7 +48,6 @@ static BPJavascriptRuntime *instance;
     _context = [[JSContext alloc] init];
     
     //Load all Javascript files
-    NSString *cryptico_js = [[NSBundle mainBundle] pathForResource:@"cryptico.min" ofType:@"js"];
     NSString *encryption_js = [[NSBundle mainBundle] pathForResource:@"encryption" ofType:@"js"];
     
     NSString *ec_js = [[NSBundle mainBundle] pathForResource:@"ec" ofType:@"js"];
@@ -58,15 +57,15 @@ static BPJavascriptRuntime *instance;
     
     NSString *gibberish_js = [[NSBundle mainBundle] pathForResource:@"gibberish-aes-1.0.0.min" ofType:@"js"];
     
-    NSMutableString *script = [NSMutableString stringWithContentsOfFile:cryptico_js encoding:NSUTF8StringEncoding error:nil];
-    [script appendString:[NSString stringWithContentsOfFile:gibberish_js encoding:NSUTF8StringEncoding error:NULL]];
+    NSMutableString *script = [NSMutableString stringWithContentsOfFile:gibberish_js encoding:NSUTF8StringEncoding error:nil];
     [script appendString:[NSString stringWithContentsOfFile:encryption_js encoding:NSUTF8StringEncoding error:NULL]];
     [script appendString:[NSString stringWithContentsOfFile:ec_js encoding:NSUTF8StringEncoding error:NULL]];
     [script appendString:[NSString stringWithContentsOfFile:jsbn_js encoding:NSUTF8StringEncoding error:NULL]];
     [script appendString:[NSString stringWithContentsOfFile:jsbn2_js encoding:NSUTF8StringEncoding error:NULL]];
     [script appendString:[NSString stringWithContentsOfFile:sec_js encoding:NSUTF8StringEncoding error:NULL]];
     
-    JSValue *result = [_context evaluateScript: script];
+    //JSValue *result = [_context evaluateScript: script];
+    [_context evaluateScript: script];
     
     return [super init];
 }
