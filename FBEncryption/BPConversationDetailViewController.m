@@ -356,8 +356,9 @@ NSTimeInterval const secondsForTypingIndicator = 10;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Encryption not available"
                                                         message:@"Tell your friend!"
                                                        delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Ok",nil];
+        alert.delegate = self;
         [alert show];
         return;
     }
@@ -368,6 +369,15 @@ NSTimeInterval const secondsForTypingIndicator = 10;
         self.encryptionEnabled = YES;
         [sender setImage: [self lockedImage] forState:UIControlStateNormal];
     }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != 1)
+        return;
+    
+    self.messageInputView.textView.text = [self.messageInputView.textView.text stringByAppendingString: @"SafeChat.IM Encrypted Facebook Messenger\nwww.safechat.im"];
+    self.messageInputView.sendButton.enabled = YES;
 }
 
 -(UIImage *)lockedImage
