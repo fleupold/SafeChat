@@ -297,6 +297,10 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     if(cell.messageType == JSBubbleMessageTypeOutgoing) {
         cell.bubbleView.textColor = [UIColor whiteColor];
     }
+    
+    if (![self messageForRowAtIndexPath: indexPath].synced) {
+        cell.bubbleView.alpha = 0.6;
+    }
 }
 
 - (void)loadMore {
