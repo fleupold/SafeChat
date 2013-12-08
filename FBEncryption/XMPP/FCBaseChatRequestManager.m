@@ -8,6 +8,7 @@
 
 #import "FCBaseChatRequestManager.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface FCBaseChatRequestManager ()
 @end
@@ -119,6 +120,12 @@ static FCBaseChatRequestManager *instance;
     // we recived message
     NSLog(@"Message received: %@", message.description);
     [[NSNotificationCenter defaultCenter] postNotificationName: @"didReceiveMessage" object:message];
+
+    //make some noise
+    if(message.body) {
+        AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
+        [self playSound: @"message-received"];
+    }d
 }
 
 -(void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error {
@@ -133,6 +140,7 @@ static FCBaseChatRequestManager *instance;
 }
 
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message {
+    [self playSound: @"message-sent"];
     NSLog(@"sent");
 }
 
@@ -164,6 +172,14 @@ static FCBaseChatRequestManager *instance;
         [message addChild:body];
         [self.xmppStream sendElement:message];
     }
+}
+
+-(void)playSound: (NSString *)filename
+{
+    SystemSoundID completeSound;
+    NSURL *audioPath = [[NSBundle mainBundle] URLForResource:filename withExtension:@"aiff"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)audioPath, &completeSound);
+    AudioServicesPlaySystemSound (completeSound);
 }
 
 @end

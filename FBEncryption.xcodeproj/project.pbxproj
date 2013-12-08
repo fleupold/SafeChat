@@ -1096,6 +1096,14 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Felix Leupold";
 				TargetAttributes = {
+					0873370418150CC5004A0AE3 = {
+						DevelopmentTeam = J62B27W3QR;
+						SystemCapabilities = {
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+						};
+					};
 					0873372818150CC5004A0AE3 = {
 						TestTargetID = 0873370418150CC5004A0AE3;
 					};
@@ -1399,6 +1407,8 @@
 		0873373B18150CC5004A0AE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/FBEncryption,
@@ -1417,6 +1427,7 @@
 					/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1424,6 +1435,8 @@
 		0873373C18150CC5004A0AE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/FBEncryption,
@@ -1442,6 +1455,7 @@
 					/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
