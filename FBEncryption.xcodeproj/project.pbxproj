@@ -135,6 +135,8 @@
 		086A05F61853952300D26488 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 086A05F51853952300D26488 /* Default-568h@2x.png */; };
 		086A05F9185395AB00D26488 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 086A05F7185395AB00D26488 /* splash.png */; };
 		086A05FA185395AB00D26488 /* splash_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 086A05F8185395AB00D26488 /* splash_small.png */; };
+		086A06001854B18600D26488 /* PDKeychainBindings.m in Sources */ = {isa = PBXBuildFile; fileRef = 086A05FD1854B18600D26488 /* PDKeychainBindings.m */; };
+		086A06011854B18600D26488 /* PDKeychainBindingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086A05FF1854B18600D26488 /* PDKeychainBindingsController.m */; };
 		0873370918150CC5004A0AE3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0873370818150CC5004A0AE3 /* Foundation.framework */; };
 		0873370B18150CC5004A0AE3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0873370A18150CC5004A0AE3 /* CoreGraphics.framework */; };
 		0873370D18150CC5004A0AE3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0873370C18150CC5004A0AE3 /* UIKit.framework */; };
@@ -384,6 +386,10 @@
 		086A05F51853952300D26488 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		086A05F7185395AB00D26488 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		086A05F8185395AB00D26488 /* splash_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_small.png; sourceTree = "<group>"; };
+		086A05FC1854B18600D26488 /* PDKeychainBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindings.h; sourceTree = "<group>"; };
+		086A05FD1854B18600D26488 /* PDKeychainBindings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDKeychainBindings.m; sourceTree = "<group>"; };
+		086A05FE1854B18600D26488 /* PDKeychainBindingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindingsController.h; sourceTree = "<group>"; };
+		086A05FF1854B18600D26488 /* PDKeychainBindingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDKeychainBindingsController.m; sourceTree = "<group>"; };
 		0873370518150CC5004A0AE3 /* FBEncryption.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FBEncryption.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0873370818150CC5004A0AE3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0873370A18150CC5004A0AE3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -482,6 +488,7 @@
 		085754541817EAB5006C1DD9 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				086A05FB1854B18600D26488 /* PDKeychainBindingsController */,
 				0860F8341830D31E007A63EE /* JSMessagesViewController */,
 				085759EE181A65A9006C1DD9 /* AFNetworking */,
 				085754711819590E006C1DD9 /* XMPP */,
@@ -950,6 +957,17 @@
 			path = ionicons;
 			sourceTree = "<group>";
 		};
+		086A05FB1854B18600D26488 /* PDKeychainBindingsController */ = {
+			isa = PBXGroup;
+			children = (
+				086A05FC1854B18600D26488 /* PDKeychainBindings.h */,
+				086A05FD1854B18600D26488 /* PDKeychainBindings.m */,
+				086A05FE1854B18600D26488 /* PDKeychainBindingsController.h */,
+				086A05FF1854B18600D26488 /* PDKeychainBindingsController.m */,
+			);
+			path = PDKeychainBindingsController;
+			sourceTree = "<group>";
+		};
 		087336FC18150CC5004A0AE3 = {
 			isa = PBXGroup;
 			children = (
@@ -1221,6 +1239,7 @@
 				0857545D1817EEDB006C1DD9 /* BPFriend.m in Sources */,
 				085759D61819622E006C1DD9 /* GCDAsyncSocket.m in Sources */,
 				0850A0071837FA5F00D6B22E /* BPFqlThread.m in Sources */,
+				086A06001854B18600D26488 /* PDKeychainBindings.m in Sources */,
 				085759C31819622E006C1DD9 /* XMPPPlainAuthentication.m in Sources */,
 				085759C41819622E006C1DD9 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				0850A0011833CA4900D6B22E /* BPFqlRequestManager.m in Sources */,
@@ -1242,6 +1261,7 @@
 				08509FF71833A37D00D6B22E /* BPRecipientsTableDataSource.m in Sources */,
 				0860F8721830D31F007A63EE /* NSString+JSMessagesView.m in Sources */,
 				085759DC1819622E006C1DD9 /* ContextFilterLogFormatter.m in Sources */,
+				086A06011854B18600D26488 /* PDKeychainBindingsController.m in Sources */,
 				085759CD1819622E006C1DD9 /* XMPPParser.m in Sources */,
 				085759CC1819622E006C1DD9 /* XMPPModule.m in Sources */,
 				08575469181813DF006C1DD9 /* BPConfigurationViewController.m in Sources */,

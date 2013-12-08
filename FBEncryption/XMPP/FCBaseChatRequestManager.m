@@ -125,7 +125,7 @@ static FCBaseChatRequestManager *instance;
     if(message.body) {
         AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
         [self playSound: @"message-received"];
-    }d
+    }
 }
 
 -(void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error {

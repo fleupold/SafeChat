@@ -11,6 +11,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonCryptor.h>
 #import <CommonCrypto/CommonKeyDerivation.h>
+#import "PDKeychainBindings.h"
 
 @implementation BPJavascriptRuntime
 
@@ -34,17 +35,17 @@ static BPJavascriptRuntime *instance;
 }
 
 +(BOOL)privateKeyAvailable {
-    return [[NSUserDefaults standardUserDefaults] objectForKey: private_key_identifier] != nil;
+    return [[PDKeychainBindings sharedKeychainBindings] objectForKey: private_key_identifier] != nil;
 }
 
 +(void)resetPrivateKey
 {
     [BPFriend resetAllSessionKeys];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey: private_key_identifier];
+    [[PDKeychainBindings sharedKeychainBindings] removeObjectForKey: private_key_identifier];
 }
 
 -(id)init{
-    _myPrivateKey = [[NSUserDefaults standardUserDefaults] objectForKey: private_key_identifier];
+    _myPrivateKey = [[PDKeychainBindings sharedKeychainBindings] objectForKey: private_key_identifier];
     _context = [[JSContext alloc] init];
     
     //Load all Javascript files
@@ -91,7 +92,7 @@ static BPJavascriptRuntime *instance;
     NSData *salt = [[BPFriend me].username dataUsingEncoding:NSUTF8StringEncoding];
     NSData *key = [self keyFromPassphrase:passphrase withSalt:salt];
     _myPrivateKey = [self hexFromNSData: key];
-    [[NSUserDefaults standardUserDefaults] setObject:_myPrivateKey forKey:private_key_identifier];
+    [[PDKeychainBindings sharedKeychainBindings] setObject:_myPrivateKey forKey:private_key_identifier];
     
     JSValue *derive_public = _context[@"derive_public"];
     //NSLog(@"%@", derive_public);
