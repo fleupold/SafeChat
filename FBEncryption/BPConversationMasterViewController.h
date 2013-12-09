@@ -21,4 +21,5 @@
 @property IBOutlet STHeaderView *tableHeaderView;
 @property IBOutlet UIView *tableFooterView;
 
+-(void)fetchThreads;
 @end

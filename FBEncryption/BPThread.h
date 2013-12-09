@@ -46,4 +46,7 @@
 -(void)addIncomingMessage: (NSString *)text from: (BPFriend *)friend;
 
 -(void)loadMore;
+
+-(void)postNotificationFor: (BPMessage *)message;
+
 @end

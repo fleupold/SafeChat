@@ -17,6 +17,8 @@
 #import "BPMessageTableViewCell.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "IonIcons.h"
+#import "XMPPMessage.h"
+#import "BPAppDelegate.h"
 
 @interface BPConversationMasterViewController () {
     NSMutableArray *_objects;
@@ -71,32 +73,13 @@
     self.footerView = self.tableFooterView;
     self.footerView.hidden = YES;
     self.tableHeaderView.title.font = [IonIcons fontWithSize:15];
-    
-    [self checkEncryptionConfigured];
-    
+        
     [self performSelector:@selector(fetchThreads) withObject:nil afterDelay:0.5];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMessage:) name:@"didReceiveMessage" object: nil];
 }
 
--(void)checkEncryptionConfigured
-{
-    if([BPFriend meHasEncryptionConfigured]) {
-        return;
-    }
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No Private Key"
-                                                    message: @"Do you want to set up encryption now?"
-                                                   delegate: self
-                                          cancelButtonTitle: @"Yes"
-                                          otherButtonTitles:@"No", nil];
-    [alert show];
-}
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(buttonIndex == 0)
-        [self performSegueWithIdentifier: @"load_configuration"  sender: alertView];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -209,13 +192,17 @@
 }
 
 -(void)didReceiveMessage:(NSNotification *)notification {
-    [self fetchThreads];
+    XMPPMessage *message = notification.object;
+    if(message.body) {
+        [self fetchThreads];
+    }
 }
 
 -(void)fetchThreads
 {
     [self fetchThreads: NO];
 }
+
 
 -(void)fetchThreads: (BOOL)loadingMore
 {
@@ -227,6 +214,7 @@
      * Is either called to load older messages or the most recent ones, which is indicated
      * by the boolean parameter
     */
+    BPAppDelegate *appDelegate = (BPAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     NSDate *threadsBefore;
     NSDate *threadsAfter;
@@ -237,7 +225,6 @@
     else {
         threadsAfter = lastUpdated;
         threadsBefore = [NSDate date];
-        lastUpdated = threadsBefore;
     }
     
     [BPFqlRequestManager requestThreadsBefore: threadsBefore
@@ -245,6 +232,12 @@
                                withCompletion:
      ^(NSDictionary *response) {
          FBGraphObject *threadInformation;
+         
+         if (!loadingMore) {
+             lastUpdated = threadsBefore;
+         }
+         
+         [appDelegate setNumberOfRefreshingThreads: ((NSArray *)[response objectForKey:@"data"]).count];
          
          //First get information about involved friends, on completion continue initializing the threads
          NSMutableSet *userIDs = [NSMutableSet set];
@@ -262,6 +255,7 @@
               } failure:
               ^(NSError *error) {
                   NSLog(@"%@", error);
+                  [appDelegate appRefreshDidFail];
               }];
          }
          else {
@@ -271,6 +265,7 @@
                                       failure:
      ^(NSError *error) {
           NSLog(@"%@", error);
+         [appDelegate appRefreshDidFail];
       }];
 }
 
@@ -334,30 +329,6 @@
         return NO;
     
     [self fetchThreads: YES];
-    
-    /*
-    if (!nextPage)
-        return NO;
-    [[FBRequest requestForGraphPath: nextPage] startWithCompletionHandler:
-     ^(FBRequestConnection *connection,
-       NSDictionary<FBGraphUser> *inbox,
-       NSError *error) {
-         if (!error) {
-             for (FBGraphObject *threadInformation in [inbox objectForKey:@"data"])
-             {
-                 BPThread *thread = [BPInboxThread threadFromFBGraphObject: threadInformation];
-                 [_objects addObject: thread];
-             }
-             [self setNextPage: [[inbox objectForKey:@"paging"] objectForKey: @"next"]];
-             
-             [self.tableView reloadData];
-             [self loadMoreCompleted];
-         }
-         else {
-             NSLog(@"%@", error);
-         }
-     }]; 
-     */
     return YES;
 }
 

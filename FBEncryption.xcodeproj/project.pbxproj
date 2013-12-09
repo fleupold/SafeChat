@@ -14,7 +14,7 @@
 		0850A0041837ED8800D6B22E /* BPInboxThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 0850A0031837ED8800D6B22E /* BPInboxThread.m */; };
 		0850A0071837FA5F00D6B22E /* BPFqlThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 0850A0061837FA5F00D6B22E /* BPFqlThread.m */; };
 		0850A00A1838185000D6B22E /* BPFqlMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0850A0091838185000D6B22E /* BPFqlMessage.m */; };
-		0850A01D183A44A700D6B22E /* logo_58.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01A183A44A700D6B22E /* logo_58.png */; };
+		0850A01D183A44A700D6B22E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01A183A44A700D6B22E /* icon.png */; };
 		0850A01E183A44A700D6B22E /* logo_80.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01B183A44A700D6B22E /* logo_80.png */; };
 		0850A01F183A44A700D6B22E /* logo_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01C183A44A700D6B22E /* logo_120.png */; };
 		0857544D1817BB17006C1DD9 /* BPFacebookLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */; };
@@ -181,7 +181,7 @@
 		0850A0061837FA5F00D6B22E /* BPFqlThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPFqlThread.m; sourceTree = "<group>"; };
 		0850A0081838185000D6B22E /* BPFqlMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPFqlMessage.h; sourceTree = "<group>"; };
 		0850A0091838185000D6B22E /* BPFqlMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPFqlMessage.m; sourceTree = "<group>"; };
-		0850A01A183A44A700D6B22E /* logo_58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_58.png; sourceTree = "<group>"; };
+		0850A01A183A44A700D6B22E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		0850A01B183A44A700D6B22E /* logo_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_80.png; sourceTree = "<group>"; };
 		0850A01C183A44A700D6B22E /* logo_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_120.png; sourceTree = "<group>"; };
 		0857544B1817BB17006C1DD9 /* BPFacebookLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPFacebookLoginViewController.h; sourceTree = "<group>"; };
@@ -459,7 +459,7 @@
 		0850A013183A434800D6B22E /* app_icon */ = {
 			isa = PBXGroup;
 			children = (
-				0850A01A183A44A700D6B22E /* logo_58.png */,
+				0850A01A183A44A700D6B22E /* icon.png */,
 				0850A01B183A44A700D6B22E /* logo_80.png */,
 				0850A01C183A44A700D6B22E /* logo_120.png */,
 			);
@@ -1117,6 +1117,9 @@
 					0873370418150CC5004A0AE3 = {
 						DevelopmentTeam = J62B27W3QR;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.DataProtection = {
 								enabled = 1;
 							};
@@ -1198,7 +1201,7 @@
 				085759E31819622E006C1DD9 /* build-libidn.sh in Resources */,
 				0860F8941830D31F007A63EE /* send-button-pressed@2x.png in Resources */,
 				0860F8891830D31F007A63EE /* bubble-classic-square-blue.png in Resources */,
-				0850A01D183A44A700D6B22E /* logo_58.png in Resources */,
+				0850A01D183A44A700D6B22E /* icon.png in Resources */,
 				086A05F9185395AB00D26488 /* splash.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

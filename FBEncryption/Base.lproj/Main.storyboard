@@ -71,7 +71,7 @@
         <!--Configuration View Controller - Configuration-->
         <scene sceneID="rv0-XW-lES">
             <objects>
-                <viewController id="uNa-c3-HnK" customClass="BPConfigurationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConfigurationViewController" id="uNa-c3-HnK" customClass="BPConfigurationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="l4g-QB-X1V"/>
                         <viewControllerLayoutGuide type="bottom" id="GDM-7y-vld"/>

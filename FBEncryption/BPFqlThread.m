@@ -10,6 +10,7 @@
 #import "BPFacebookDateFormatter.h"
 #import "BPFqlRequestManager.h"
 #import "BPFqlMessage.h"
+#import "BPAppDelegate.h"
 
 @implementation BPFqlThread
 @synthesize hasLoadedMessages;
@@ -109,6 +110,7 @@
                                          } failure:^(NSError *error) {
                                              [self handleUpdateResponse: [NSDictionary dictionary] unsyncedMessages: [unsyncedMessages mutableCopy] invalidate: invalidate];
                                              NSLog(@"%@", error);
+                                             [(BPAppDelegate *)[[UIApplication sharedApplication] delegate] appRefreshDidFail];
                                          }];
 }
 
@@ -119,6 +121,7 @@
     for (NSDictionary *messageDict in [response objectForKey:@"data"]) {
         BPFqlMessage *message = [BPFqlMessage messageFromFBGraphObject: (FBGraphObject *)messageDict];
         [self.messages addObject: message];
+        [self postNotificationFor: message];
         
         //See if this message is one that hasn't been synced
         if (![message.from isMe]) {
@@ -140,6 +143,8 @@
     }
     [self.messages addObjectsFromArray: unsyncedMessages];
     [self.delegate hasUpdatedThread: self scrollToRow: self.messages.count - 1];
+    
+    [(BPAppDelegate *)[[UIApplication sharedApplication] delegate] threadFinishedRefresh];
 }
 
 -(void)updateWithThread: (BPThread *)newThread
@@ -149,6 +154,7 @@
     self.unread = newThread.unread;
     [self update];
 }
+
 
 
 @end

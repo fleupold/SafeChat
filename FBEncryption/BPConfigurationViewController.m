@@ -158,7 +158,7 @@
     [FBSession setActiveSession:session];
     
 
-    [session openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent
+    [session openWithBehavior:FBSessionLoginBehaviorWithFallbackToWebView
             completionHandler:
      ^(FBSession *session, FBSessionState state, NSError *error) {
          if ([session isOpen]) {

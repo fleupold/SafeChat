@@ -9,6 +9,7 @@
 #import "BPAppDelegate.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "BPFacebookLoginViewController.h"
+#import "BPConversationMasterViewController.h"
 #import "BPFriend.h"
 #import "BPJavascriptRuntime.h"
 
@@ -18,6 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 10];
+    
     // Override point for customization after application launch.
     [self.window makeKeyAndVisible];
     [FBLoginView class];
@@ -27,6 +30,7 @@
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         // Yes, so just open the session (this won't display any UX).
         [self openSession];
+        [self checkEncryptionConfigured];
     } else {
         // No, display the login page.
         [self showLoginView];
@@ -45,7 +49,8 @@
         BOOL result = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
         FBSession *activeSession = [FBSession activeSession];
         [self sessionStateChanged: activeSession state: activeSession.state error:nil];
-    
+        [self checkEncryptionConfigured];
+
         return result;
     }
 }
@@ -64,6 +69,8 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
@@ -77,6 +84,56 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - Background Mode
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
+{
+    backgroundAppRefreshCompletionHandler = completionHandler;
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    BPConversationMasterViewController *conversations = [navController.viewControllers objectAtIndex:0];
+    [conversations fetchThreads];
+}
+
+-(BOOL)isInBackgroundMode
+{
+    return backgroundAppRefreshCompletionHandler != nil;
+}
+
+-(void)appRefreshDidFail
+{
+    [self appRefreshFinished: UIBackgroundFetchResultFailed];
+}
+
+-(void)appRefreshFinished: (UIBackgroundFetchResult) result
+{
+    if (backgroundAppRefreshCompletionHandler) {
+        backgroundAppRefreshCompletionHandler(result);
+    }
+    unfinishedRefreshingThreads = 0;
+    backgroundAppRefreshCompletionHandler = nil;
+}
+
+-(void)setNumberOfRefreshingThreads: (NSInteger) refreshCount
+{
+    if (![self isInBackgroundMode])
+        return;
+    
+    if (refreshCount == 0) {
+        [self appRefreshFinished: UIBackgroundFetchResultNoData];
+    }
+    
+    unfinishedRefreshingThreads = refreshCount;
+}
+
+-(void)threadFinishedRefresh
+{
+    unfinishedRefreshingThreads -= 1;
+    if (unfinishedRefreshingThreads == 0) {
+        [self appRefreshFinished: UIBackgroundFetchResultNewData];
+    }
+}
+
+#pragma marke - Facebook login methods
 
 - (void)showLoginView
 {
@@ -142,6 +199,8 @@
      }];
 }
 
+#pragma mark - launch queries
+
 -(void)registerMe
 {
     if (FBSession.activeSession.isOpen) {
@@ -171,6 +230,28 @@
                  NSLog(@"%@", error);
              }
          }];
+    }
+}
+
+-(void)checkEncryptionConfigured
+{
+    if([BPFriend meHasEncryptionConfigured] || FBSession.activeSession.state == FBSessionStateCreated) {
+        return;
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No Private Key"
+                                                    message: @"Do you want to set up encryption now?"
+                                                   delegate: self
+                                          cancelButtonTitle: @"Yes"
+                                          otherButtonTitles:@"No", nil];
+    [alert show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *configurationVc = [storyboard instantiateViewControllerWithIdentifier:@"ConfigurationViewController"];
+        [(UINavigationController*) self.window.rootViewController pushViewController: configurationVc animated:YES];
     }
 }
 

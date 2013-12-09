@@ -9,12 +9,22 @@
 #import <UIKit/UIKit.h>
 
 @interface BPAppDelegate : UIResponder <UIApplicationDelegate>
+{
+    void (^backgroundAppRefreshCompletionHandler)(UIBackgroundFetchResult result);
+    NSInteger unfinishedRefreshingThreads;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController* navController;
 
 - (void)openSession;
 - (void)showLoginView;
+
+#pragma mark - Background Mode
+-(void)appRefreshDidFail;
+-(void)setNumberOfRefreshingThreads: (NSInteger) refreshCount;
+-(void)threadFinishedRefresh;
+-(BOOL)isInBackgroundMode;
 
 
 @end

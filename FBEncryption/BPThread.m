@@ -8,6 +8,7 @@
 
 #import "BPThread.h"
 #import "BPFacebookDateFormatter.h"
+#import "BPAppDelegate.h"
 
 @implementation BPThread
 @synthesize updated_at, unread, messages, participants, delegate, nextPage;
@@ -214,5 +215,19 @@
 -(BOOL)isEqual:(id)object
 {
     return [object isMemberOfClass: [self class]] && [self.id isEqualToString: ((BPThread *)object).id];
+}
+
+-(void)postNotificationFor: (BPMessage *)message
+{
+    if ([message.from isMe] || ![(BPAppDelegate *)[[UIApplication sharedApplication] delegate] isInBackgroundMode]) {
+        return;
+    }
+    
+    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+    localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", message.from.name, message.text];
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    [UIApplication sharedApplication].applicationIconBadgeNumber += 1;
 }
 @end
