@@ -73,9 +73,7 @@
     self.footerView = self.tableFooterView;
     self.footerView.hidden = YES;
     self.tableHeaderView.title.font = [IonIcons fontWithSize:15];
-        
-    [self performSelector:@selector(fetchThreads) withObject:nil afterDelay:0.5];
-    
+            
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMessage:) name:@"didReceiveMessage" object: nil];
 }
 
