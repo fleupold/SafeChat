@@ -94,6 +94,10 @@
 
 -(void)updateAndInvalidateUnsyncedMessages: (BOOL)invalidate
 {
+    if (self.isUpdating)
+        return;
+    self.isUpdating = YES;
+        
     //Find the last message in sync
     NSPredicate *unsyncPredicate = [NSPredicate predicateWithFormat: @"(SELF.from.isMe == 1) AND (not SELF.synced == 1)"];
     NSArray *unsyncedMessages = [self.messages filteredArrayUsingPredicate: unsyncPredicate];
@@ -108,9 +112,9 @@
                                          completion:^(NSDictionary *response) {
                                              [self handleUpdateResponse: response unsyncedMessages: [unsyncedMessages mutableCopy] invalidate: invalidate];
                                          } failure:^(NSError *error) {
+                                             [(BPAppDelegate *)[[UIApplication sharedApplication] delegate] appRefreshDidFail];
                                              [self handleUpdateResponse: [NSDictionary dictionary] unsyncedMessages: [unsyncedMessages mutableCopy] invalidate: invalidate];
                                              NSLog(@"%@", error);
-                                             [(BPAppDelegate *)[[UIApplication sharedApplication] delegate] appRefreshDidFail];
                                          }];
 }
 
@@ -145,6 +149,7 @@
     [self.delegate hasUpdatedThread: self scrollToRow: self.messages.count - 1];
     
     [(BPAppDelegate *)[[UIApplication sharedApplication] delegate] threadFinishedRefresh];
+    self.isUpdating = NO;
 }
 
 -(void)updateWithThread: (BPThread *)newThread

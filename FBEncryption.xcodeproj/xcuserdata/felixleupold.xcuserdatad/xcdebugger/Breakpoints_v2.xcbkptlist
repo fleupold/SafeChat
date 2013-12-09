@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPFqlThread.m"
-            timestampString = "408281328.334701"
+            timestampString = "408285032.595279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "-updateAndInvalidateUnsyncedMessages:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPFqlThread.m"
-            timestampString = "408281328.334701"
+            timestampString = "408285032.595279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "-handleUpdateResponse:unsyncedMessages:invalidate:"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPFqlThread.m"
-            timestampString = "408281328.334701"
+            timestampString = "408285032.595279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "-updateAndInvalidateUnsyncedMessages:"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "408282858.559966"
+            timestampString = "408285425.926612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
             landmarkName = "-fetchThreads:"
             landmarkType = "5">
             <Locations>
@@ -328,11 +328,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "408281328.334701"
+            timestampString = "408285425.926612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "-didReceiveMessage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -344,11 +344,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "408281328.334701"
+            timestampString = "408285425.926612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "-didReceiveMessage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -360,11 +360,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPConversationMasterViewController.m"
-            timestampString = "408281328.334701"
+            timestampString = "408285425.926612"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
             landmarkName = "-fetchThreads"
             landmarkType = "5">
          </BreakpointContent>
@@ -392,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPFqlThread.m"
-            timestampString = "408281328.334701"
+            timestampString = "408285032.595279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
             landmarkName = "-handleUpdateResponse:unsyncedMessages:invalidate:"
             landmarkType = "5">
          </BreakpointContent>

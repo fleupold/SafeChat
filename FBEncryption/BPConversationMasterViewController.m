@@ -192,6 +192,10 @@
 }
 
 -(void)didReceiveMessage:(NSNotification *)notification {
+    // Only react if currently visible
+    if (self.navigationController.visibleViewController != self)
+        return;
+    
     XMPPMessage *message = notification.object;
     if(message.body) {
         [self fetchThreads];

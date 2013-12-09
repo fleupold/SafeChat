@@ -12,6 +12,7 @@
 
 
 @property BOOL hasLoadedMessages;
+@property BOOL isUpdating;
 
 -(void)updateWithThread: (BPThread *)newThread;
 -(void)update;
