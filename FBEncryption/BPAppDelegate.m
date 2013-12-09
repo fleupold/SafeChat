@@ -87,11 +87,16 @@
 }
 
 #pragma mark - Background Mode
+- (BPConversationMasterViewController *)conversationsViewController
+{
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    return [navController.viewControllers objectAtIndex:0];
+}
+
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
     backgroundAppRefreshCompletionHandler = completionHandler;
-    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
-    BPConversationMasterViewController *conversations = [navController.viewControllers objectAtIndex:0];
+    BPConversationMasterViewController *conversations = [self conversationsViewController];
     [conversations fetchThreads];
 }
 
@@ -134,7 +139,13 @@
     }
 }
 
-#pragma marke - Facebook login methods
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    BPConversationMasterViewController *conversations = [self conversationsViewController];
+    [conversations performSegueWithIdentifier: @"showDetail" sender: notification];
+}
+
+#pragma mark - Facebook login methods
 
 - (void)showLoginView
 {

@@ -170,8 +170,26 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        BPFqlThread *object = self.objects[indexPath.row];
+        BPFqlThread *object;
+        
+        //Find the thread that corresponds to that notification
+        if ([sender isKindOfClass: [UILocalNotification class]]) {
+            [self.navigationController popToRootViewControllerAnimated: NO];
+            
+            NSString *thread_id = [((UILocalNotification *)sender).userInfo objectForKey: @"thread_id"];
+            for (BPFqlThread *thread in self.objects) {
+                if ([thread.id isEqualToString: thread_id]) {
+                    object = thread;
+                    break;
+                }
+            }
+        }
+        
+        //Table Row was pressed
+        else {
+            NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+            object = self.objects[indexPath.row];
+        }
         
         BPConversationDetailViewController *destination = ((BPConversationDetailViewController *)[segue destinationViewController]);
         if(destination.detailItem == nil)
