@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0873370418150CC5004A0AE3"
                BuildableName = "FBEncryption.app"
-               BlueprintName = "FBEncryption"
-               ReferencedContainer = "container:FBEncryption.xcodeproj">
+               BlueprintName = "SafeChat.im"
+               ReferencedContainer = "container:SafeChat.im.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0873372818150CC5004A0AE3"
                BuildableName = "FBEncryptionTests.xctest"
-               BlueprintName = "FBEncryptionTests"
-               ReferencedContainer = "container:FBEncryption.xcodeproj">
+               BlueprintName = "SafeChat.imTests"
+               ReferencedContainer = "container:SafeChat.im.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -44,8 +44,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0873370418150CC5004A0AE3"
             BuildableName = "FBEncryption.app"
-            BlueprintName = "FBEncryption"
-            ReferencedContainer = "container:FBEncryption.xcodeproj">
+            BlueprintName = "SafeChat.im"
+            ReferencedContainer = "container:SafeChat.im.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -63,8 +63,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0873370418150CC5004A0AE3"
             BuildableName = "FBEncryption.app"
-            BlueprintName = "FBEncryption"
-            ReferencedContainer = "container:FBEncryption.xcodeproj">
+            BlueprintName = "SafeChat.im"
+            ReferencedContainer = "container:SafeChat.im.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -81,8 +81,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0873370418150CC5004A0AE3"
             BuildableName = "FBEncryption.app"
-            BlueprintName = "FBEncryption"
-            ReferencedContainer = "container:FBEncryption.xcodeproj">
+            BlueprintName = "SafeChat.im"
+            ReferencedContainer = "container:SafeChat.im.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

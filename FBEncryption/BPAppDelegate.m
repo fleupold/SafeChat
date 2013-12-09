@@ -20,6 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval: 10];
+    [self registerDefaultsFromSettingsBundle];
     
     // Override point for customization after application launch.
     [self.window makeKeyAndVisible];
@@ -253,6 +254,39 @@
         UIViewController *configurationVc = [storyboard instantiateViewControllerWithIdentifier:@"ConfigurationViewController"];
         [(UINavigationController*) self.window.rootViewController pushViewController: configurationVc animated:YES];
     }
+}
+
+#pragma mark - Settings
+- (void)registerDefaultsFromSettingsBundle {
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    // Look up the bundle in order to get the preference list
+    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+    if(!settingsBundle) {
+        NSLog(@"Could not find Settings.bundle");
+        return;
+    }
+    // Get the preferences for the ESV App
+    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
+    
+    NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
+    
+    // For each preference check if the key is already set in the general settings.
+    // If not, then add the key together with the corresponding default value.
+    for(NSDictionary *prefSpecification in preferences) {
+        NSString *key = [prefSpecification objectForKey:@"Key"];
+        
+        if(key) {
+            NSObject *existingValue = [userDefaults objectForKey:key];
+            if (!existingValue) {
+                [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
+            }
+        }
+    }
+    // Adding the default keys to the preferences
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
 }
 
 @end

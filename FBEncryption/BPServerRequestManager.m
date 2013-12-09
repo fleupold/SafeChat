@@ -11,13 +11,16 @@
 
 @implementation BPServerRequestManager
 
-const NSString *BaseUrl = @"http://blockprism2.likescale.com";
++(NSString *)baseUrl
+{
+    return [[NSUserDefaults standardUserDefaults] stringForKey: @"public_key_server_url"];
+}
 
 +(void)publicKeyForID: (NSString *)facebookID
            completion: (void(^)(AFHTTPRequestOperation *operation, id responseObject))successBlock
               failure: (void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
-    NSString *urlString = [NSString stringWithFormat: @"%@/public_key/facebook/", BaseUrl];
+    NSString *urlString = [NSString stringWithFormat: @"%@/public_key/facebook/", [BPServerRequestManager baseUrl]];
     NSDictionary *params = @{@"facebook_id": facebookID};
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
@@ -33,7 +36,7 @@ const NSString *BaseUrl = @"http://blockprism2.likescale.com";
               failure: (void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSString *urlString = [NSString stringWithFormat: @"%@/public_key/facebook/", BaseUrl];
+    NSString *urlString = [NSString stringWithFormat: @"%@/public_key/facebook/", [BPServerRequestManager baseUrl]];
     NSDictionary *params = @{@"facebook_id": facebookID,
                              @"public_key": key,
                              @"access_token": accessToken,
