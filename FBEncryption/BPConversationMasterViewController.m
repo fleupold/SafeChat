@@ -251,12 +251,7 @@
                                         after: threadsAfter
                                withCompletion:
      ^(NSDictionary *response) {
-         FBGraphObject *threadInformation;
-         
-         if (!loadingMore) {
-             lastUpdated = threadsBefore;
-         }
-         
+         FBGraphObject *threadInformation;    
          [appDelegate setNumberOfRefreshingThreads: ((NSArray *)[response objectForKey:@"data"]).count];
          
          //First get information about involved friends, on completion continue initializing the threads
@@ -280,6 +275,10 @@
          }
          else {
              [self handleThreadsReceivedAndMissingUsersCreated: response wasLoadingMore:loadingMore];
+         }
+         
+         if (!loadingMore) {
+             lastUpdated = threadsBefore;
          }
      }
                                       failure:

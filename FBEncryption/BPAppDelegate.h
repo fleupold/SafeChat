@@ -12,6 +12,7 @@
 {
     void (^backgroundAppRefreshCompletionHandler)(UIBackgroundFetchResult result);
     NSInteger unfinishedRefreshingThreads;
+    NSDate *backgroundEntryTime;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -25,6 +26,6 @@
 -(void)setNumberOfRefreshingThreads: (NSInteger) refreshCount;
 -(void)threadFinishedRefresh;
 -(BOOL)isInBackgroundMode;
-
+- (NSDate *)backgroundEntryTime;
 
 @end

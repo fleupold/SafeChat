@@ -218,11 +218,7 @@
 }
 
 -(void)postNotificationFor: (BPMessage *)message
-{
-    if ([message.from isMe] || ![(BPAppDelegate *)[[UIApplication sharedApplication] delegate] isInBackgroundMode]) {
-        return;
-    }
-    
+{  
     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
     localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", message.from.name, message.text];

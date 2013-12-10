@@ -125,7 +125,11 @@
     for (NSDictionary *messageDict in [response objectForKey:@"data"]) {
         BPFqlMessage *message = [BPFqlMessage messageFromFBGraphObject: (FBGraphObject *)messageDict];
         [self.messages addObject: message];
-        [self postNotificationFor: message];
+        
+        BPAppDelegate *appDelegate = (BPAppDelegate *)[[UIApplication sharedApplication] delegate];
+        if (![message.from isMe] && [appDelegate isInBackgroundMode] && [appDelegate backgroundEntryTime] < message.created) {
+            [self postNotificationFor: message];
+        }
         
         //See if this message is one that hasn't been synced
         if (![message.from isMe]) {
