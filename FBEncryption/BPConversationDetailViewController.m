@@ -377,8 +377,10 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     if (buttonIndex != 1)
         return;
     
+    [self.messageInputView.textView becomeFirstResponder];
     self.messageInputView.textView.text = [self.messageInputView.textView.text stringByAppendingString: @"SafeChat.IM Encrypted Facebook Messenger\nwww.safechat.im"];
     self.messageInputView.sendButton.enabled = YES;
+    [self textViewDidChange: self.messageInputView.textView];
 }
 
 -(UIImage *)lockedImage
