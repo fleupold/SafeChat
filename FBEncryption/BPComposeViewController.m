@@ -107,6 +107,9 @@
     self.recipientTextField.superview.hidden = YES;
     self.tableView.hidden = NO;
     
+    //User wants to type the message right away
+    [self.messageInputView.textView becomeFirstResponder];
+    
 }
 
 
