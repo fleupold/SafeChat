@@ -112,7 +112,7 @@ static BPFriend *me;
 {
     //This method is just a helper for the one above. If this method is called the username has
     //to be set
-    [BPServerRequestManager publicKeyForID:self.username
+    [BPServerRequestManager publicKeyForID:self.id
                                 completion:^(AFHTTPRequestOperation *operation, id responseObject) {
                                     self.sessionKey = [[BPJavascriptRuntime getInstance] generateSessionKey: operation.responseString];
                                     self.encryptionSupport = EncryptionAvailable;

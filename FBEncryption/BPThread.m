@@ -224,6 +224,8 @@
     localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", message.from.name, message.text];
     localNotification.userInfo = [NSDictionary dictionaryWithObject: self.id forKey:@"thread_id"];
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     [UIApplication sharedApplication].applicationIconBadgeNumber += 1;
 }

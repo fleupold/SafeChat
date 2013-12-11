@@ -21,6 +21,8 @@
 - (void)openSession;
 - (void)showLoginView;
 
+- (void)clearConversations;
+
 #pragma mark - Background Mode
 -(void)appRefreshDidFail;
 -(void)setNumberOfRefreshingThreads: (NSInteger) refreshCount;

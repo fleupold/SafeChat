@@ -7,6 +7,7 @@
 //
 
 #import "BPConfigurationViewController.h"
+#import "BPConversationMasterViewController.h"
 #import "BPServerRequestManager.h"
 #import "BPFriend.h"
 #import "IonIcons.h"
@@ -110,7 +111,7 @@
     NSString *publicKey = [jsRuntime generatePublicKeyWithPassphrase: self.passphraseField.text];
     
     [BPServerRequestManager storePublicKey:publicKey
-                                     forID:[BPFriend me].username
+                                     forID:[BPFriend me].id
                             withAccessToke: token
                                   override: override
                                 completion:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -118,7 +119,7 @@
                                 }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        NSLog(@"%@", error);
-                                       if ([operation.responseString isEqualToString: @"Wrong public key"]) {
+                                       if ([operation.responseString isEqualToString: @"Wrong public key."]) {
                                            [self wrongPassphraseAlert];
                                        } else {
                                            [self alertError: error];
@@ -142,7 +143,6 @@
 
     NSString* authenticatorAppId = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"AuthenticatorAppId"];
     NSString* clientAppId = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"];
-
 
     //We need a custom caching strategy, otherwise the old token will be reused...
     FBSessionTokenCachingStrategy *cachingStrategy = [[FBSessionTokenCachingStrategy alloc] initWithUserDefaultTokenInformationKeyName: authenticatorAppId];
@@ -209,11 +209,17 @@
 -(IBAction)resetPassword:(id)sender
 {
     [BPJavascriptRuntime resetPrivateKey];
+    
+    //Also delete all conversations, so that the encrypted message get reloaded
+    BPAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate clearConversations];
+    
     [self viewDidLoad];
 }
 
 -(void)logoutButtonWasPressed:(id)sender {
     [FBSession.activeSession closeAndClearTokenInformation];
+    [self resetPassword: nil];
     BPAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate showLoginView];
 }

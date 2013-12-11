@@ -279,7 +279,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bob, Alice" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49G-Gp-Svc">
-                                            <rect key="frame" x="63" y="8" width="220" height="21"/>
+                                            <rect key="frame" x="63" y="8" width="197" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -332,7 +332,7 @@
                                         <constraint firstItem="49G-Gp-Svc" firstAttribute="top" secondItem="A9s-HP-V6H" secondAttribute="top" constant="8" id="NbK-H2-Cx8"/>
                                         <constraint firstAttribute="trailing" secondItem="0GZ-q1-UM3" secondAttribute="trailing" constant="9" id="OTJ-sG-CmM"/>
                                         <constraint firstItem="PtV-I2-M4G" firstAttribute="bottom" secondItem="0GZ-q1-UM3" secondAttribute="bottom" id="OtS-PX-uRy"/>
-                                        <constraint firstAttribute="trailing" secondItem="49G-Gp-Svc" secondAttribute="trailing" constant="37" id="P4M-Ve-nzy"/>
+                                        <constraint firstAttribute="trailing" secondItem="49G-Gp-Svc" secondAttribute="trailing" constant="60" id="P4M-Ve-nzy"/>
                                         <constraint firstItem="ZR5-S3-IPA" firstAttribute="top" secondItem="49G-Gp-Svc" secondAttribute="top" id="VKx-gd-IvC"/>
                                         <constraint firstAttribute="bottom" secondItem="ZR5-S3-IPA" secondAttribute="bottom" constant="25" id="WTa-ct-NOY"/>
                                         <constraint firstItem="0GZ-q1-UM3" firstAttribute="leading" secondItem="PtV-I2-M4G" secondAttribute="trailing" constant="8" id="aGR-hu-G88"/>
@@ -499,7 +499,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="927" y="50"/>
+            <point key="canvasLocation" x="943" y="50"/>
         </scene>
         <!--Compose View Controller-->
         <scene sceneID="Ftm-z8-ybl">
@@ -590,7 +590,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0T-jh-a0h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="955" y="754"/>
+            <point key="canvasLocation" x="943" y="746"/>
         </scene>
     </scenes>
     <resources>

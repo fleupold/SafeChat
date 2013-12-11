@@ -392,14 +392,14 @@
 		086A05FD1854B18600D26488 /* PDKeychainBindings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDKeychainBindings.m; sourceTree = "<group>"; };
 		086A05FE1854B18600D26488 /* PDKeychainBindingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDKeychainBindingsController.h; sourceTree = "<group>"; };
 		086A05FF1854B18600D26488 /* PDKeychainBindingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDKeychainBindingsController.m; sourceTree = "<group>"; };
-		0873370518150CC5004A0AE3 /* SafeChat.im.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeChat.im.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0873370518150CC5004A0AE3 /* SafeChat.IM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeChat.IM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0873370818150CC5004A0AE3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0873370A18150CC5004A0AE3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0873370C18150CC5004A0AE3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		0873371018150CC5004A0AE3 /* SafeChat.im-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SafeChat.im-Info.plist"; sourceTree = "<group>"; };
+		0873371018150CC5004A0AE3 /* SafeChat.IM-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SafeChat.IM-Info.plist"; sourceTree = "<group>"; };
 		0873371218150CC5004A0AE3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0873371418150CC5004A0AE3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0873371618150CC5004A0AE3 /* SafeChat.im-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeChat.im-Prefix.pch"; sourceTree = "<group>"; };
+		0873371618150CC5004A0AE3 /* SafeChat.IM-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SafeChat.IM-Prefix.pch"; sourceTree = "<group>"; };
 		0873371718150CC5004A0AE3 /* BPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BPAppDelegate.h; sourceTree = "<group>"; };
 		0873371818150CC5004A0AE3 /* BPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BPAppDelegate.m; sourceTree = "<group>"; };
 		0873371B18150CC5004A0AE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -408,9 +408,9 @@
 		0873372018150CC5004A0AE3 /* BPConversationDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BPConversationDetailViewController.h; sourceTree = "<group>"; };
 		0873372118150CC5004A0AE3 /* BPConversationDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BPConversationDetailViewController.m; sourceTree = "<group>"; };
 		0873372318150CC5004A0AE3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		0873372918150CC5004A0AE3 /* SafeChat.imTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeChat.imTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0873372918150CC5004A0AE3 /* SafeChat.IMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeChat.IMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0873372A18150CC5004A0AE3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		0873373218150CC5004A0AE3 /* SafeChat.imTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SafeChat.imTests-Info.plist"; sourceTree = "<group>"; };
+		0873373218150CC5004A0AE3 /* SafeChat.IMTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SafeChat.IMTests-Info.plist"; sourceTree = "<group>"; };
 		0873373418150CC5004A0AE3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0873373618150CC5004A0AE3 /* FBEncryptionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBEncryptionTests.m; sourceTree = "<group>"; };
 		08B7A4B41827CC8A003C0B51 /* encryption.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = encryption.js; sourceTree = "<group>"; };
@@ -986,8 +986,8 @@
 		0873370618150CC5004A0AE3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0873370518150CC5004A0AE3 /* SafeChat.im.app */,
-				0873372918150CC5004A0AE3 /* SafeChat.imTests.xctest */,
+				0873370518150CC5004A0AE3 /* SafeChat.IM.app */,
+				0873372918150CC5004A0AE3 /* SafeChat.IMTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1043,10 +1043,10 @@
 				0857545E1817FA7C006C1DD9 /* images */,
 				08575461181802A0006C1DD9 /* BPEncryptedObject.h */,
 				08575462181802A0006C1DD9 /* BPEncryptedObject.m */,
-				0873371018150CC5004A0AE3 /* SafeChat.im-Info.plist */,
+				0873371018150CC5004A0AE3 /* SafeChat.IM-Info.plist */,
 				0873371118150CC5004A0AE3 /* InfoPlist.strings */,
 				0873371418150CC5004A0AE3 /* main.m */,
-				0873371618150CC5004A0AE3 /* SafeChat.im-Prefix.pch */,
+				0873371618150CC5004A0AE3 /* SafeChat.IM-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1063,7 +1063,7 @@
 		0873373118150CC5004A0AE3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0873373218150CC5004A0AE3 /* SafeChat.imTests-Info.plist */,
+				0873373218150CC5004A0AE3 /* SafeChat.IMTests-Info.plist */,
 				0873373318150CC5004A0AE3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -1072,9 +1072,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0873370418150CC5004A0AE3 /* SafeChat.im */ = {
+		0873370418150CC5004A0AE3 /* SafeChat.IM */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0873373A18150CC5004A0AE3 /* Build configuration list for PBXNativeTarget "SafeChat.im" */;
+			buildConfigurationList = 0873373A18150CC5004A0AE3 /* Build configuration list for PBXNativeTarget "SafeChat.IM" */;
 			buildPhases = (
 				0873370118150CC5004A0AE3 /* Sources */,
 				0873370218150CC5004A0AE3 /* Frameworks */,
@@ -1084,14 +1084,14 @@
 			);
 			dependencies = (
 			);
-			name = SafeChat.im;
+			name = SafeChat.IM;
 			productName = FBEncryption;
-			productReference = 0873370518150CC5004A0AE3 /* SafeChat.im.app */;
+			productReference = 0873370518150CC5004A0AE3 /* SafeChat.IM.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0873372818150CC5004A0AE3 /* SafeChat.imTests */ = {
+		0873372818150CC5004A0AE3 /* SafeChat.IMTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0873373D18150CC5004A0AE3 /* Build configuration list for PBXNativeTarget "SafeChat.imTests" */;
+			buildConfigurationList = 0873373D18150CC5004A0AE3 /* Build configuration list for PBXNativeTarget "SafeChat.IMTests" */;
 			buildPhases = (
 				0873372518150CC5004A0AE3 /* Sources */,
 				0873372618150CC5004A0AE3 /* Frameworks */,
@@ -1102,9 +1102,9 @@
 			dependencies = (
 				0873372F18150CC5004A0AE3 /* PBXTargetDependency */,
 			);
-			name = SafeChat.imTests;
+			name = SafeChat.IMTests;
 			productName = FBEncryptionTests;
-			productReference = 0873372918150CC5004A0AE3 /* SafeChat.imTests.xctest */;
+			productReference = 0873372918150CC5004A0AE3 /* SafeChat.IMTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1133,7 +1133,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0873370018150CC5004A0AE3 /* Build configuration list for PBXProject "SafeChat.im" */;
+			buildConfigurationList = 0873370018150CC5004A0AE3 /* Build configuration list for PBXProject "SafeChat.IM" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1147,8 +1147,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0873370418150CC5004A0AE3 /* SafeChat.im */,
-				0873372818150CC5004A0AE3 /* SafeChat.imTests */,
+				0873370418150CC5004A0AE3 /* SafeChat.IM */,
+				0873372818150CC5004A0AE3 /* SafeChat.IMTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1326,7 +1326,7 @@
 /* Begin PBXTargetDependency section */
 		0873372F18150CC5004A0AE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0873370418150CC5004A0AE3 /* SafeChat.im */;
+			target = 0873370418150CC5004A0AE3 /* SafeChat.IM */;
 			targetProxy = 0873372E18150CC5004A0AE3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1441,19 +1441,19 @@
 					/Users/felixleupold/Projects/blockprism/FBEncryption,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "FBEncryption/SafeChat.im-Prefix.pch";
+				GCC_PREFIX_HEADER = "FBEncryption/SafeChat.IM-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SDKROOT)/usr/include/libxml2",
 				);
-				INFOPLIST_FILE = "FBEncryption/SafeChat.im-Info.plist";
+				INFOPLIST_FILE = "FBEncryption/SafeChat.IM-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/XMPP/XMPPFramework,
 					/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
 				);
-				PRODUCT_NAME = SafeChat.im;
+				PRODUCT_NAME = SafeChat.IM;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1469,19 +1469,19 @@
 					/Users/felixleupold/Projects/blockprism/FBEncryption,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "FBEncryption/SafeChat.im-Prefix.pch";
+				GCC_PREFIX_HEADER = "FBEncryption/SafeChat.IM-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SDKROOT)/usr/include/libxml2",
 				);
-				INFOPLIST_FILE = "FBEncryption/SafeChat.im-Info.plist";
+				INFOPLIST_FILE = "FBEncryption/SafeChat.IM-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/XMPP/XMPPFramework,
 					/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
 				);
-				PRODUCT_NAME = SafeChat.im;
+				PRODUCT_NAME = SafeChat.IM;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1503,8 +1503,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "FBEncryptionTests/SafeChat.imTests-Info.plist";
-				PRODUCT_NAME = SafeChat.imTests;
+				INFOPLIST_FILE = "FBEncryptionTests/SafeChat.IMTests-Info.plist";
+				PRODUCT_NAME = SafeChat.IMTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1522,8 +1522,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBEncryption/FBEncryption-Prefix.pch";
-				INFOPLIST_FILE = "FBEncryptionTests/SafeChat.imTests-Info.plist";
-				PRODUCT_NAME = SafeChat.imTests;
+				INFOPLIST_FILE = "FBEncryptionTests/SafeChat.IMTests-Info.plist";
+				PRODUCT_NAME = SafeChat.IMTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1532,7 +1532,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0873370018150CC5004A0AE3 /* Build configuration list for PBXProject "SafeChat.im" */ = {
+		0873370018150CC5004A0AE3 /* Build configuration list for PBXProject "SafeChat.IM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0873373818150CC5004A0AE3 /* Debug */,
@@ -1541,7 +1541,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0873373A18150CC5004A0AE3 /* Build configuration list for PBXNativeTarget "SafeChat.im" */ = {
+		0873373A18150CC5004A0AE3 /* Build configuration list for PBXNativeTarget "SafeChat.IM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0873373B18150CC5004A0AE3 /* Debug */,
@@ -1550,7 +1550,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0873373D18150CC5004A0AE3 /* Build configuration list for PBXNativeTarget "SafeChat.imTests" */ = {
+		0873373D18150CC5004A0AE3 /* Build configuration list for PBXNativeTarget "SafeChat.IMTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0873373E18150CC5004A0AE3 /* Debug */,

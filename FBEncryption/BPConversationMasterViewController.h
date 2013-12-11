@@ -22,4 +22,6 @@
 @property IBOutlet UIView *tableFooterView;
 
 -(void)fetchThreads;
+-(void)clearThreads;
+
 @end

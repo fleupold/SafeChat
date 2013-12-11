@@ -127,7 +127,7 @@
         [self.messages addObject: message];
         
         BPAppDelegate *appDelegate = (BPAppDelegate *)[[UIApplication sharedApplication] delegate];
-        if (![message.from isMe] && [appDelegate isInBackgroundMode] && [appDelegate backgroundEntryTime] < message.created) {
+        if (![message.from isMe] && [appDelegate isInBackgroundMode] && [message.created timeIntervalSinceDate: appDelegate.backgroundEntryTime] > 0) {
             [self postNotificationFor: message];
         }
         

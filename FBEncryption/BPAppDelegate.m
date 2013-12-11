@@ -87,6 +87,11 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)clearConversations
+{
+    [[self conversationsViewController] clearThreads];
+}
+
 #pragma mark - Background Mode
 
 - (NSDate *)backgroundEntryTime

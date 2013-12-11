@@ -319,6 +319,12 @@
     }
 }
 
+- (void)clearThreads
+{
+    _objects = [NSMutableArray array];
+    lastUpdated = nil;
+}
+
 -(void)setNextPage: (NSString *)page
 {
     NSURL *nextPageURL = [NSURL URLWithString: page];

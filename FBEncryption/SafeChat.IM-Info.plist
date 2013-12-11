@@ -55,7 +55,7 @@
 			<string>logo_120</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb218116941675093</string>
+				<string>fb440641012702130</string>
 			</array>
 		</dict>
 	</array>
@@ -64,7 +64,7 @@
 	<key>FacebookAppID</key>
 	<string>1378001845774632</string>
 	<key>FacebookDisplayName</key>
-	<string>SecureChat</string>
+	<string>SafteChat.IM</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
