@@ -1,6 +1,6 @@
 //
-//  FBEncryptionTests.m
-//  FBEncryptionTests
+//  SafeChatTests.m
+//  SafeChatTests
 //
 //  Created by Felix Leupold on 10/21/13.
 //  Copyright (c) 2013 Felix Leupold. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface FBEncryptionTests : XCTestCase
+@interface SafeChatTests : XCTestCase
 
 @end
 
-@implementation FBEncryptionTests
+@implementation SafeChatTests
 
 - (void)setUp
 {

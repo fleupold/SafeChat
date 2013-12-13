@@ -1438,7 +1438,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/felixleupold/Projects/blockprism/FBEncryption,
+					/Users/felixleupold/Projects/blockprism/SafeChat,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBEncryption/SafeChat.IM-Prefix.pch";
@@ -1450,8 +1450,8 @@
 				INFOPLIST_FILE = "FBEncryption/SafeChat.IM-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/XMPP/XMPPFramework,
-					/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
+					/Users/felixleupold/Projects/blockprism/SafeChat/FBEncryption/XMPP/XMPPFramework,
+					/Users/felixleupold/Projects/blockprism/SafeChat/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
 				);
 				PRODUCT_NAME = SafeChat.IM;
 				PROVISIONING_PROFILE = "";
@@ -1466,7 +1466,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/felixleupold/Projects/blockprism/FBEncryption,
+					/Users/felixleupold/Projects/blockprism/SafeChat,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBEncryption/SafeChat.IM-Prefix.pch";
@@ -1478,8 +1478,8 @@
 				INFOPLIST_FILE = "FBEncryption/SafeChat.IM-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/XMPP/XMPPFramework,
-					/Users/felixleupold/Projects/blockprism/FBEncryption/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
+					/Users/felixleupold/Projects/blockprism/SafeChat/FBEncryption/XMPP/XMPPFramework,
+					/Users/felixleupold/Projects/blockprism/SafeChat/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
 				);
 				PRODUCT_NAME = SafeChat.IM;
 				PROVISIONING_PROFILE = "";

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0873370418150CC5004A0AE3"
-               BuildableName = "SafeChat.im.app"
+               BuildableName = "SafeChat.IM.app"
                BlueprintName = "SafeChat.IM"
                ReferencedContainer = "container:SafeChat.IM.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0873372818150CC5004A0AE3"
-               BuildableName = "SafeChat.imTests.xctest"
+               BuildableName = "SafeChat.IMTests.xctest"
                BlueprintName = "SafeChat.IMTests"
                ReferencedContainer = "container:SafeChat.IM.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0873370418150CC5004A0AE3"
-            BuildableName = "SafeChat.im.app"
+            BuildableName = "SafeChat.IM.app"
             BlueprintName = "SafeChat.IM"
             ReferencedContainer = "container:SafeChat.IM.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0873370418150CC5004A0AE3"
-            BuildableName = "SafeChat.im.app"
+            BuildableName = "SafeChat.IM.app"
             BlueprintName = "SafeChat.IM"
             ReferencedContainer = "container:SafeChat.IM.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0873370418150CC5004A0AE3"
-            BuildableName = "SafeChat.im.app"
+            BuildableName = "SafeChat.IM.app"
             BlueprintName = "SafeChat.IM"
             ReferencedContainer = "container:SafeChat.IM.xcodeproj">
          </BuildableReference>

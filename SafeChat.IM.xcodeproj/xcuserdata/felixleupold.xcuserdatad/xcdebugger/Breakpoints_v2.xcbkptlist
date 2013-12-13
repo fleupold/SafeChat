@@ -392,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FBEncryption/BPAppDelegate.h"
-            timestampString = "408281328.334701"
+            timestampString = "408636643.760801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "13"
-            endingLineNumber = "13"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
             landmarkName = "@interface BPAppDelegate"
             landmarkType = "2">
          </BreakpointContent>
