@@ -51,7 +51,7 @@ static const NSString *fqlUrl = @"https://graph.facebook.com/fql?q=";
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //NSLog(@"%@", fql);
+        NSLog(@"%@", fql);
         failureBlock(error);
     }];
     
