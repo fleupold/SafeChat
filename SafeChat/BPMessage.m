@@ -49,7 +49,7 @@
 
 -(NSString *)text
 {
-    if (_text != nil && [_text rangeOfString: @"BLOCKPRISM.ORG"].location != NSNotFound) {
+    if (_text != nil && [_text rangeOfString: @"SAFECHAT.IM"].location != NSNotFound) {
         _text = [self decryptMessage: _text];
     }
     return _text;
@@ -67,7 +67,7 @@
     //We break up the message into a submessage for each user and
     //look for the one that is currently logged in.
     BPFriend *me = [BPFriend me];
-    NSArray *submessages = [message componentsSeparatedByString: @"BLOCKPRISM.ORG_"];
+    NSArray *submessages = [message componentsSeparatedByString: @"SAFECHAT.IM"];
     for (NSString *submessage in submessages)
     {
         if ([submessage rangeOfString: me.username].location == NSNotFound)
@@ -104,7 +104,7 @@
             continue;
         }
         NSString *cipher = [[BPJavascriptRuntime getInstance] encrypt: self.text withSessionKey:participant.sessionKey];
-        NSString *encryptedPart = [NSString stringWithFormat: @"BLOCKPRISM.ORG_%@@%@@%@", me.username, participant.username, cipher];
+        NSString *encryptedPart = [NSString stringWithFormat: @"SAFECHAT.IM_%@@%@@%@", me.username, participant.username, cipher];
         encryptedMessage = [encryptedMessage stringByAppendingString: encryptedPart];
     }
     self.encrypted = YES;

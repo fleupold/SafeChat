@@ -17,7 +17,6 @@
 			<key>CFBundleIconFiles</key>
 			<array>
 				<string>icon</string>
-				<string>logo_58</string>
 				<string>logo_80</string>
 				<string>logo_120</string>
 				<string>logo</string>
@@ -60,7 +59,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1.0.0</string>
 	<key>FacebookAppID</key>
 	<string>1378001845774632</string>
 	<key>FacebookDisplayName</key>
