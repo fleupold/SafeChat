@@ -15,11 +15,7 @@
 
 @implementation BPJavascriptRuntime
 
-const CCAlgorithm kAlgorithm = kCCAlgorithmAES128;
 const NSUInteger kAlgorithmKeySize = kCCKeySizeAES256;
-const NSUInteger kAlgorithmBlockSize = kCCBlockSizeAES128;
-const NSUInteger kAlgorithmIVSize = kCCBlockSizeAES128;
-const NSUInteger kPBKDFSaltSize = 8;
 const NSUInteger kPBKDFRounds = 10000;
 
 #define private_key_identifier @"my_private_key"
