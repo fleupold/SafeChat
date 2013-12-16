@@ -28,4 +28,4 @@ Notifications only work if you allow the app to run in background mode. Since we
 
 ## More information
 
-For more information read the [FAQ page](wiki/FAQ#how-can-validate-the-promised-privacy-and-encryption) in the wiki or drop us an e-mail at info@safechat.im.
+For more information read the [FAQ page](/fleupold/SafeChat/wiki/FAQ#how-can-validate-the-promised-privacy-and-encryption) in the wiki or drop us an e-mail at info@safechat.im.
