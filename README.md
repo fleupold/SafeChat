@@ -25,3 +25,7 @@ Due to limitations in the Facebook XMPP support, we currently cannot provide the
 * Sending 'read receipts' (this might be considered a feature. You can read messages without letting your friend know you have already seen it)
 
 Notifications only work if you allow the app to run in background mode. Since we do not store any messages, we cannot send push notifications. Instead the app refreshes in the background about every 10 minutes and fetches the newest messages.
+
+## More information
+
+For more information read the [FAQ page](wiki/FAQ#how-can-validate-the-promised-privacy-and-encryption) in the wiki or drop us an e-mail at info@safechat.im.
