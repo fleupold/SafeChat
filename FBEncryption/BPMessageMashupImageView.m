@@ -18,12 +18,18 @@ static NSLock *cache_lock;
 
 -(id)initWithStyle: (BPMessageMashupStyle)aStyle {
     style = aStyle;
+    self.backgroundColor = [UIColor whiteColor];
     return [super init];
 }
 
 -(void)setUserID:(NSString *)userID
 {
     [self setUserIDs:@[userID]];
+}
+
+-(NSArray *)userIDs
+{
+    return _userIDs;
 }
 
 -(void)setUserIDs: (NSArray *)userIDs
@@ -60,7 +66,7 @@ static NSLock *cache_lock;
     _userIDs = userIDs;
     self.image = [self mashup];
     _missingImages = missingImages;
-    [self fetchMissingImagesAsync];
+    [self performSelectorInBackground: @selector(fetchMissingImages) withObject:nil];
 }
 
 -(void)setImage:(UIImage *)image {
@@ -73,13 +79,7 @@ static NSLock *cache_lock;
         
     }
     
-    [super setImage:image];
-}
-
--(void)fetchMissingImagesAsync
-{
-    fetchMissingImagesThread = [[NSThread alloc] initWithTarget:self selector:@selector(fetchMissingImages) object:nil];
-    [fetchMissingImagesThread start];
+    [super setImage: image];
 }
 
 -(void)fetchMissingImages
@@ -102,7 +102,7 @@ static NSLock *cache_lock;
         else if ([index intValue] == 2)
             bottomRightImage = temp;
     }    
-    self.image = [self mashup];
+    [self performSelectorOnMainThread: @selector(setImage:) withObject:[self mashup] waitUntilDone:NO];
 }
 
 -(void)fetchImageForUser:(NSString *)userID to: (UIImage **)image
@@ -127,7 +127,7 @@ static NSLock *cache_lock;
     *image = newImage;
 }
 
--(UIImage *)mashup {   
+-(UIImage *)mashup {
     CGSize size = self.frame.size;
     UIGraphicsBeginImageContext(size);
     
@@ -162,7 +162,6 @@ static NSLock *cache_lock;
 
 -(void)resetImage
 {
-    [fetchMissingImagesThread cancel];
     _missingImages = nil;
     _userIDs = nil;
     leftImage = nil;

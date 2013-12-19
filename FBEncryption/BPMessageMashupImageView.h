@@ -18,11 +18,12 @@ typedef NS_ENUM(NSUInteger, BPMessageMashupStyle) {
     NSArray *_userIDs;
     UIImage *leftImage, *topRightImage, *bottomRightImage;
     NSDictionary *_missingImages;
-    NSThread *fetchMissingImagesThread;
+    BOOL isAlive;
 }
 
 @property (nonatomic) NSString *userID;
 @property BPMessageMashupStyle style;
+@property NSArray *userIDs;
 
 -(id)initWithStyle: (BPMessageMashupStyle)aStyle;
 

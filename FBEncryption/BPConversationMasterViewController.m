@@ -116,11 +116,17 @@
             continue;
         [userIDs addObject: user.id];
     }
-    BPMessageMashupImageView *newMashup = [[BPMessageMashupImageView alloc] initWithFrame: cell.messageImage.frame];
-    [newMashup setUserIDs: userIDs];
-    [cell.messageImageContainer addSubview: newMashup];
-    [cell.messageImage removeFromSuperview];
-    cell.messageImage = newMashup;
+    
+    //draw new Mashup if necessary
+    if (![cell.messageImage.userIDs isEqualToArray: userIDs])
+    {
+        BPMessageMashupImageView *newMashup = [[BPMessageMashupImageView alloc] initWithFrame: cell.messageImage.frame];
+        [newMashup setUserIDs: userIDs];
+        [cell.messageImageContainer addSubview: newMashup];
+        [cell.messageImage removeFromSuperview];
+        cell.messageImage = newMashup;
+    }
+    
     
     
     if (object.unread > 0) {
