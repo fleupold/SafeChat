@@ -13,7 +13,7 @@
 -(BPFacebookDateFormatter *)init
 {
     self = [super init];
-    [self setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
+    [self setDateFormat: @"yyyy-MM-dd'T'HH:mm:ssZ"];
     return self;
 }
 
