@@ -22,6 +22,7 @@ Your private  key is stored encrypted on your device. No messages are ever trans
 ## Limitations
 Due to limitations in the Facebook XMPP support, we currently cannot provide the following features:
 * Writing messages in group chats
+* Sending rich media messages (e.g. pictures)
 * Sending 'read receipts' (this might be considered a feature. You can read messages without letting your friend know you have already seen it)
 
 Notifications only work if you allow the app to run in background mode. Since we do not store any messages, we cannot send push notifications. Instead the app refreshes in the background about every 10 minutes and fetches the newest messages.
