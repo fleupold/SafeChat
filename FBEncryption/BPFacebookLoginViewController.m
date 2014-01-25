@@ -7,8 +7,13 @@
 //
 
 #import "BPFacebookLoginViewController.h"
-#import "BPAppDelegate.h"
+
 #import <FacebookSDK/FacebookSDK.h>
+
+#import "IonIcons.h"
+
+#import "BPAppDelegate.h"
+#import "BPJavascriptRuntime.h"
 
 @interface BPFacebookLoginViewController ()
 
@@ -21,7 +26,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -30,8 +34,16 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
+
+    self.loginView.delegate = self;
     [self.loginView setReadPermissions: @[@"read_mailbox", @"xmpp_login"]];
+    
+    //if we are not logged in, there should be no way to dismiss the view
+    if (FBSession.activeSession.state == FBSessionStateOpen) {
+        self.dismissButton.hidden = NO;
+    } else {
+        self.dismissButton.hidden = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,5 +59,13 @@
     [self.spinner stopAnimating];
 }
 
+- (IBAction)dismissButtonPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
+- (void) loginViewShowingLoggedOutUser:(FBLoginView *)loginView
+{
+    self.dismissButton.hidden = YES;
+    [BPJavascriptRuntime resetPrivateKey];
+}
 @end

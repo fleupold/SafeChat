@@ -49,11 +49,22 @@
                                     <constraint firstAttribute="height" constant="60" id="jqB-4C-Ctl"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwH-Ru-Xbt">
+                                <rect key="frame" x="133" y="338" width="54" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Dismiss">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissButtonPressed:" destination="Lbp-V5-kGq" eventType="touchUpInside" id="2Wj-dF-tiX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="LsY-0z-DAx" secondAttribute="centerX" id="1br-h6-GjB"/>
                             <constraint firstItem="MN8-M0-YKT" firstAttribute="top" secondItem="LsY-0z-DAx" secondAttribute="bottom" constant="3" id="4Ps-gA-4cW"/>
+                            <constraint firstAttribute="centerX" secondItem="uwH-Ru-Xbt" secondAttribute="centerX" id="aGU-bI-NSb"/>
                             <constraint firstAttribute="centerY" secondItem="LsY-0z-DAx" secondAttribute="centerY" id="naM-dU-VwK"/>
                             <constraint firstItem="LsY-0z-DAx" firstAttribute="top" secondItem="YCz-BK-oEn" secondAttribute="bottom" constant="234" id="vwe-go-qhb"/>
                             <constraint firstItem="LsY-0z-DAx" firstAttribute="centerX" secondItem="MN8-M0-YKT" secondAttribute="centerX" id="wFS-hS-4wC"/>
@@ -61,6 +72,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="DlA-4a-71x"/>
                     <connections>
+                        <outlet property="dismissButton" destination="uwH-Ru-Xbt" id="5XS-q1-MEl"/>
                         <outlet property="loginView" destination="LsY-0z-DAx" id="RmW-gf-rXb"/>
                         <outlet property="spinner" destination="MN8-M0-YKT" id="DFa-EN-sRg"/>
                     </connections>

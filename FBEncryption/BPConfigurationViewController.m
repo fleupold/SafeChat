@@ -218,8 +218,6 @@
 }
 
 -(void)logoutButtonWasPressed:(id)sender {
-    [FBSession.activeSession closeAndClearTokenInformation];
-    [self resetPassword: nil];
     BPAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate showLoginView];
 }
