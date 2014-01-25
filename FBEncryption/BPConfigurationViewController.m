@@ -249,7 +249,14 @@
 
 -(BOOL)isWeakPassword: (NSString *)password
 {
-    return password.length < 10;
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:@"(?=^.{8,}$)(?=.*\\d)(?=.*[!@#$%^&*]+)(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                                    options:0
+                                    error:nil];
+    NSRange matchRange = [regex rangeOfFirstMatchInString:password
+                                                  options:NSMatchingReportProgress
+                                                    range:NSMakeRange(0, password.length)];
+    return (matchRange.location == NSNotFound);
 }
 
 -(void)logoutButtonWasPressed:(id)sender {
