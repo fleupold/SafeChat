@@ -69,6 +69,11 @@ static BPFriend *me;
     return [friendList allValues];
 }
 
++(void)clearFriendList
+{
+    friendList = [NSMutableDictionary dictionary];
+}
+
 +(void)resetAllSessionKeys
 {
     for (BPFriend *friend in [BPFriend allFriends])

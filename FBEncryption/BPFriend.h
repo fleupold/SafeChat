@@ -29,6 +29,7 @@ typedef NSInteger BPEncryptionsSupport;
 
 +(NSArray *)allFriends;
 +(void)resetAllSessionKeys;
++(void)clearFriendList;
 
 -(BOOL)isMe;
 -(BPEncryptionsSupport)encryptionSupport;

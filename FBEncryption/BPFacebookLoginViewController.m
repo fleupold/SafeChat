@@ -13,6 +13,7 @@
 #import "IonIcons.h"
 
 #import "BPAppDelegate.h"
+#import "BPFriend.h"
 #import "BPJavascriptRuntime.h"
 
 @interface BPFacebookLoginViewController ()
@@ -67,5 +68,10 @@
 {
     self.dismissButton.hidden = YES;
     [BPJavascriptRuntime resetPrivateKey];
+    
+    BPAppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate clearConversations];
+    
+    [BPFriend clearFriendList];
 }
 @end
