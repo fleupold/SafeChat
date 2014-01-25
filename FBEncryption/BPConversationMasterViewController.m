@@ -74,7 +74,15 @@
     self.footerView.hidden = YES;
     self.tableHeaderView.title.font = [IonIcons fontWithSize:15];
             
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMessage:) name:@"didReceiveMessage" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveMessage:)
+                                                 name:@"didReceiveMessage"
+                                               object: nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self.tableView
+                                             selector:@selector(reloadData)
+                                                 name:kMessageDecryptedNotification
+                                               object:nil];
 }
 
 

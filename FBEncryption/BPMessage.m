@@ -98,6 +98,8 @@
                     if (isAvailable) {
                         self.text = [[BPJavascriptRuntime getInstance] decrypt:cipher
                                                             withSessionKey:other.sessionKey];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kMessageDecryptedNotification
+                                                                            object:self];
                     }
                 }];
                 

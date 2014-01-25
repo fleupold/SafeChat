@@ -10,6 +10,8 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "BPFriend.h"
 
+static NSString * const kMessageDecryptedNotification = @"kMessageDecryptedNotification";
+
 @interface BPMessage : NSObject
 {
     NSString *_text;

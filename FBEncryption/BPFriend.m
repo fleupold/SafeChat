@@ -10,7 +10,7 @@
 #import "BPServerRequestManager.h"
 #import "BPJavascriptRuntime.h"
 
-const static NSTimeInterval ENCRYPTION_SUPPORT_REFRESH_PERIOD = 60 * 60 * 24;
+const static NSTimeInterval kEncryptionSupportRefreshPeriod = 60 * 60 * 24;
 
 @implementation BPFriend {
     BPEncryptionsSupport _encryptionSupport;
@@ -106,7 +106,7 @@ static BPFriend *me;
     }
     
     NSTimeInterval sinceLastCheck = [[NSDate date] timeIntervalSinceDate:_lastEncryptionSupportCheck];
-    if (_encryptionSupport == EncryptionNotAvailable && sinceLastCheck > ENCRYPTION_SUPPORT_REFRESH_PERIOD) {
+    if (_encryptionSupport == EncryptionNotAvailable && sinceLastCheck > kEncryptionSupportRefreshPeriod) {
         _encryptionSupport = EncryptionNotChecked;
     }
     return _encryptionSupport;

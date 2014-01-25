@@ -76,6 +76,12 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMessage:) name:@"didReceiveMessage" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailToSendMessage:) name:@"didFailToSendMessage" object: nil];
     
+    //Message decrypted Notification
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(messageGotDecrypted:)
+                                                 name:kMessageDecryptedNotification
+                                               object: nil];
+    
     //connect with Chat service so that we can receive incoming messages
     [self.detailItem prepareForSending];
 }
@@ -138,6 +144,13 @@ NSTimeInterval const secondsForTypingIndicator = 10;
     }
 }
 
+-(void)messageGotDecrypted: (NSNotification *)notification
+{
+    BPMessage *message = notification.object;
+    if ([self.detailItem.messages containsObject: message]) {
+        [self.tableView reloadData];
+    }
+}
 
 -(BOOL)isTyping
 {
