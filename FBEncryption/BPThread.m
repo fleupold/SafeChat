@@ -129,7 +129,6 @@
     for (BPFriend *participant in self.participants)
     {
         if ([participant isMe]) {
-            participant.encryptionSupport = EncryptionAvailable;
             continue;
         }
         

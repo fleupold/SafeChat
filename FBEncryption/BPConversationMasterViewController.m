@@ -328,6 +328,7 @@
 - (void)clearThreads
 {
     _objects = [NSMutableArray array];
+    [self.tableView reloadData];
     lastUpdated = nil;
 }
 

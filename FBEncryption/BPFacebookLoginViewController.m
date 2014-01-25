@@ -39,7 +39,7 @@
     [self.loginView setReadPermissions: @[@"read_mailbox", @"xmpp_login"]];
     
     //if we are not logged in, there should be no way to dismiss the view
-    if (FBSession.activeSession.state == FBSessionStateOpen) {
+    if (FBSession.activeSession.isOpen) {
         self.dismissButton.hidden = NO;
     } else {
         self.dismissButton.hidden = YES;

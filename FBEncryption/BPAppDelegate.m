@@ -73,7 +73,10 @@
 {
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    if (FBSession.activeSession.isOpen) {
+        [self fetchFriends];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

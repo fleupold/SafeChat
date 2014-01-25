@@ -10,8 +10,13 @@
 #import "BPServerRequestManager.h"
 #import "BPJavascriptRuntime.h"
 
-@implementation BPFriend
-@synthesize name, id, username, encryptionSupport, sessionKey;
+const static NSTimeInterval ENCRYPTION_SUPPORT_REFRESH_PERIOD = 60 * 60 * 24;
+
+@implementation BPFriend {
+    BPEncryptionsSupport _encryptionSupport;
+}
+
+@synthesize name, id, username, sessionKey;
 
 static NSMutableDictionary *friendList;
 static BPFriend *me;
@@ -25,9 +30,7 @@ static BPFriend *me;
     BPFriend *friend = [friendList objectForKey: id];
     if (friend == nil) {
         //Create if not found
-        friend = [[BPFriend alloc] init];
-        friend.name = name;
-        friend.id = id;
+        friend = [[BPFriend alloc] initWithId:id andName:name];
         [friendList setValue:friend forKey:id];
     }
     return friend;
@@ -74,9 +77,33 @@ static BPFriend *me;
     }
 }
 
+- (instancetype)initWithId: (NSString *)uid andName: (NSString *)aName
+{
+    self = [super init];
+    if (self) {
+        self.name = aName;
+        self.id = uid;
+        _lastEncryptionSupportCheck = [NSDate distantPast];
+    }
+    return self;
+}
+
 -(BOOL)isMe
 {
     return self == me;
+}
+
+- (BPEncryptionsSupport)encryptionSupport
+{
+    if ([self isMe]) {
+        return [self.class meHasEncryptionConfigured] ? EncryptionAvailable : EncryptionNotAvailable;
+    }
+    
+    NSTimeInterval sinceLastCheck = [[NSDate date] timeIntervalSinceDate:_lastEncryptionSupportCheck];
+    if (_encryptionSupport == EncryptionNotAvailable && sinceLastCheck > ENCRYPTION_SUPPORT_REFRESH_PERIOD) {
+        _encryptionSupport = EncryptionNotChecked;
+    }
+    return _encryptionSupport;
 }
 
 -(void)checkEncryptionSupportAndExecuteOnCompletion: (void (^)(BOOL))completionHandler
@@ -115,12 +142,15 @@ static BPFriend *me;
     [BPServerRequestManager publicKeyForID:self.id
                                 completion:^(AFHTTPRequestOperation *operation, id responseObject) {
                                     self.sessionKey = [[BPJavascriptRuntime getInstance] generateSessionKey: operation.responseString];
-                                    self.encryptionSupport = EncryptionAvailable;
+                                    _encryptionSupport = EncryptionAvailable;
                                     completionHandler(YES);
                                 }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       _encryptionSupport = EncryptionNotAvailable;
                                        completionHandler(NO);
                                    }];
+    
+    _lastEncryptionSupportCheck = [NSDate date];
 }
 
 @end
