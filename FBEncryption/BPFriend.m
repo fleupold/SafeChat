@@ -66,7 +66,8 @@ static BPFriend *me;
 
 +(NSArray *)allFriends
 {
-    return [friendList allValues];
+    NSPredicate *notMe = [NSPredicate predicateWithFormat: @"SELF.isMe == 0"];
+    return [[friendList allValues] filteredArrayUsingPredicate:notMe];
 }
 
 +(void)clearFriendList
