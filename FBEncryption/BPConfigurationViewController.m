@@ -17,7 +17,11 @@
 
 @end
 
-@implementation BPConfigurationViewController
+@implementation BPConfigurationViewController {
+    UIAlertView *_weakPasswordAlertView, *_wrongPasswordAlertView;
+}
+
+
 @synthesize passphraseField, loadingView, spinner;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -87,6 +91,19 @@
 
 -(IBAction)generateKeyPair:(id)sender
 {
+    if ([self isWeakPassword:passphraseField.text]) {
+        _weakPasswordAlertView = [[UIAlertView alloc] initWithTitle: @"Weak Password!"
+                                                                      message: @"Please choose a password with at least 10 characters, one number, one upper letter, and one special letter."
+                                                                     delegate: self
+                                                            cancelButtonTitle:@"Ignore" otherButtonTitles: @"Change", nil];
+        [_weakPasswordAlertView show];
+    } else {
+        [self generateKeyPairWithValidatedPassword];
+    }
+}
+
+-(void)generateKeyPairWithValidatedPassword
+{
     //Hide the keyboard
     [self.passphraseField resignFirstResponder];
     
@@ -97,7 +114,7 @@
         [self generateKeyPairWithAccessToken: self.limitedAccessToken override: NO];
     }
 }
-    
+
 -(void)generateKeyPairWithAccessToken:(NSString *)token override: (BOOL)override
 {
     //start the activity view
@@ -184,17 +201,30 @@
 
 -(void)wrongPassphraseAlert
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Wrong Password" message:@"Do you want to overwrite the current password?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
-    [alert show];
+    _wrongPasswordAlertView = [[UIAlertView alloc] initWithTitle: @"Wrong Password" message:@"Do you want to overwrite the current password?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+    [_wrongPasswordAlertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ([alertView.title isEqualToString: @"Wrong Password"] && buttonIndex == 0) {
-        [self generateKeyPairWithAccessToken: self.limitedAccessToken override: YES];
-        return;
+    if (alertView == _wrongPasswordAlertView) {
+        if (buttonIndex == 0) {
+            // Override button
+            [self generateKeyPairWithAccessToken: self.limitedAccessToken override: YES];
+        } else {
+            [self resetPassword: nil];
+            [self keyPairGenerated];
+        }
+    } else if (alertView == _weakPasswordAlertView) {
+        if (buttonIndex == 0) {
+            //Ignore button
+            [self generateKeyPairWithValidatedPassword];
+        }
+    } else {
+        //error alert View
+        [self resetPassword: nil];
+        [self keyPairGenerated];
     }
-    [self resetPassword: nil];
-    [self keyPairGenerated];
+    
 }
 
 
@@ -215,6 +245,11 @@
     [appDelegate clearConversations];
     
     [self viewDidLoad];
+}
+
+-(BOOL)isWeakPassword: (NSString *)password
+{
+    return password.length < 10;
 }
 
 -(void)logoutButtonWasPressed:(id)sender {
