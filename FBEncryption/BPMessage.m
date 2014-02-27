@@ -57,7 +57,12 @@
 
 -(void)setText:(NSString *)text
 {
-    _text = text;
+    
+    if(text == [NSNull null]) {
+        _text = @"";
+    } else {
+        _text = text;
+    }
 }
 
 -(NSString *)decryptMessage: (NSString *)message
@@ -67,10 +72,6 @@
     //We break up the message into a submessage for each user and
     //look for the one that is currently logged in.
     BPFriend *me = [BPFriend me];
-    if (me.encryptionSupport == EncryptionNotAvailable) {
-        return message;
-    }
-    
     NSArray *submessages = [message componentsSeparatedByString: @"SAFECHAT.IM_"];
     for (NSString *submessage in submessages)
     {
@@ -89,22 +90,7 @@
         
         NSString *cipher = messageParts[2];
         @try {
-            if (other.sessionKey != nil) {
-                return [[BPJavascriptRuntime getInstance] decrypt:cipher
-                                                   withSessionKey:other.sessionKey];
-            } else {
-                //We have to fetch the session key first
-                [other checkEncryptionSupportAndExecuteOnCompletion:^(BOOL isAvailable) {
-                    if (isAvailable) {
-                        self.text = [[BPJavascriptRuntime getInstance] decrypt:cipher
-                                                            withSessionKey:other.sessionKey];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kMessageDecryptedNotification
-                                                                            object:self];
-                    }
-                }];
-                
-                return message;
-            }
+            return [[BPJavascriptRuntime getInstance] decrypt:cipher withSessionKey: other.sessionKey];
         }
         @catch (NSException *exception) {
             return message;
