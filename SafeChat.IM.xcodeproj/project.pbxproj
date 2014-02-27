@@ -18,7 +18,6 @@
 		0850A01E183A44A700D6B22E /* logo_80.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01B183A44A700D6B22E /* logo_80.png */; };
 		0850A01F183A44A700D6B22E /* logo_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 0850A01C183A44A700D6B22E /* logo_120.png */; };
 		0857544D1817BB17006C1DD9 /* BPFacebookLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */; };
-		0857544F1817BD77006C1DD9 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0857544E1817BD77006C1DD9 /* FacebookSDK.framework */; };
 		085754531817E632006C1DD9 /* BPThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 085754521817E632006C1DD9 /* BPThread.m */; };
 		085754571817EAE0006C1DD9 /* BPFacebookDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 085754561817EAE0006C1DD9 /* BPFacebookDateFormatter.m */; };
 		0857545A1817EDE3006C1DD9 /* BPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 085754591817EDE3006C1DD9 /* BPMessage.m */; };
@@ -155,6 +154,7 @@
 		0873373718150CC5004A0AE3 /* FBEncryptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0873373618150CC5004A0AE3 /* FBEncryptionTests.m */; };
 		08B7A4B61827CCBB003C0B51 /* encryption.js in Resources */ = {isa = PBXBuildFile; fileRef = 08B7A4B41827CC8A003C0B51 /* encryption.js */; };
 		08B7A4B91829170F003C0B51 /* gibberish-aes-1.0.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 08B7A4B718291702003C0B51 /* gibberish-aes-1.0.0.min.js */; };
+		6F0520FE18947CA10056807D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F0520FD18947CA10056807D /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,7 +187,6 @@
 		0850A01C183A44A700D6B22E /* logo_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_120.png; sourceTree = "<group>"; };
 		0857544B1817BB17006C1DD9 /* BPFacebookLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPFacebookLoginViewController.h; sourceTree = "<group>"; };
 		0857544C1817BB17006C1DD9 /* BPFacebookLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPFacebookLoginViewController.m; sourceTree = "<group>"; };
-		0857544E1817BD77006C1DD9 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		085754511817E632006C1DD9 /* BPThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPThread.h; sourceTree = "<group>"; };
 		085754521817E632006C1DD9 /* BPThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPThread.m; sourceTree = "<group>"; };
 		085754551817EAE0006C1DD9 /* BPFacebookDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPFacebookDateFormatter.h; sourceTree = "<group>"; };
@@ -415,6 +414,7 @@
 		0873373618150CC5004A0AE3 /* FBEncryptionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBEncryptionTests.m; sourceTree = "<group>"; };
 		08B7A4B41827CC8A003C0B51 /* encryption.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = encryption.js; sourceTree = "<group>"; };
 		08B7A4B718291702003C0B51 /* gibberish-aes-1.0.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "gibberish-aes-1.0.0.min.js"; sourceTree = "<group>"; };
+		6F0520FD18947CA10056807D /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -423,11 +423,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				085759EA181962F0006C1DD9 /* libresolv.dylib in Frameworks */,
+				6F0520FE18947CA10056807D /* FacebookSDK.framework in Frameworks */,
 				085759E8181962CE006C1DD9 /* CFNetwork.framework in Frameworks */,
 				085759E6181962C7006C1DD9 /* Security.framework in Frameworks */,
 				085754E118195F1E006C1DD9 /* libxml2.dylib in Frameworks */,
 				0873370B18150CC5004A0AE3 /* CoreGraphics.framework in Frameworks */,
-				0857544F1817BD77006C1DD9 /* FacebookSDK.framework in Frameworks */,
 				085759E41819622E006C1DD9 /* libidn.a in Frameworks */,
 				0873370D18150CC5004A0AE3 /* UIKit.framework in Frameworks */,
 				0873370918150CC5004A0AE3 /* Foundation.framework in Frameworks */,
@@ -995,11 +995,11 @@
 		0873370718150CC5004A0AE3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6F0520FD18947CA10056807D /* FacebookSDK.framework */,
 				085759E9181962F0006C1DD9 /* libresolv.dylib */,
 				085759E7181962CE006C1DD9 /* CFNetwork.framework */,
 				085759E5181962C7006C1DD9 /* Security.framework */,
 				085754E018195F1E006C1DD9 /* libxml2.dylib */,
-				0857544E1817BD77006C1DD9 /* FacebookSDK.framework */,
 				0873370818150CC5004A0AE3 /* Foundation.framework */,
 				0873370A18150CC5004A0AE3 /* CoreGraphics.framework */,
 				0873370C18150CC5004A0AE3 /* UIKit.framework */,
@@ -1118,7 +1118,7 @@
 				ORGANIZATIONNAME = "Felix Leupold";
 				TargetAttributes = {
 					0873370418150CC5004A0AE3 = {
-						DevelopmentTeam = J62B27W3QR;
+						DevelopmentTeam = UJY6BBJ3C3;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1435,10 +1435,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/SafeChat,
+					/Users/stefangeorge/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBEncryption/SafeChat.IM-Prefix.pch";
@@ -1448,13 +1449,16 @@
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "FBEncryption/SafeChat.IM-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/SafeChat/FBEncryption/XMPP/XMPPFramework,
 					/Users/felixleupold/Projects/blockprism/SafeChat/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
+					/Users/stefangeorge/Desktop/SafeChat/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
 				);
 				PRODUCT_NAME = SafeChat.IM;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1462,11 +1466,13 @@
 		0873373C18150CC5004A0AE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/SafeChat,
+					/Users/stefangeorge/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBEncryption/SafeChat.IM-Prefix.pch";
@@ -1476,13 +1482,16 @@
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "FBEncryption/SafeChat.IM-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/SafeChat/FBEncryption/XMPP/XMPPFramework,
 					/Users/felixleupold/Projects/blockprism/SafeChat/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
+					/Users/stefangeorge/Desktop/SafeChat/FBEncryption/XMPP/XMPPFramework/Vendor/libidn,
 				);
 				PRODUCT_NAME = SafeChat.IM;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
