@@ -154,7 +154,8 @@
 		0873373718150CC5004A0AE3 /* FBEncryptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0873373618150CC5004A0AE3 /* FBEncryptionTests.m */; };
 		08B7A4B61827CCBB003C0B51 /* encryption.js in Resources */ = {isa = PBXBuildFile; fileRef = 08B7A4B41827CC8A003C0B51 /* encryption.js */; };
 		08B7A4B91829170F003C0B51 /* gibberish-aes-1.0.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 08B7A4B718291702003C0B51 /* gibberish-aes-1.0.0.min.js */; };
-		6F0520FE18947CA10056807D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F0520FD18947CA10056807D /* FacebookSDK.framework */; };
+		6FA469CB18E4A03000605D19 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA469CA18E4A03000605D19 /* FacebookSDK.framework */; };
+		6FA469CC18E4A03000605D19 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FA469CA18E4A03000605D19 /* FacebookSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -414,7 +415,7 @@
 		0873373618150CC5004A0AE3 /* FBEncryptionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBEncryptionTests.m; sourceTree = "<group>"; };
 		08B7A4B41827CC8A003C0B51 /* encryption.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = encryption.js; sourceTree = "<group>"; };
 		08B7A4B718291702003C0B51 /* gibberish-aes-1.0.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "gibberish-aes-1.0.0.min.js"; sourceTree = "<group>"; };
-		6F0520FD18947CA10056807D /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		6FA469CA18E4A03000605D19 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -423,11 +424,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				085759EA181962F0006C1DD9 /* libresolv.dylib in Frameworks */,
-				6F0520FE18947CA10056807D /* FacebookSDK.framework in Frameworks */,
 				085759E8181962CE006C1DD9 /* CFNetwork.framework in Frameworks */,
 				085759E6181962C7006C1DD9 /* Security.framework in Frameworks */,
 				085754E118195F1E006C1DD9 /* libxml2.dylib in Frameworks */,
 				0873370B18150CC5004A0AE3 /* CoreGraphics.framework in Frameworks */,
+				6FA469CB18E4A03000605D19 /* FacebookSDK.framework in Frameworks */,
 				085759E41819622E006C1DD9 /* libidn.a in Frameworks */,
 				0873370D18150CC5004A0AE3 /* UIKit.framework in Frameworks */,
 				0873370918150CC5004A0AE3 /* Foundation.framework in Frameworks */,
@@ -439,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0873372B18150CC5004A0AE3 /* XCTest.framework in Frameworks */,
+				6FA469CC18E4A03000605D19 /* FacebookSDK.framework in Frameworks */,
 				0873372D18150CC5004A0AE3 /* UIKit.framework in Frameworks */,
 				0873372C18150CC5004A0AE3 /* Foundation.framework in Frameworks */,
 			);
@@ -995,7 +997,7 @@
 		0873370718150CC5004A0AE3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6F0520FD18947CA10056807D /* FacebookSDK.framework */,
+				6FA469CA18E4A03000605D19 /* FacebookSDK.framework */,
 				085759E9181962F0006C1DD9 /* libresolv.dylib */,
 				085759E7181962CE006C1DD9 /* CFNetwork.framework */,
 				085759E5181962C7006C1DD9 /* Security.framework */,
@@ -1440,6 +1442,7 @@
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/SafeChat,
 					/Users/stefangeorge/Documents/FacebookSDK,
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBEncryption/SafeChat.IM-Prefix.pch";
@@ -1473,6 +1476,7 @@
 					"$(inherited)",
 					/Users/felixleupold/Projects/blockprism/SafeChat,
 					/Users/stefangeorge/Documents/FacebookSDK,
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBEncryption/SafeChat.IM-Prefix.pch";
@@ -1505,6 +1509,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBEncryption/FBEncryption-Prefix.pch";
@@ -1528,6 +1533,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FBEncryption/FBEncryption-Prefix.pch";

@@ -39,12 +39,15 @@
     self.loginView.delegate = self;
     [self.loginView setReadPermissions: @[@"read_mailbox", @"xmpp_login"]];
     
+    self.loginView.loginBehavior = FBSessionLoginBehaviorWithFallbackToWebView;
+    
     //if we are not logged in, there should be no way to dismiss the view
     if (FBSession.activeSession.isOpen) {
         self.dismissButton.hidden = NO;
     } else {
         self.dismissButton.hidden = YES;
     }
+    
 }
 
 - (void)didReceiveMemoryWarning
