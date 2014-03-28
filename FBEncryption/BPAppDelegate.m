@@ -218,7 +218,7 @@
 - (void)openSession
 {
     [FBSession openActiveSessionWithReadPermissions:@[@"read_mailbox", @"xmpp_login"]
-                                       allowLoginUI:YES
+                                       allowLoginUI:NO
                                   completionHandler:
      ^(FBSession *session,
        FBSessionState state, NSError *error) {
